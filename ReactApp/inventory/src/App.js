@@ -14,6 +14,7 @@ function App() {
 
 	const addItemToData = (item) => {
 		let items = data["items"];
+    item.id = items.length;
 		items.push(item);
 		setData({ items: items });
 		console.log(data);
@@ -21,9 +22,19 @@ function App() {
 
   return (
     <div className="App">
-      <SearchBar updateSearchParams={updateFilters} />
-			<ItemsDisplay items={data["items"]} />
-			<AddItem addItem={addItemToData} />
+      <div className="row mt-3">
+        <h2>Inventory Management Web App</h2>
+        <p>Store ur stuff here</p>
+        <div className="row mt-3">
+          <SearchBar updateSearchParams={updateFilters} />
+        </div>
+        <div className="row mt-3">
+          <AddItem addItem={addItemToData} />
+        </div>
+      </div>
+      <div className="row mt-3">
+          <ItemsDisplay items={data["items"]} />
+        </div>
     </div>
   );
 }
