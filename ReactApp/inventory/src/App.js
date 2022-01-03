@@ -15,26 +15,66 @@ function App() {
 	const addItemToData = (item) => {
 		let items = data["items"];
     item.id = items.length;
-		items.push(item);
-		setData({ items: items });
-		console.log(data);
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(item),
+    };
+    
+    /* get - get info, post - send info, put - modify, delete - del */
+    fetch("http://localhost:3000/items", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        items.push(data);
+		    setData({ items: items });
+      });
 	};
+
+  const filterData = (data) => {
+    const filteredData = [];
+    
+    if (!filters.name) {
+      return data;
+    }
+    
+    for (const item of data) {
+      if (filters.name !== "" && item.name !== filters.name) {
+        continue;
+      }
+      if (filters.price !== "" && item.price !== filters.price) {
+        continue;
+      }
+      if (filters.type !== "" && item.type !== filters.type) {
+        continue;
+      }
+      if (filters.brand !== "" && item.brand !== filters.brand) {
+        continue;
+      }
+      
+      filteredData.push(item);
+    }
+
+    return filteredData;
+  };
 
   return (
     <div className="App">
       <div className="row mt-3">
         <h2>Inventory Management Web App</h2>
         <p>Store ur stuff here</p>
-        <div className="row mt-3">
-          <SearchBar updateSearchParams={updateFilters} />
-        </div>
-        <div className="row mt-3">
-          <AddItem addItem={addItemToData} />
-        </div>
       </div>
       <div className="row mt-3">
-          <ItemsDisplay items={data["items"]} />
-        </div>
+        <SearchBar updateSearchParams={updateFilters} />
+      </div>
+      <div className="row mt-3">
+        <AddItem addItem={addItemToData} />
+      </div>
+      <div className="row mt-3">
+          <ItemsDisplay items={filterData(data["items"])} />
+      </div>
     </div>
   );
 }
