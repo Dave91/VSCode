@@ -2,19 +2,40 @@ import "./App.css";
 import SearchBar from "./SearchBar";
 import ItemsDisplay from "./ItemsDisplay";
 import AddItem from "./AddItem";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
 	const [filters, setFilters] = useState({});
 	const [data, setData] = useState({ items: [] });
 
+  useEffect(() => {
+    fetch("http://localhost:3000/items")
+    .then((response) => response.json())
+    .then((data) => setData({ items: data }));
+  }, []);
+
 	const updateFilters = (searchParams) => {
 		setFilters(searchParams);
 	};
 
+  const deleteItem = (item) => {
+    const items = data["items"];
+    const requestOptions = {
+      method: "DELETE"
+    }
+    fetch(`http://localhost:3000/items/${item.id}`, requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          const idx = items.indexOf(item);
+          items.splice(idx, 1);
+          setData({ items: items });
+        }
+      }
+    );
+  };
+
 	const addItemToData = (item) => {
 		let items = data["items"];
-    item.id = items.length;
 
     const requestOptions = {
       method: "POST",
@@ -73,13 +94,16 @@ function App() {
         <AddItem addItem={addItemToData} />
       </div>
       <div className="row mt-3">
-          <ItemsDisplay items={filterData(data["items"])} />
+          <ItemsDisplay
+            deleteItem={deleteItem}
+            items={filterData(data["items"])} />
       </div>
     </div>
   );
 }
 
-/* function ButtonState() {
+/*
+function ButtonState() {
   const [title, setTitle] = useState("");
   const [count, setCount] = useState(0);
 
@@ -99,6 +123,7 @@ function App() {
       <button onClick={updateCounterClicked}>Update Counter</button>
     </div>
   );
-} */
+}
+*/
 
 export default App;

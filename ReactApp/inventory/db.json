@@ -1,3 +1,18 @@
 {
-	"items": []
+  "items": [
+    {
+      "name": "Cookie",
+      "price": "5.50",
+      "type": "Choco",
+      "brand": "Original",
+      "id": 1
+    },
+    {
+      "name": "Test",
+      "price": "5.55",
+      "type": "Test2",
+      "brand": "Test3",
+      "id": 2
+    }
+  ]
 }
