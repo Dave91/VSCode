@@ -1,5 +1,5 @@
 {
-  "name": "three-demo",
+  "name": "three-planets-demo",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -11,5 +11,10 @@
   },
   "dependencies": {
     "three": "^0.128.0"
-  }
+  },
+  "description": "Scrollable 3D Animated Website demo with ThreeJS/Vite",
+  "main": "main.js",
+  "keywords": [],
+  "author": "Dave",
+  "license": "ISC"
 }
