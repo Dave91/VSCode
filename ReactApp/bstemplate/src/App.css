@@ -8,28 +8,47 @@ div {
   font-family: cursive;
 }
 
-.App-nav {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.navb {
+  background: url("banner1.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.btn {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.hline {
+  margin-top: 50px;
+  margin-bottom: 55px;
+  min-width: 50vw;
 }
 
 .App-header {
-  padding-top: 50px;
+  background: url("bgdark.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: 40px;
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 150vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(8px + 2vmin);
-  color: white;
-}
-
-.btn {
-  margin-left: 10px;
+  font-size: calc(6px + 2vmin);
+  color: beige;
 }
 
 .App-link {
-  color: #61dafb;
+  color: coral;
+}
+
+#home {
+  margin-top: 5px;
+  padding: 15px;
 }
