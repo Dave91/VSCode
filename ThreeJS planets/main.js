@@ -97,7 +97,7 @@ scene.background = spaceTexture;
 const moon1Texture = new THREE.TextureLoader().load('moon.jpg');
 const normal1Texture = new THREE.TextureLoader().load('normal.jpg');
 
-const moon1 = new THREE.Mesh(
+const moon = new THREE.Mesh(
   new THREE.SphereGeometry(3, 32, 32),
   new THREE.MeshStandardMaterial({
     map: moon1Texture,
@@ -105,17 +105,17 @@ const moon1 = new THREE.Mesh(
   })
 );
 
-scene.add(moon1);
-moon1.name = "m1"
-moon1.position.z = -5;
-moon1.position.x = 2;
+scene.add(moon);
+moon.name = "m1"
+moon.position.z = -5;
+moon.position.x = 2;
 
 // Earth (moon2)
 
 const moon2Texture = new THREE.TextureLoader().load('earthwithtopo.jpg');
 const normal2Texture = new THREE.TextureLoader().load('earthwithtopo.jpg');
 
-const moon2 = new THREE.Mesh(
+const earth = new THREE.Mesh(
   new THREE.SphereGeometry(3, 32, 32),
   new THREE.MeshStandardMaterial({
     map: moon2Texture,
@@ -123,17 +123,17 @@ const moon2 = new THREE.Mesh(
   })
 );
 
-scene.add(moon2);
-moon2.name = "m2"
-moon2.position.z = 6;
-moon2.position.x = -4;
+scene.add(earth);
+earth.name = "m2"
+earth.position.z = 6;
+earth.position.x = -4;
 
 // Mars (moon3)
 
-const moon3Texture = new THREE.TextureLoader().load('space.jpg');
-const normal3Texture = new THREE.TextureLoader().load('bgblackwhite.jpeg');
+const moon3Texture = new THREE.TextureLoader().load('mars.jpg');
+const normal3Texture = new THREE.TextureLoader().load('marsnorm.jpg');
 
-const moon3 = new THREE.Mesh(
+const mars = new THREE.Mesh(
   new THREE.SphereGeometry(3, 32, 32),
   new THREE.MeshStandardMaterial({
     map: moon3Texture,
@@ -141,26 +141,15 @@ const moon3 = new THREE.Mesh(
   })
 );
 
-scene.add(moon3);
-moon3.name = "m3"
-moon3.position.z = 30;
-moon3.position.setX(-10);
+scene.add(mars);
+mars.name = "m3"
+mars.position.z = 30;
+mars.position.setX(-10);
 
 // Scroll Animation
 
 function moveCamera() {
   const t = document.body.getBoundingClientRect().top;
-
-  moon1.rotation.x += 0.075;
-  moon1.rotation.y += 0.01;
-  moon1.rotation.z += 0.05;
-
-  moon2.rotation.y += 0.05;
-  moon2.rotation.z += 0.01;
-
-	moon3.rotation.x += 0.075;
-  moon3.rotation.y += 0.05;
-  moon3.rotation.z += 0.05;
 
   camera.position.z = t * -0.01;
   camera.position.x = t * -0.0002;
@@ -175,9 +164,9 @@ moveCamera();
 function animate() {
   requestAnimationFrame(animate);
 
-  moon1.rotation.x += 0.005;
-  moon2.rotation.x += 0.005;
-	moon3.rotation.x += 0.005;
+  moon.rotation.y -= 0.005;
+  earth.rotation.y -= 0.005;
+	mars.rotation.y -= 0.005;
 
   // for a simpler zoom in, zoom out, no rotation
   // controls.update();
