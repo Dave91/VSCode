@@ -32,14 +32,22 @@ function renderRay() {
 	// calc obj intersecting picking ray
 	const intersects = raycaster.intersectObjects( scene.children );
 
-	if (intersects[ 0 ].object.name === "m1") {
+	if (intersects[ 0 ].object.name === "moon") {
 		window.open("https://en.wikipedia.org/wiki/Moon");
 	} else {
-		if (intersects[ 0 ].object.name === "m2") {
+		if (intersects[ 0 ].object.name === "earth") {
 			window.open("https://www.google.hu/intl/hu/earth/"); 
 		} else {
-			if (intersects[ 0 ].object.name === "m3") {
+			if (intersects[ 0 ].object.name === "mars") {
 				window.open("https://en.wikipedia.org/wiki/Mars");
+			} else {
+				if (intersects[ 0 ].object.name === "bhole") {
+					window.open("https://en.wikipedia.org/wiki/Black_hole");
+				} else {
+					if (intersects[ 0 ].object.name === "sun") {
+						window.open("https://en.wikipedia.org/wiki/Sun");
+					}
+				}
 			}
 		}
 	}
@@ -62,7 +70,7 @@ window.addEventListener( 'click', onMouseClick, false );
 // Lights
 
 const pointLight = new THREE.PointLight(0xffffff);
-pointLight.position.set(5, 5, 5);
+pointLight.position.set(15, 7, 10);
 const ambientLight = new THREE.AmbientLight(0xffffff);
 
 scene.add(pointLight, ambientLight)
@@ -92,57 +100,95 @@ Array(250).fill().forEach(addStar);
 const spaceTexture = new THREE.TextureLoader().load('bg4.jpg');
 scene.background = spaceTexture;
 
-// Moon1
+// Sun
 
-const moon1Texture = new THREE.TextureLoader().load('moon.jpg');
+const sunTexture = new THREE.TextureLoader().load('normal.jpg');
+const sun = new THREE.Mesh(
+  new THREE.SphereGeometry(12, 32, 32),
+  new THREE.MeshStandardMaterial({
+    color: 0xffff55,
+    normalMap: sunTexture,
+  })
+);
+
+scene.add(sun);
+sun.name = "sun"
+sun.position.z = -37;
+sun.position.x = 25;
+sun.position.y = 7;
+
+// Moon
+
+const moonTexture = new THREE.TextureLoader().load('moon.jpg');
 const normal1Texture = new THREE.TextureLoader().load('normal.jpg');
 
 const moon = new THREE.Mesh(
-  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.SphereGeometry(1.7, 32, 32),
   new THREE.MeshStandardMaterial({
-    map: moon1Texture,
+    map: moonTexture,
     normalMap: normal1Texture,
   })
 );
 
 scene.add(moon);
-moon.name = "m1"
+moon.name = "moon"
 moon.position.z = -5;
 moon.position.x = 2;
 
-// Earth (moon2)
+// Earth
 
-const moon2Texture = new THREE.TextureLoader().load('earthwithtopo.jpg');
+const earthTexture = new THREE.TextureLoader().load('earthwithtopo.jpg');
 const normal2Texture = new THREE.TextureLoader().load('earthwithtopo.jpg');
 
 const earth = new THREE.Mesh(
   new THREE.SphereGeometry(3, 32, 32),
   new THREE.MeshStandardMaterial({
-    map: moon2Texture,
+    map: earthTexture,
     normalMap: normal2Texture,
   })
 );
 
 scene.add(earth);
-earth.name = "m2"
+earth.name = "earth"
 earth.position.z = 6;
 earth.position.x = -4;
 
-// Mars (moon3)
+// Black Hole
 
-const moon3Texture = new THREE.TextureLoader().load('mars.jpg');
+const bholeTexture = new THREE.TextureLoader().load('bh4.jpg');
+const normal4Texture = new THREE.TextureLoader().load('bh4.jpg');
+
+const bhole = new THREE.Mesh(
+  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.MeshStandardMaterial({
+    map: bholeTexture,
+    normalMap: normal4Texture,
+  })
+);
+
+scene.add(bhole);
+bhole.name = "bhole"
+bhole.rotation.y -= 1;
+bhole.rotation.x += 1;
+bhole.position.z = 25;
+bhole.position.x = -10;
+bhole.position.y = 10;
+
+// Mars
+
+const marsTexture = new THREE.TextureLoader().load('mars.jpg');
 const normal3Texture = new THREE.TextureLoader().load('marsnorm.jpg');
 
 const mars = new THREE.Mesh(
-  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.SphereGeometry(2.5, 32, 32),
   new THREE.MeshStandardMaterial({
-    map: moon3Texture,
+    map: marsTexture,
     normalMap: normal3Texture,
   })
 );
 
 scene.add(mars);
-mars.name = "m3"
+mars.name = "mars"
 mars.position.z = 30;
 mars.position.setX(-10);
 
@@ -164,8 +210,10 @@ moveCamera();
 function animate() {
   requestAnimationFrame(animate);
 
+	sun.rotation.y -= 0.001;
   moon.rotation.y -= 0.005;
   earth.rotation.y -= 0.005;
+	// bhole.rotation.y -= 0.005;
 	mars.rotation.y -= 0.005;
 
   // for a simpler zoom in, zoom out, no rotation
