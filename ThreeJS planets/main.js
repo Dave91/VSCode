@@ -213,13 +213,21 @@ function animate() {
 	sun.rotation.y -= 0.001;
   moon.rotation.y -= 0.005;
   earth.rotation.y -= 0.005;
-	// bhole.rotation.y -= 0.005;
 	mars.rotation.y -= 0.005;
 
   // for a simpler zoom in, zoom out, no rotation
   // controls.update();
 
   renderer.render(scene, camera);
+}
+
+window.addEventListener('resize', onWindResize, false);
+
+function onWindResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
 }
 
 animate();

@@ -155,8 +155,6 @@ function moveCamera() {
   torus.rotation.z += 0.05;
 
   camera.position.z = t * -0.01;
-  // camera.position.x = t * -0.0002;
-  // camera.rotation.y = t * -0.0002;
 }
 
 document.body.onscroll = moveCamera;
@@ -177,6 +175,15 @@ function animate() {
   controls.update();
 
   renderer.render(scene, camera);
+}
+
+window.addEventListener('resize', onWindResize, false);
+
+function onWindResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
 }
 
 animate();
