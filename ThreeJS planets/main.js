@@ -1,14 +1,11 @@
 import './style.css';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { mapLinear } from 'three/src/math/MathUtils';
 
 // Setup
 
 const scene = new THREE.Scene();
-
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
 });
@@ -26,32 +23,28 @@ const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
 function renderRay() {
-	// update picking ray with camera and mouse pos
+  // mouse pos camera to pick object clicked
 	raycaster.setFromCamera( mouse, camera );
-
-	// calc obj intersecting picking ray
 	const intersects = raycaster.intersectObjects( scene.children );
 
 	if (intersects[ 0 ].object.name === "moon") {
 		window.open("https://en.wikipedia.org/wiki/Moon");
-	} else {
-		if (intersects[ 0 ].object.name === "earth") {
-			window.open("https://www.google.hu/intl/hu/earth/"); 
-		} else {
-			if (intersects[ 0 ].object.name === "mars") {
-				window.open("https://en.wikipedia.org/wiki/Mars");
-			} else {
-				if (intersects[ 0 ].object.name === "bhole") {
-					window.open("https://en.wikipedia.org/wiki/Black_hole");
-				} else {
-					if (intersects[ 0 ].object.name === "sun") {
-						window.open("https://en.wikipedia.org/wiki/Sun");
-					}
-				}
-			}
-		}
 	}
-	console.log(intersects[ 0 ].object.name)
+  if (intersects[ 0 ].object.name === "earth") {
+    window.open("https://www.google.hu/intl/hu/earth/"); 
+  }
+  if (intersects[ 0 ].object.name === "mars") {
+    window.open("https://en.wikipedia.org/wiki/Mars");
+  }
+  if (intersects[ 0 ].object.name === "bhole") {
+    window.open("https://en.wikipedia.org/wiki/Black_hole");
+  }
+  if (intersects[ 0 ].object.name === "sun") {
+    window.open("https://en.wikipedia.org/wiki/Sun");
+  }
+  if (intersects[ 0 ].object.name === "asteroid") {
+    window.open("https://en.wikipedia.org/wiki/Asteroid");
+	}
 	renderer.render( scene, camera );
 }
 
@@ -75,34 +68,32 @@ const ambientLight = new THREE.AmbientLight(0xffffff);
 
 scene.add(pointLight, ambientLight)
 
-// for a simpler zoom in, zoom out, no rotation
-// const controls = new OrbitControls(camera, renderer.domElement);
+// Asteroids
 
-// Stars
-
-function addStar() {
-  const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-  const material = new THREE.MeshStandardMaterial({ color: 0xfffff5 });
-  const star = new THREE.Mesh(geometry, material);
+function addAsteroid() {
+  const geometry = new THREE.SphereGeometry(0.5, 4, 4);
+  const material = new THREE.MeshStandardMaterial({ metalness: true });
+  const asteroid = new THREE.Mesh(geometry, material);
 
   const [x, y, z] = Array(3)
     .fill()
     .map(() => THREE.MathUtils.randFloatSpread(100));
 
-  star.position.set(x, y, z);
-  scene.add(star);
+  asteroid.position.set(x, y, z);
+  scene.add(asteroid);
+  asteroid.name = "asteroid"
 }
 
-Array(250).fill().forEach(addStar);
+Array(250).fill().forEach(addAsteroid);
 
 // Background
 
-const spaceTexture = new THREE.TextureLoader().load('bg4.jpg');
+const spaceTexture = new THREE.TextureLoader().load('./bg4.jpg');
 scene.background = spaceTexture;
 
 // Sun
 
-const sunTexture = new THREE.TextureLoader().load('normal.jpg');
+const sunTexture = new THREE.TextureLoader().load('./normal.jpg');
 const sun = new THREE.Mesh(
   new THREE.SphereGeometry(12, 32, 32),
   new THREE.MeshStandardMaterial({
@@ -119,8 +110,8 @@ sun.position.y = 7;
 
 // Moon
 
-const moonTexture = new THREE.TextureLoader().load('moon.jpg');
-const normal1Texture = new THREE.TextureLoader().load('normal.jpg');
+const moonTexture = new THREE.TextureLoader().load('./moon.jpg');
+const normal1Texture = new THREE.TextureLoader().load('./normal.jpg');
 
 const moon = new THREE.Mesh(
   new THREE.SphereGeometry(1.7, 32, 32),
@@ -137,8 +128,8 @@ moon.position.x = 2;
 
 // Earth
 
-const earthTexture = new THREE.TextureLoader().load('earthwithtopo.jpg');
-const normal2Texture = new THREE.TextureLoader().load('earthwithtopo.jpg');
+const earthTexture = new THREE.TextureLoader().load('./earthwithtopo.jpg');
+const normal2Texture = new THREE.TextureLoader().load('./earthwithtopo.jpg');
 
 const earth = new THREE.Mesh(
   new THREE.SphereGeometry(3, 32, 32),
@@ -155,8 +146,8 @@ earth.position.x = -4;
 
 // Black Hole
 
-const bholeTexture = new THREE.TextureLoader().load('bh4.jpg');
-const normal4Texture = new THREE.TextureLoader().load('bh4.jpg');
+const bholeTexture = new THREE.TextureLoader().load('./bh4.jpg');
+const normal4Texture = new THREE.TextureLoader().load('./bh4.jpg');
 
 const bhole = new THREE.Mesh(
   new THREE.SphereGeometry(3, 32, 32),
@@ -176,8 +167,8 @@ bhole.position.y = 10;
 
 // Mars
 
-const marsTexture = new THREE.TextureLoader().load('mars.jpg');
-const normal3Texture = new THREE.TextureLoader().load('marsnorm.jpg');
+const marsTexture = new THREE.TextureLoader().load('./mars.jpg');
+const normal3Texture = new THREE.TextureLoader().load('./marsnorm.jpg');
 
 const mars = new THREE.Mesh(
   new THREE.SphereGeometry(2.5, 32, 32),
@@ -214,9 +205,6 @@ function animate() {
   moon.rotation.y -= 0.005;
   earth.rotation.y -= 0.005;
 	mars.rotation.y -= 0.005;
-
-  // for a simpler zoom in, zoom out, no rotation
-  // controls.update();
 
   renderer.render(scene, camera);
 }

@@ -17,15 +17,62 @@ camera.position.x = -3;
 
 renderer.render(scene, camera);
 
-// Background
+// Raycaster (for event handling)
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function renderRay() {
+  // mouse pos camera to pick object clicked
+	raycaster.setFromCamera( mouse, camera );
+	const intersects = raycaster.intersectObjects( scene.children );
+  if (intersects[ 0 ].object.name) {
+    var answer = window.confirm("Do you wish to open link on new tab?");
+    if (answer === false) {
+      return;
+    }
+  }
+
+	if (intersects[ 0 ].object.name === "avatar") {
+    window.open("./rolam.jpg");
+	}
+  if (intersects[ 0 ].object.name === "poet") {
+    window.open("./poet-pic.jpg");
+  }
+  if (intersects[ 0 ].object.name === "doggy") {
+    window.open("./doggy.jpg");
+  }
+  if (intersects[ 0 ].object.name === "flower") {
+    window.open("./flower.jpg");
+  }
+  if (intersects[ 0 ].object.name === "book") {
+    window.open("./book.jpg");
+  }
+  if (intersects[ 0 ].object.name === "moon") {
+    window.open("https://en.wikipedia.org/wiki/Moon");
+  }
+	renderer.render(scene, camera);
+}
+
+// Events
+
+function onMouseClick(event) {
+	// calc mouse pos in normalized device coords
+	// (-1 to +1)
+	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+	window.requestAnimationFrame(renderRay);
+}
+
+window.addEventListener('click', onMouseClick, false);
+
+// Background, Light, Controls
 
 const bgTexture = new THREE.TextureLoader()
-  .load('Roland Mey Pixabay.jpg');
+  .load('./Roland Mey Pixabay.jpg');
 scene.background = bgTexture;
 
-// Lights
-
-const pointLight = new THREE.PointLight(0xffffff);
+const pointLight = new THREE.PointLight(0xffff55);
 pointLight.position.set(5, 5, 5);
 const ambientLight = new THREE.AmbientLight(0xffffff);
 
@@ -36,7 +83,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 // Torus
 
 const torusTexture = new THREE.TextureLoader()
-  .load('bgfulllight.jpg');
+  .load('./bgfulllight.jpg');
 const torus = new THREE.Mesh(
   new THREE.TorusKnotGeometry(150, 15, 25, 100, 1, 2),
   new THREE.MeshStandardMaterial({ map: torusTexture })
@@ -44,49 +91,33 @@ const torus = new THREE.Mesh(
 
 scene.add(torus);
 
-// Bubbles
-
-function addBubble() {
-  const bubble = new THREE.Mesh(
-    new THREE.SphereGeometry(1, 24, 24),
-    new THREE.MeshStandardMaterial({ color: 'lightblue' })
-  );
-
-  const [x, y, z] = Array(3)
-    .fill()
-    .map(() => THREE.MathUtils.randFloatSpread(200));
-
-  bubble.position.set(x, y, z);
-  bubble.name = "bubble";
-  scene.add(bubble);
-}
-
-Array(150).fill().forEach(addBubble);
-
 // Avatar
 
 const avatarTexture = new THREE.TextureLoader()
-  .load('rolam.jpg');
+  .load('./rolam.jpg');
 const avatar = new THREE.Mesh(
   new THREE.BoxGeometry(3, 3, 3),
   new THREE.MeshBasicMaterial({ map: avatarTexture })
 );
 
 scene.add(avatar);
-avatar.position.z = 2;
-avatar.position.x = 3;
+avatar.name = "avatar"
+avatar.position.z = 4;
+avatar.position.x = 4;
 avatar.position.y = 0;
+avatar.rotation.y -= 0.6
 
 // Poet
 
 const poetTexture = new THREE.TextureLoader()
-  .load('poet-pic.jpg');
+  .load('./poet-pic.jpg');
 const poet = new THREE.Mesh(
   new THREE.BoxGeometry(3, 3, 3),
   new THREE.MeshStandardMaterial({ map: poetTexture })
 );
 
 scene.add(poet);
+poet.name = "poet"
 poet.position.z = 2;
 poet.position.x = -5;
 poet.position.y = 3;
@@ -94,39 +125,42 @@ poet.position.y = 3;
 // Doggy
 
 const doggyTexture = new THREE.TextureLoader()
-  .load('doggy.jpg');
+  .load('./doggy.jpg');
 const doggy = new THREE.Mesh(
   new THREE.BoxGeometry(3, 3, 3),
   new THREE.MeshStandardMaterial({ map: doggyTexture })
 );
 
 scene.add(doggy);
+doggy.name = "doggy"
 doggy.position.z = 0;
 doggy.position.x = -15;
 
 // Flower
 
 const flowerTexture = new THREE.TextureLoader()
-  .load('flower.jpg');
+  .load('./flower.jpg');
 const flower = new THREE.Mesh(
   new THREE.BoxGeometry(3, 3, 3),
   new THREE.MeshStandardMaterial({ map: flowerTexture })
 );
 
 scene.add(flower);
+flower.name = "flower"
 flower.position.z = 15;
 flower.position.x = 3;
 
 // Books
 
 const bookTexture = new THREE.TextureLoader()
-  .load('book.jpg');
+  .load('./book.jpg');
 const book = new THREE.Mesh(
   new THREE.BoxGeometry(3, 3, 3),
   new THREE.MeshStandardMaterial({ map: bookTexture })
 );
 
 scene.add(book);
+book.name = "book"
 book.position.z = 25;
 book.position.x = 5;
 book.position.y = 3;
@@ -134,13 +168,14 @@ book.position.y = 3;
 // Moon
 
 const moonTexture = new THREE.TextureLoader()
-  .load('moon.jpg');
+  .load('./moon.jpg');
 const moon = new THREE.Mesh(
   new THREE.SphereGeometry(6, 30, 30),
   new THREE.MeshStandardMaterial({ map: moonTexture })
 );
 
 scene.add(moon);
+moon.name = "moon"
 moon.position.z = 23;
 moon.position.x = -20;
 moon.position.y = -2;
@@ -165,7 +200,6 @@ moveCamera();
 function animate() {
   requestAnimationFrame(animate);
 
-  avatar.rotation.y -= 0.001;
   poet.rotation.y += 0.002;
   doggy.rotation.x += 0.005;
   flower.rotation.z -= 0.003;

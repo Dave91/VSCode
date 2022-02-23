@@ -2,17 +2,12 @@
   text-align: center;
 }
 
-*.a,
-p,
-div {
-  font-family: cursive;
-}
-
 .navb {
-  background: url("banner1.jpg");
+  background: url("./bannerlight.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  background-color: beige;
 }
 
 .btn {
@@ -20,35 +15,57 @@ div {
   margin-bottom: 5px;
   margin-left: 10px;
   margin-right: 10px;
+  background-image: url("./btnbg.jpg");
+  border-width: 2px;
+  border-color: coral;
 }
 
-.hline {
-  margin-top: 50px;
-  margin-bottom: 55px;
-  min-width: 50vw;
+hr {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.App-header {
-  background: url("bgdark.jpeg");
+.content {
+  --dark-bg: rgba(15, 15, 55, 0.8);
+  --spacing: 350px;
+
+  width: 100vw;
+  color: burlywood;
+  z-index: 99;
+  position: absolute;
+  width: 100%;
+  margin: 0px auto;
+  padding: 65px 0px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  height: 100%;
+
+  font-family: fantasy;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  background: url("./bglight.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  margin-top: 40px;
-  background-color: #282c34;
-  min-height: 150vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(6px + 2vmin);
-  color: beige;
+  background-color: white;
 }
 
 .App-link {
   color: coral;
 }
 
-#home {
-  margin-top: 5px;
-  padding: 15px;
+h3 {
+  font-weight: 700;
+  font-style: normal;
+}
+
+section {
+  grid-column: 3 / 11;
+  padding: 1rem;
+  background-color: var(--dark-bg);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }

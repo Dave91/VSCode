@@ -12,27 +12,22 @@ import Footer from './Footer';
 // alapból Header jelenik meg
 
 function App() {
+	
 	return (
     <div class="App">
 			<div class="navb fixed-top">
-				<a className="btn btn-primary btn-xl"
-					href="#rolam">Rólam</a>
-				<a className="btn btn-primary btn-xl"
-					href="#versek">Versek</a>
-				<a className="btn btn-primary btn-xl"
-					href="#irasok">Írások</a>
-
+				<a className="btn btn-primary btn-xl">Rólam</a>
+				<a className="btn btn-primary btn-xl">Versek</a>
+				<a className="btn btn-primary btn-xl">Írások</a>
+				<hr />
 			</div>
-			<div class="App-header">
-				<Header />
-				<hr class="hline" id="rolam"></hr>
-				<Rolam />
-				<hr class="hline" id="versek"></hr>
-				<Versek />
-				<hr class="hline" id="irasok"></hr>
-				<Irasok />
-				<hr class="hline"></hr>
-				<Footer />
+			<div class="content">
+				<section>
+					<Header />
+				</section>
+				<section>
+					<Footer />
+				</section>
 			</div>
     </div>
   );
