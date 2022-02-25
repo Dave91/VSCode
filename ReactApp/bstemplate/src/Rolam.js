@@ -1,6 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min';
-import './App.css';
 
 function Rolam() {
 	return (
@@ -9,9 +6,9 @@ function Rolam() {
 				id="sect-rolam">
 				<div className="row">
 					<div className="col-lg-8 mx-auto text-center">
-						<h2 className="section-heading text-white">
+						<h3 className="section-heading">
 							Rólam
-						</h2>
+						</h3>
 						<p className="text-faded">
 							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pellentesque, ante a facilisis luctus, turpis dolor lobortis lorem, molestie egestas lectus urna vel augue. Ut auctor volutpat orci. Morbi tincidunt velit non eleifend fringilla. Donec laoreet vestibulum condimentum. Nunc sit amet sapien quis tortor interdum vehicula nec eget tortor. Nullam maximus ipsum erat, vel posuere ipsum dictum tempus. Aliquam gravida ex quam, a bibendum ante viverra non.
 
