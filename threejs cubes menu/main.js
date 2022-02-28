@@ -13,7 +13,6 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.z = 30;
-camera.position.x = -3;
 
 renderer.render(scene, camera);
 
@@ -24,31 +23,39 @@ const mouse = new THREE.Vector2();
 
 function renderRay() {
   // mouse pos camera to pick object clicked
-	raycaster.setFromCamera( mouse, camera );
-	const intersects = raycaster.intersectObjects( scene.children );
-  if (intersects[ 0 ].object.name) {
-    var answer = window.confirm("Do you wish to open link on new tab?");
-    if (answer === false) {
-      return;
-    }
+	raycaster.setFromCamera(mouse, camera);
+	const intersects = raycaster.intersectObjects(scene.children);
+  var sect = null;
+  if (intersects[0].object.name === "rolam") {
+    sect = "rolam"
   }
-
-	if (intersects[ 0 ].object.name === "menu1") {
-    window.open("./rolam2.jpg");
-	}
-  if (intersects[ 0 ].object.name === "menu2") {
-    window.open("./rolam2.jpg");
-	}
-  if (intersects[ 0 ].object.name === "menu3") {
-    window.open("./rolam2.jpg");
-	}
-  if (intersects[ 0 ].object.name === "menu4") {
-    window.open("./rolam2.jpg");
-	}
+  if (intersects[0].object.name === "versek") {
+    sect = "versek"
+  }
+  if (intersects[0].object.name === "irasok") {
+    sect = "irasok"
+  }
+  menu_anim = "out"
+  document.getElementById(sect).className = "";
 	renderer.render(scene, camera);
+  window.removeEventListener('mousemove', onMouseOver, false);
+  controls.autoRotate = false;
+  window.addEventListener('click', onMouseClick(sect), false);
 }
 
-function onMouseClick(event) {
+function onMouseClick(sect) {
+  return function() {
+    menu_anim = "in";
+    camera.rotation.y = -1.5;
+    camera.rotation.x = 0;
+    document.getElementById(sect).className = "hidden-cont";
+    window.removeEventListener('click', onMouseClick, false);
+    controls.autoRotate = true;
+    window.addEventListener('mousemove', onMouseOver, false);
+  };
+}
+
+function onMouseOver(event) {
 	// calc mouse pos in normalized device coords
 	// (-1 to +1)
 	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -56,7 +63,7 @@ function onMouseClick(event) {
 	window.requestAnimationFrame(renderRay);
 }
 
-window.addEventListener('click', onMouseClick, false);
+window.addEventListener('mousemove', onMouseOver, false);
 
 // Background, Light, Controls
 
@@ -68,7 +75,9 @@ const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(ambientLight);
 
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.autoRotate = true;
+// controls.autoRotate = true;
+// controls.autoRotateSpeed = 5.0;
+var menu_anim = "off"
 
 // Text Labels
 
@@ -78,32 +87,51 @@ function createTextLabel(text, x, y, z, id) {
     // TextGeometry(String, Object)
     const textObj = new THREE.TextGeometry(text, {
         font: font,
-        size: 1,
-        height: 0.1,
-        curveSegments: 4,
+        size: 2,
+        height: 0.5,
+        curveSegments: 6,
     });
     const labelTexture = new THREE.TextureLoader()
       .load('./space.jpg');
     const material = new THREE.MeshBasicMaterial({ map: labelTexture });
-    const mesh = new THREE.Mesh(textObj, material);
-    mesh.name = id;
-    mesh.position.x = x;
-    mesh.position.y = y;
-    mesh.position.z = z;
-    scene.add(mesh);
+    const mLabel = new THREE.Mesh(textObj, material);
+    mLabel.name = id;
+    mLabel.position.x = x;
+    mLabel.position.y = y;
+    mLabel.position.z = z;
+    scene.add(mLabel);
   });
 }
 
-createTextLabel("menu1", 4, 0, 4, "menu1");
-createTextLabel("menu2", -5, 3, 2, "menu2");
-createTextLabel("menu3", -15, 3, 0, "menu3");
-createTextLabel("menu4", 3, 3, 15, "menu4");
+createTextLabel("About Me", 4, 0, 4, "rolam");
+createTextLabel("Poems", -5, 3, 2, "versek");
+createTextLabel("Publications", -15, 6, 0, "irasok");
 
 // Animation Loop
 
 function animate() {
   requestAnimationFrame(animate);
-  controls.update();
+  if (menu_anim === "off") {
+    camera.rotation.y = 0;
+  }
+  if (menu_anim === "in") {
+    if (camera.rotation.y < 0) {
+      camera.rotation.y += 0.01;
+    }
+  }
+  if (menu_anim === "out") {
+    if (camera.rotation.x < 1) {
+      camera.rotation.x += 0.02;
+    }
+  }
+
+  /*
+  if (camera.rotation.y < 1.5) {
+    camera.rotation.y += 0.005;
+  } else {
+    camera.rotation.y -= 2.5;
+  } */
+  //controls.update();
   renderer.render(scene, camera);
 }
 

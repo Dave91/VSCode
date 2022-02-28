@@ -26,6 +26,12 @@ function renderRay() {
   // mouse pos camera to pick object clicked
 	raycaster.setFromCamera( mouse, camera );
 	const intersects = raycaster.intersectObjects( scene.children );
+  if (intersects[0].object.name) {
+    var answer = window.confirm("Do you wish to open link on new tab?");
+    if (answer === false) {
+      return;
+    }
+  }
 
 	if (intersects[ 0 ].object.name === "moon") {
 		window.open("https://en.wikipedia.org/wiki/Moon");

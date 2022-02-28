@@ -21,29 +21,42 @@ main {
   z-index: 99;
   position: absolute;
   width: 100%;
-  margin: 0px auto;
-  padding: 120px 0px;
-
+  margin: 0px 0px;
+  padding: 55px 0px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
 }
 
-h3 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: elevon, sans-serif;
   font-weight: 700;
   font-style: normal;
+  text-align: center;
 }
 
 canvas {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: 0px;
 }
 
 section {
-  grid-column: 1 / 7;
+  grid-column: 3 / 11;
   padding: 1rem;
   background-color: var(--dark-bg);
   font-size: 1.25rem;
   line-height: 1.5;
+}
+
+.hidden-cont {
+  display: none;
+}
+
+p,
+pre {
+  text-align: center;
 }
