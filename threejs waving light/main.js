@@ -37,11 +37,30 @@ const bgTexture = new THREE.TextureLoader()
   .load('./space.jpg');
 scene.background = bgTexture;
 
-const directLight = new THREE.DirectionalLight(0xffffff, 1);
-directLight.position.set(0, 0, 2);
+// Toggle directLight
+
+function toggleLights(event) {
+  const toggleBtn = document.getElementById('toggle-btn');
+  if (directLight) {
+    toggleBtn.value = "Light Mode";
+    scene.remove(directLight);
+    directLight = null;
+  } else {
+    toggleBtn.value = "Dark Mode";
+    directLight = new THREE.DirectionalLight(0xffffff, 1);
+    directLight.position.set(0, 0, 2)
+    scene.add(directLight);
+  }
+  renderer.render(scene, camera);
+}
+
+var directLight = null;
+
+document.getElementById('toggle-btn').addEventListener('click', toggleLights, false);
+
 const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(0, 0, 1);
-scene.add(directLight, pointLight);
+scene.add(pointLight);
 
 // Plane
 
@@ -63,8 +82,8 @@ for (let i = 0; i < array.length; i += 3) {
   const x = array[i];
   const y = array[i + 1];
   const z = array[i + 2];
-  array[i] = x + Math.random();
-  array[i + 1] = y + Math.random();
+  array[i] = x + (Math.random() - 0.25);
+  array[i + 1] = y + (Math.random() - 0.25);
   array[i + 2] = z + Math.random();
 }
 
