@@ -15,6 +15,10 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.render(scene, camera);
 
+const bgTexture = new THREE.TextureLoader()
+  .load('./space.jpg');
+scene.background = bgTexture;
+
 // Moving Light
 
 const mouse = new THREE.Vector2();
@@ -30,12 +34,6 @@ function onMouseMove(event) {
 }
 
 window.addEventListener('mousemove', onMouseMove, false);
-
-// Background, Light, Controls
-
-const bgTexture = new THREE.TextureLoader()
-  .load('./space.jpg');
-scene.background = bgTexture;
 
 // Toggle directLight
 
@@ -54,38 +52,78 @@ function toggleLights(event) {
   renderer.render(scene, camera);
 }
 
-var directLight = null;
-
 document.getElementById('toggle-btn').addEventListener('click', toggleLights, false);
 
-const pointLight = new THREE.PointLight(0xffffff);
+var directLight = new THREE.DirectionalLight(0xffffff, 1);
+directLight.position.set(0, 0, 2)
+scene.add(directLight);
+
+// Set Color & Intensity
+
+function setColorIntens(event) {
+  const colorInput = document.getElementById('set-color');
+  const intensInput = document.getElementById('set-intensity');
+  scene.remove(pointLight);
+  pointLight = new THREE.PointLight(colorInput.value, intensInput.value);
+  pointLight.position.set(0, 0, 1);
+  scene.add(pointLight);
+  renderer.render(scene, camera);
+}
+
+document.getElementById('set-color').addEventListener('change', setColorIntens, false);
+document.getElementById('set-intensity').addEventListener('change', setColorIntens, false);
+
+var pointLight = new THREE.PointLight(0xffbb00, 5);
 pointLight.position.set(0, 0, 1);
 scene.add(pointLight);
+
+// Set Plane Segments
+
+function setPlaneSegm(event) {
+  const wSegmInput = document.getElementById('set-wsegm');
+  const hSegmInput = document.getElementById('set-hsegm');
+  scene.remove(plane);
+  plane = new THREE.Mesh(
+    new THREE.PlaneGeometry(20, 20, wSegmInput.value, hSegmInput.value),
+    planeMaterial
+  );
+  scene.add(plane);
+  transformPlane();
+  renderer.render(scene, camera);
+}
+
+document.getElementById('set-wsegm').addEventListener('change', setPlaneSegm, false);
+document.getElementById('set-hsegm').addEventListener('change', setPlaneSegm, false);
 
 // Plane
 
 const planeTexture = new THREE.TextureLoader()
   .load('./space.jpg');
-const plane = new THREE.Mesh(
-  new THREE.PlaneGeometry(20, 15, 40, 30),
-  new THREE.MeshPhongMaterial({
-    map: planeTexture,
-    side: THREE.DoubleSide,
-    flatShading: THREE.FlatShading
-  })
+const planeMaterial = new THREE.MeshPhongMaterial({
+  map: planeTexture,
+  side: THREE.DoubleSide,
+  flatShading: THREE.FlatShading
+});
+var plane = new THREE.Mesh(
+  new THREE.PlaneGeometry(20, 20, 1, 1),
+  planeMaterial
 );
 
 scene.add(plane);
 
-const { array } = plane.geometry.attributes.position;
-for (let i = 0; i < array.length; i += 3) {
-  const x = array[i];
-  const y = array[i + 1];
-  const z = array[i + 2];
-  array[i] = x + (Math.random() - 0.25);
-  array[i + 1] = y + (Math.random() - 0.25);
-  array[i + 2] = z + Math.random();
+function transformPlane() {
+  const { array } = plane.geometry.attributes.position;
+  for (let i = 0; i < array.length; i += 3) {
+    const x = array[i];
+    const y = array[i + 1];
+    const z = array[i + 2];
+    array[i] = x + (Math.random() - 0.25);
+    array[i + 1] = y + (Math.random() - 0.25);
+    array[i + 2] = z + Math.random();
+  }
 }
+
+transformPlane();
 
 // Animation Loop
 

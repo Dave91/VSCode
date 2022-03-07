@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>David Prok - Moving Lights Template</title>
+    <title>David Prok - Mirror Lights Template</title>
   </head>
   <body>
     <canvas id="bg"></canvas>
@@ -24,9 +24,45 @@
           revelation or flee from the light into the peace and safety of a new
           dark age."
           <br />
-          - H.P. Lovecraft
+          - H. P. Lovecraft
         </p>
-        <input id="toggle-btn" type="submit" value="Light Mode" />
+      </section>
+      <section class="sect-opt">
+        <div style="text-align: right">
+          <p>Toggle Overall Lighting:</p>
+          <p>Point Light Color & Intensity:</p>
+          <p>Plane Segments (width/height):</p>
+        </div>
+        <div>
+          <input id="toggle-btn" type="submit" value="Dark Mode" />
+          <br />
+          <input id="set-color" type="color" value="#ffbb00" />
+          <input
+            id="set-intensity"
+            type="number"
+            value="5"
+            min="1"
+            max="10"
+            style="width: 5ch"
+          />
+          <br />
+          <input
+            id="set-wsegm"
+            type="number"
+            value="1"
+            min="1"
+            max="100"
+            style="width: 5ch"
+          />
+          <input
+            id="set-hsegm"
+            type="number"
+            value="1"
+            min="1"
+            max="100"
+            style="width: 5ch"
+          />
+        </div>
       </section>
     </main>
 

@@ -38,10 +38,31 @@ canvas {
 }
 
 section {
-  grid-column: 2 / 12;
+  grid-column: 3 / 11;
   padding: 1rem;
   background: var(--dark-bg);
   font-size: 1.25rem;
   text-align: justify;
   line-height: 1.5;
+}
+
+.sect-opt {
+  grid-column: 5 / 9;
+  font-size: 1;
+  line-height: 1;
+  margin-top: 8rem;
+}
+
+div {
+  display: inline-block;
+}
+
+input {
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 50rem) {
+  .sect-opt {
+    grid-column: 3 / 11;
+  }
 }
