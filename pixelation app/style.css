@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: transparent;
 }
 
 #canvas1 {
@@ -11,10 +10,12 @@
 }
 
 #content {
+  padding: 1rem 1rem;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: burlywood;
   text-align: justify;
+  background: rgba(255, 255, 255, 0.3);
 }
