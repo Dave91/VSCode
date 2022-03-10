@@ -4,8 +4,8 @@ image1.src = "space.jpg";
 image1.addEventListener('load', function() {
 	const canvas = document.getElementById('canvas1');
 	const context = canvas.getContext('2d');
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	context.canvas.width = window.innerWidth;
+	context.canvas.height = window.innerHeight;
 	
 	context.drawImage(image1, 0, 0, canvas.width, canvas.height);
 	const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
