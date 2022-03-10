@@ -35,19 +35,19 @@ image1.addEventListener('load', function() {
 
 	class Particle {
 		constructor() {
-			this.size = Math.random() * 3 + 1;
+			this.size = Math.random() * 5 + 1;
 			this.x = Math.random() * canvas.width;
 			this.y = 0;
 			this.posRowY = Math.floor(this.y);
 			this.posColX = Math.floor(this.x);
 			this.speed = 0;
-			this.velocity = Math.random() * 0.5;
+			this.velocity = Math.random() * 2.5;
 		}
 		update() {
 			this.posRowY = Math.floor(this.y);
 			this.posColX = Math.floor(this.x);
 			this.speed = mappedImage[this.posRowY][this.posColX][0];
-			let move = (2.5 - this.speed) + this.velocity;
+			let move = (1.5 - this.speed) + this.velocity;
 			this.y += move;
 			if (this.y >= canvas.height) {
 				this.y = 0;
