@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bubbles</title>
+    <title>Bubbles Template</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -110,8 +110,15 @@
         <input class="input-btn" type="button" value="Menu 4" id="m-btn-4" />
       </div>
       <div id="menu-right">
-        <input type="checkbox" checked="true" id="m-chkb" />
+        <pre>Anim/total/size</pre>
         <input
+          title="Toggle animation on/off"
+          type="checkbox"
+          checked="true"
+          id="m-chkb"
+        />
+        <input
+          title="Number of bubbles"
           class="input-num"
           type="number"
           min="10"
@@ -121,6 +128,7 @@
           id="m-num-1"
         />
         <input
+          title="Average size of bubbles"
           class="input-num"
           type="number"
           min="1"

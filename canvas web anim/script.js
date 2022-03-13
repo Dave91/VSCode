@@ -109,17 +109,25 @@ function onMenuClick(event) {
 	content2.hidden = true;
 	content3.hidden = true;
 	content4.hidden = true;
+	menuBtn1.style = "border: 1px solid black;";
+	menuBtn2.style = "border: 1px solid black;";
+	menuBtn3.style = "border: 1px solid black;";
+	menuBtn4.style = "border: 1px solid black;";
 
 	if (event.target === menuBtn1) {
+		menuBtn1.style = "border: 1px solid white;";
 		content1.hidden = false;
 	}
 	if (event.target === menuBtn2) {
+		menuBtn2.style = "border: 1px solid white;";
 		content2.hidden = false;
 	}
 	if (event.target === menuBtn3) {
+		menuBtn3.style = "border: 1px solid white;";
 		content3.hidden = false;
 	}
 	if (event.target === menuBtn4) {
+		menuBtn4.style = "border: 1px solid white;";
 		content4.hidden = false;
 	}
 }
