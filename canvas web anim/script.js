@@ -4,8 +4,22 @@ context.canvas.width = window.innerWidth;
 context.canvas.height = window.innerHeight;
 let particleArray;
 
-const image1 = new Image();
-image1.src = "space.jpg";
+const content1 = document.getElementById("cont1");
+const content2 = document.getElementById("cont2");
+const content3 = document.getElementById("cont3");
+const content4 = document.getElementById("cont4");
+
+const menuBtn1 = document.getElementById("m-btn-1");
+const menuBtn2 = document.getElementById("m-btn-2");
+const menuBtn3 = document.getElementById("m-btn-3");
+const menuBtn4 = document.getElementById("m-btn-4");
+
+const menuChkb = document.getElementById("m-chkb");
+const menuNum1 = document.getElementById("m-num-1");
+const menuNum2 = document.getElementById("m-num-2");
+var toggleAnim = true;
+var setPartsTotal = menuNum1.value;
+var setPartsSize = menuNum2.value;
 
 // smaller memory usage when not using class decl??
 // can be compared to similar, but classed canvas stuff
@@ -44,9 +58,9 @@ Particle.prototype.update = function() {
 // init anim, fill up array
 function init() {
 	particleArray = [];
-	for (let i = 0; i < 100; i++) {
+	for (let i = 0; i < setPartsTotal; i++) {
 		let id = i;
-		let size = Math.random() * 10;
+		let size = Math.random() * setPartsSize;
 		let x = Math.random() * (innerWidth - size * 2);
 		let y = Math.random() * (innerHeight - size * 2);
 		let dirX = (Math.random() * 0.6) - 0.3;
@@ -60,17 +74,57 @@ init();
 // animation loop
 function animate() {
 	requestAnimationFrame(animate);
-	context.clearRect(0, 0, innerWidth, innerHeight);
-	for (let obj of particleArray) {
-		obj.update();
+	if (toggleAnim) {
+		context.clearRect(0, 0, innerWidth, innerHeight);
+		for (let obj of particleArray) {
+			obj.update();
+		}
 	}
 }
 
 animate();
 
-// Resize event handler
+// event handlers
 window.addEventListener("resize", function() {
 	canvas.width = innerWidth;
 	canvas.height = innerHeight;
 	init();
 });
+
+function onInputChange() {
+	if (menuChkb.checked) {
+		toggleAnim = true;
+	} else {toggleAnim = false;}
+	setPartsTotal = menuNum1.value;
+	setPartsSize = menuNum2.value;
+	init();
+}
+
+menuChkb.addEventListener("change", onInputChange, false);
+menuNum1.addEventListener("change", onInputChange, false);
+menuNum2.addEventListener("change", onInputChange, false);
+
+function onMenuClick(event) {
+	content1.hidden = true;
+	content2.hidden = true;
+	content3.hidden = true;
+	content4.hidden = true;
+
+	if (event.target === menuBtn1) {
+		content1.hidden = false;
+	}
+	if (event.target === menuBtn2) {
+		content2.hidden = false;
+	}
+	if (event.target === menuBtn3) {
+		content3.hidden = false;
+	}
+	if (event.target === menuBtn4) {
+		content4.hidden = false;
+	}
+}
+
+menuBtn1.addEventListener("click", onMenuClick, false);
+menuBtn2.addEventListener("click", onMenuClick, false);
+menuBtn3.addEventListener("click", onMenuClick, false);
+menuBtn4.addEventListener("click", onMenuClick, false);
