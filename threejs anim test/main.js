@@ -26,29 +26,29 @@ function renderRay() {
   // mouse pos camera to pick object clicked
 	raycaster.setFromCamera( mouse, camera );
 	const intersects = raycaster.intersectObjects( scene.children );
-  if (intersects[ 0 ].object.name) {
+  if (intersects[0].object.name) {
     var answer = window.confirm("Do you wish to open link on new tab?");
     if (answer === false) {
       return;
     }
   }
 
-	if (intersects[ 0 ].object.name === "avatar") {
-    window.open("./rolam.jpg");
+	if (intersects[0].object.name === "avatar") {
+    return;
 	}
-  if (intersects[ 0 ].object.name === "poet") {
+  if (intersects[0].object.name === "poet") {
     window.open("./poet-pic.jpg");
   }
-  if (intersects[ 0 ].object.name === "doggy") {
+  if (intersects[0].object.name === "doggy") {
     window.open("./doggy.jpg");
   }
-  if (intersects[ 0 ].object.name === "flower") {
+  if (intersects[0].object.name === "flower") {
     window.open("./flower.jpg");
   }
-  if (intersects[ 0 ].object.name === "book") {
+  if (intersects[0].object.name === "book") {
     window.open("./book.jpg");
   }
-  if (intersects[ 0 ].object.name === "moon") {
+  if (intersects[0].object.name === "moon") {
     window.open("https://en.wikipedia.org/wiki/Moon");
   }
 	renderer.render(scene, camera);

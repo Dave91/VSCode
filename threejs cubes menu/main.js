@@ -75,8 +75,7 @@ const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(ambientLight);
 
 const controls = new OrbitControls(camera, renderer.domElement);
-// controls.autoRotate = true;
-// controls.autoRotateSpeed = 5.0;
+
 var menu_anim = "off"
 
 // Text Labels
@@ -124,14 +123,6 @@ function animate() {
       camera.rotation.x += 0.02;
     }
   }
-
-  /*
-  if (camera.rotation.y < 1.5) {
-    camera.rotation.y += 0.005;
-  } else {
-    camera.rotation.y -= 2.5;
-  } */
-  //controls.update();
   renderer.render(scene, camera);
 }
 

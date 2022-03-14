@@ -59,6 +59,7 @@ section {
   font-size: 1.25rem;
   line-height: 1.5;
   margin-bottom: var(--spacing);
+  text-align: justify;
 }
 
 blockquote {
@@ -89,4 +90,13 @@ footer {
   background: var(--dark-bg);
   font-size: 1rem;
   line-height: 1;
+}
+
+a {
+  color: goldenrod;
+  text-decoration: none;
+}
+
+a:hover {
+  color: bisque;
 }
