@@ -17,55 +17,6 @@ camera.position.x = -3;
 
 renderer.render(scene, camera);
 
-// Raycaster (for event handling)
-
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
-function renderRay() {
-  // mouse pos camera to pick object clicked
-	raycaster.setFromCamera( mouse, camera );
-	const intersects = raycaster.intersectObjects( scene.children );
-  if (intersects[0].object.name) {
-    var answer = window.confirm("Do you wish to open link on new tab?");
-    if (answer === false) {
-      return;
-    }
-  }
-
-	if (intersects[0].object.name === "avatar") {
-    return;
-	}
-  if (intersects[0].object.name === "poet") {
-    window.open("./poet-pic.jpg");
-  }
-  if (intersects[0].object.name === "doggy") {
-    window.open("./doggy.jpg");
-  }
-  if (intersects[0].object.name === "flower") {
-    window.open("./flower.jpg");
-  }
-  if (intersects[0].object.name === "book") {
-    window.open("./book.jpg");
-  }
-  if (intersects[0].object.name === "moon") {
-    window.open("https://en.wikipedia.org/wiki/Moon");
-  }
-	renderer.render(scene, camera);
-}
-
-// Events
-
-function onMouseClick(event) {
-	// calc mouse pos in normalized device coords
-	// (-1 to +1)
-	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-	window.requestAnimationFrame(renderRay);
-}
-
-window.addEventListener('click', onMouseClick, false);
-
 // Background, Light, Controls
 
 const bgTexture = new THREE.TextureLoader()
