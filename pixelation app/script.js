@@ -1,84 +1,53 @@
-const image1 = new Image();
-image1.src = "space.jpg";
+const canvas = document.getElementById('canvas1');
+const context = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-image1.addEventListener('load', function() {
-	const canvas = document.getElementById('canvas1');
-	const context = canvas.getContext('2d');
-	context.canvas.width = window.innerWidth;
-	context.canvas.height = window.innerHeight;
-	
-	context.drawImage(image1, 0, 0, canvas.width, canvas.height);
-	const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
-	context.clearRect(0, 0, canvas.width, canvas.height);
+const symbols = "0123456789QWERTZUIOPASDFGHJKLYXCVBNM";
+const dropSize = 24;
+const totalDrops = canvas.width / dropSize;
+let particleArray = [];
 
-	let particleArray = [];
-	const totalParticles = 3000;
-	
-	// mapping pixel rgb values row*col
-	let mappedImage = [];
-	for (let y = 0; y < canvas.height; y++) {
-		let row = [];
-		for (let x = 0; x < canvas.width; x++) {
-			const red = pixels.data[(y * 4 * pixels.width) + (x * 4)];
-			const green = pixels.data[(y * 4 * pixels.width) + (x * 4 + 1)];
-			const blue = pixels.data[(y * 4 * pixels.width) + (x * 4 + 2)];
-			const brightness = calcRelativeBrightness(red, green, blue);
-			const cell = [cellBrightness = brightness,];
-			row.push(cell);
-		}
-		mappedImage.push(row);
-	}
+function Particle() {
+	this.x = Math.random() * canvas.width;
+	this.y = 0;
+	this.speed = Math.random() * 0.2 + 0.4;
+}
 
-	function calcRelativeBrightness(red, green, blue) {
-		return Math.sqrt((red * red) * 0.299 + (green * green) * 0.587 + (blue * blue) * 0.114) / 100;
+Particle.prototype.update = function() {
+	this.y += this.speed;
+	if (this.y > canvas.height) {
+		this.y = 0;
+		this.x = Math.random() * canvas.width;
 	}
+}
 
-	class Particle {
-		constructor() {
-			this.size = Math.random() * 1.5 + 1;
-			this.x = Math.random() * canvas.width;
-			this.y = 0;
-			this.posRowY = Math.floor(this.y);
-			this.posColX = Math.floor(this.x);
-			this.speed = 0;
-			this.velocity = Math.random() * 0.5;
-		}
-		update() {
-			this.posRowY = Math.floor(this.y);
-			this.posColX = Math.floor(this.x);
-			this.speed = mappedImage[this.posRowY][this.posColX][0];
-			let move = (2.5 - this.speed) + this.velocity;
-			this.y += move;
-			if (this.y >= canvas.height) {
-				this.y = 0;
-				this.x = Math.random() * canvas.width;
-			}
-		}
-		draw() {
-			context.beginPath();
-			context.fillStyle = "green";
-			context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-			context.fill();
-		}
+Particle.prototype.draw = function() {
+	context.fillStyle = "green";
+	context.font = dropSize + "px monospace";
+	context.textAlign = "center";
+	let char = symbols.charAt(Math.floor(Math.random() * symbols.length));
+	context.fillText(char, this.x, this.y * (dropSize / 2));
+	context.fill();
+}
+
+function init() {
+	for (let i = 0; i < totalDrops; i++) {
+		particleArray.push(new Particle);
 	}
-	function init() {
-		for (let i = 0; i < totalParticles; i++) {
-			particleArray.push(new Particle);
-		}
+}
+
+init();
+
+// anim loop
+function animate() {
+	context.fillStyle = "rgba(0, 0, 0, 0.05)";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+	for (let particle of particleArray) {
+		particle.update();
+		particle.draw();
 	}
-	init();
-	// anim loop
-	function animate() {
-		context.globalAlpha = 0.05;
-		context.fillStyle = "black";
-		context.fillRect(0, 0, canvas.width, canvas.height);
-		context.globalAlpha = 0.5;
-		for (let particle of particleArray) {
-			particle.update();
-			context.globalAlpha = particle.speed * 0.5;
-			particle.draw();
-		}
-		requestAnimationFrame(animate);
-	}
-	animate();
-});
+	requestAnimationFrame(animate);
+}
+
+animate();
