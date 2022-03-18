@@ -105,10 +105,12 @@ menuNum1.addEventListener("change", onInputChange, false);
 menuNum2.addEventListener("change", onInputChange, false);
 
 function onMenuClick(event) {
-	content1.hidden = true;
-	content2.hidden = true;
-	content3.hidden = true;
-	content4.hidden = true;
+	let contHideCss = "width: 45%; top: 50rem; background: navajowhite; max-height: 38%;";
+	let contShowCss = "width: 90%; top: 5rem; background: rgba(255, 150, 50, 0.5); max-height: 83%;";
+	content1.style = contHideCss;
+	content2.style = contHideCss;
+	content3.style = contHideCss;
+	content4.style = contHideCss;
 	menuBtn1.style = "border: 1px solid black;";
 	menuBtn2.style = "border: 1px solid black;";
 	menuBtn3.style = "border: 1px solid black;";
@@ -116,19 +118,19 @@ function onMenuClick(event) {
 
 	if (event.target === menuBtn1) {
 		menuBtn1.style = "border: 1px solid white;";
-		content1.hidden = false;
+		content1.style = contShowCss;
 	}
 	if (event.target === menuBtn2) {
 		menuBtn2.style = "border: 1px solid white;";
-		content2.hidden = false;
+		content2.style = contShowCss;
 	}
 	if (event.target === menuBtn3) {
 		menuBtn3.style = "border: 1px solid white;";
-		content3.hidden = false;
+		content3.style = contShowCss;
 	}
 	if (event.target === menuBtn4) {
 		menuBtn4.style = "border: 1px solid white;";
-		content4.hidden = false;
+		content4.style = contShowCss;
 	}
 }
 
