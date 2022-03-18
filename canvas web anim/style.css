@@ -63,6 +63,7 @@ p {
   height: 25px;
   width: 10ch;
   margin-right: 4px;
+  transition: 1.5s;
 }
 
 .input-num {
