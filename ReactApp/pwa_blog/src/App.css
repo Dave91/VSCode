@@ -1,0 +1,28 @@
+.App {
+  background: url("./space.jpg");
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: calc(5px + 2vmin);
+  color: black;
+}
+
+.search {
+  background: bisque;
+  margin: 5px;
+}
+
+.quote {
+  margin-top: 5px;
+
+  background: linear-gradient(rgba(50, 50, 150, 0.3), rgba(200, 200, 200, 0.6)),
+    url("./bglight.jpg");
+  background-size: auto;
+  background-position: top;
+  color: black;
+}
