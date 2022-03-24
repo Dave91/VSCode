@@ -13,7 +13,7 @@ async function renderData(data, query) {
 		if ((data[q]["text"] + data[q]["author"]).includes(query)) {
 			let qDiv = document.createElement("div");
 			qDiv.className = "quote";
-			let qDivText = data[q]["text"] + " - " + data[q]["author"];
+			let qDivText = '"' + data[q]["text"] + '" (' + data[q]["author"] + ')';
 			qDiv.innerHTML = qDivText;
 			container.appendChild(qDiv);
 		}
