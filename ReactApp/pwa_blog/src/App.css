@@ -1,25 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .App {
-  background: url("./space.jpg");
-  background-position: center;
-  background-size: cover;
+  background: navy;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   text-align: center;
   font-size: calc(5px + 2vmin);
   color: black;
 }
 
-.search {
+.search-bar {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+#search {
   background: bisque;
-  margin: 5px;
+  margin: 10px;
+  height: 2em;
 }
 
 .quote {
+  width: 100%;
+  min-height: 1.5em;
   margin-top: 5px;
-
+  padding: 0.5em;
   background: linear-gradient(rgba(50, 50, 150, 0.3), rgba(200, 200, 200, 0.6)),
     url("./bglight.jpg");
   background-size: auto;

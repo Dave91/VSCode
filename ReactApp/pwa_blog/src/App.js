@@ -3,14 +3,25 @@ import { fetchData } from './Data';
 import './App.css';
 
 function App() {
-  fetchData();
+  const search = async (event) => {
+    if (event.key === "Enter") {
+      document.querySelector(".container").innerHTML = null;
+      let inputText = document.getElementById("search");
+      let query;
+      if (inputText.value) {
+        query = inputText.value;
+      }
+      await fetchData(query);
+    }
+  }
   return (
     <div className="App">
-      <div>
+      <div className='search-bar'>
         <input
           type="text"
-          className='search'
+          id='search'
           placeholder='Type something here'
+          onKeyDown={search}
         />
       </div>
       <div className="container"></div>
