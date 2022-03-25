@@ -9,8 +9,16 @@ export async function fetchData(query) {
 
 async function renderData(data, query) {
 	let container = document.querySelector(".container");
+	let qWords = query.split(" ");
 	for (let q in data) {
-		if ((data[q]["text"] + data[q]["author"]).includes(query)) {
+		var matchFound = false;
+		for (let word in qWords) {
+			console.log(qWords[word]);
+			if ((data[q]["text"] + data[q]["author"]).includes(qWords[word])) {
+				matchFound = true;
+			}
+		}
+		if (matchFound) {
 			let qDiv = document.createElement("div");
 			qDiv.className = "quote";
 			let qDivText = '"' + data[q]["text"] + '" (' + data[q]["author"] + ')';
@@ -18,7 +26,7 @@ async function renderData(data, query) {
 			container.appendChild(qDiv);
 			setTimeout(function() {
 				qDiv.style.opacity = "1";
-			}, 250);
+			}, 100);
 		}
 	}
 }
