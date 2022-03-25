@@ -14,17 +14,20 @@ function App() {
       await fetchData(query);
     }
   }
+  // music aakash gandhi - liquid time?? (not autoplay)
+  // input radiobtns OR / AND conn tween qwords
   return (
     <div className="App">
       <div className='search-bar'>
         <input
           type="text"
           id='search'
-          placeholder='Type something here'
+          placeholder='Type something here...'
           onKeyDown={search}
         />
       </div>
       <div className="container"></div>
+      <img className='yoda' src='./yoda.gif' alt='yoda'></img>
     </div>
   );
 }
