@@ -16,6 +16,9 @@ async function renderData(data, query) {
 			let qDivText = '"' + data[q]["text"] + '" (' + data[q]["author"] + ')';
 			qDiv.innerHTML = qDivText;
 			container.appendChild(qDiv);
+			setTimeout(function() {
+				qDiv.style.opacity = "1";
+			}, 250);
 		}
 	}
 }
