@@ -35,16 +35,37 @@
 }
 
 #search {
+  float: left;
   background: bisque;
   margin: 10px;
   height: 2em;
 }
 
+.opt {
+  float: left;
+  margin: 10px;
+}
+
+#optOr,
+#optAnd {
+  margin-right: 5px;
+}
+
+label {
+  margin-right: 5px;
+}
+
+audio {
+  float: right;
+  margin: 10px;
+  height: 2rem;
+}
+
 .yoda {
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-45%, -50%);
   width: auto;
   height: 75%;
   border: 4px solid thistle;
