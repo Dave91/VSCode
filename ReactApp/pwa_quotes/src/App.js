@@ -6,15 +6,16 @@ function App() {
   const search = async (event) => {
     if (event.key === "Enter") {
       document.querySelector(".container").innerHTML = null;
+      let filtMode = document.querySelector('input[name="relation"]:checked').value;
       let inputText = document.getElementById("search");
       let query;
       if (inputText.value) {
         query = inputText.value;
       }
-      await fetchData(query);
+      await fetchData(query, filtMode);
     }
   }
-  // input radiobtns OR / AND conn tween qwords
+  // OR / AND value goes to Data.js logic
   return (
     <div className="App">
       <div className='search-bar'>
@@ -25,12 +26,13 @@ function App() {
           onKeyDown={search}
         />
         <div className='opt'>
-          <input type="radio" id='optOr' name='relation'></input>
+          <input type="radio" id='optOr' name='relation' value="OR" defaultChecked={true}></input>
           <label form='optOr'>OR</label>
-          <input type="radio" id='optAnd' name='relation'></input>
+          <input type="radio" id='optAnd' name='relation' value="AND"></input>
           <label form='optAnd'>AND</label>
+          <label id='resNum'> / (Found:)</label>
         </div>
-        <audio controls loop="true">
+        <audio controls loop={true}>
           <source src='./dan_bodan_-_fortress_europe.mp3' type='audio/mpeg'></source>
         </audio>
       </div>
