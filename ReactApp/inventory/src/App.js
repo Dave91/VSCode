@@ -102,28 +102,4 @@ function App() {
   );
 }
 
-/*
-function ButtonState() {
-  const [title, setTitle] = useState("");
-  const [count, setCount] = useState(0);
-
-  const updateTitleClicked = () => {
-    setTitle("Title has changed");
-  };
-
-  const updateCounterClicked = () => {
-    setCount(count + 1);
-  };
-
-  return (
-    <div>
-      <p>Title: {title}</p>
-      <p>Counter: {count}</p>
-      <button onClick={updateTitleClicked}>Update Title</button>
-      <button onClick={updateCounterClicked}>Update Counter</button>
-    </div>
-  );
-}
-*/
-
 export default App;
