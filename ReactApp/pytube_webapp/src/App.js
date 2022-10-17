@@ -7,6 +7,8 @@ function App() {
   const [yturl, setYturl] = useState("");
   const searchBtnPressed = function() {
     setYturl(UrlInput.value);
+    /* here comes getYtUrl.py (pytube actions) */
+    UrlImg.src = ""
   };
   console.log(yturl);
 
