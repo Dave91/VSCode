@@ -1,10 +1,15 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 // Setup
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
 const renderer = new THREE.WebGLRenderer();
 camera.position.set(6, 16, 25);
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -20,8 +25,8 @@ const mouse = new THREE.Vector2();
 
 function renderRay() {
   // mouse pos camera to pick object clicked
-	raycaster.setFromCamera( mouse, camera );
-	const intersects = raycaster.intersectObjects( scene.children );
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(scene.children);
   if (intersects[0].object.name) {
     let answer = window.confirm("Do you wish to open link on new tab?");
     if (answer === false) {
@@ -34,29 +39,29 @@ function renderRay() {
   // get the link of that same index from links list
   // window.open("link from above");
 
-	if (intersects[ 0 ].object.name === "moon") {
-		window.open("https://en.wikipedia.org/wiki/Moon");
-	}
-  if (intersects[ 0 ].object.name === "earth") {
-    window.open("https://www.google.hu/intl/hu/earth/"); 
+  if (intersects[0].object.name === "moon") {
+    window.open("https://en.wikipedia.org/wiki/Moon");
   }
-  if (intersects[ 0 ].object.name === "mars") {
+  if (intersects[0].object.name === "earth") {
+    window.open("https://www.google.hu/intl/hu/earth/");
+  }
+  if (intersects[0].object.name === "mars") {
     window.open("https://en.wikipedia.org/wiki/Mars");
   }
-  if (intersects[ 0 ].object.name === "sun") {
+  if (intersects[0].object.name === "sun") {
     window.open("https://en.wikipedia.org/wiki/Sun");
   }
-	renderer.render( scene, camera );
+  renderer.render(scene, camera);
 }
 
 // Click Events
 
-function onMouseClick( event ) {
-	// calc mouse pos in normalized device coords
-	// (-1 to +1)
-	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-	window.requestAnimationFrame(renderRay);
+function onMouseClick(event) {
+  // calc mouse pos in normalized device coords
+  // (-1 to +1)
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  window.requestAnimationFrame(renderRay);
 }
 
 // window.addEventListener('click', onMouseClick);
@@ -67,11 +72,11 @@ const pointLight = new THREE.PointLight(0xffffff, 1);
 pointLight.position.set(0, 0, -50);
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
 
-scene.add(pointLight, ambientLight)
+scene.add(pointLight, ambientLight);
 
 // Background
 
-const spaceTexture = new THREE.TextureLoader().load('./images/bg4.jpg');
+const spaceTexture = new THREE.TextureLoader().load("./images/bg4.jpg");
 scene.background = spaceTexture;
 
 // Scales/object data
@@ -101,7 +106,7 @@ const neptunDist = (N * 3230) / scaleDown;
 
 // Sun
 
-const sunTexture = new THREE.TextureLoader().load('./images/normal.jpg');
+const sunTexture = new THREE.TextureLoader().load("./images/normal.jpg");
 const sun = new THREE.Mesh(
   new THREE.SphereGeometry(N, 32, 32),
   new THREE.MeshStandardMaterial({
@@ -117,8 +122,8 @@ sun.position.set(-50, 0, 0);
 
 // Mercury
 
-const mercuryTexture = new THREE.TextureLoader().load('./images/mars.jpg');
-const mercuryNormal = new THREE.TextureLoader().load('./images/marsnorm.jpg');
+const mercuryTexture = new THREE.TextureLoader().load("./images/mars.jpg");
+const mercuryNormal = new THREE.TextureLoader().load("./images/marsnorm.jpg");
 
 const mercury = new THREE.Mesh(
   new THREE.SphereGeometry(mercuryDia, 32, 32),
@@ -134,8 +139,8 @@ mercury.position.set(-20, 0, 0);
 
 // Venus
 
-const venusTexture = new THREE.TextureLoader().load('./images/mars.jpg');
-const venusNormal = new THREE.TextureLoader().load('./images/marsnorm.jpg');
+const venusTexture = new THREE.TextureLoader().load("./images/mars.jpg");
+const venusNormal = new THREE.TextureLoader().load("./images/marsnorm.jpg");
 
 const venus = new THREE.Mesh(
   new THREE.SphereGeometry(venusDia, 32, 32),
@@ -151,8 +156,12 @@ venus.position.set(-10, 0, 0);
 
 // Earth
 
-const earthTexture = new THREE.TextureLoader().load('./images/earthwithtopo.jpg');
-const earthNormal = new THREE.TextureLoader().load('./images/earthwithtopo.jpg');
+const earthTexture = new THREE.TextureLoader().load(
+  "./images/earthwithtopo.jpg"
+);
+const earthNormal = new THREE.TextureLoader().load(
+  "./images/earthwithtopo.jpg"
+);
 
 const earth = new THREE.Mesh(
   new THREE.SphereGeometry(earthDia, 32, 32),
@@ -168,11 +177,11 @@ earth.position.set(0, 0, 0);
 
 // Moon
 
-const moonTexture = new THREE.TextureLoader().load('./images/moon.jpg');
-const moonNormal = new THREE.TextureLoader().load('./images/normal.jpg');
+const moonTexture = new THREE.TextureLoader().load("./images/moon.jpg");
+const moonNormal = new THREE.TextureLoader().load("./images/normal.jpg");
 
 const moon = new THREE.Mesh(
-  new THREE.SphereGeometry(earthDia/10, 32, 32),
+  new THREE.SphereGeometry(earthDia / 10, 32, 32),
   new THREE.MeshStandardMaterial({
     map: moonTexture,
     normalMap: moonNormal,
@@ -185,8 +194,8 @@ moon.position.set(0, 0, 0);
 
 // Mars
 
-const marsTexture = new THREE.TextureLoader().load('./images/mars.jpg');
-const marsNormal = new THREE.TextureLoader().load('./images/marsnorm.jpg');
+const marsTexture = new THREE.TextureLoader().load("./images/mars.jpg");
+const marsNormal = new THREE.TextureLoader().load("./images/marsnorm.jpg");
 
 const mars = new THREE.Mesh(
   new THREE.SphereGeometry(marsDia, 32, 32),
@@ -202,8 +211,8 @@ mars.position.set(10, 0, 0);
 
 // Jupiter
 
-const jupiterTexture = new THREE.TextureLoader().load('./images/mars.jpg');
-const jupiterNormal = new THREE.TextureLoader().load('./images/marsnorm.jpg');
+const jupiterTexture = new THREE.TextureLoader().load("./images/mars.jpg");
+const jupiterNormal = new THREE.TextureLoader().load("./images/marsnorm.jpg");
 
 const jupiter = new THREE.Mesh(
   new THREE.SphereGeometry(jupiterDia, 32, 32),
@@ -219,8 +228,8 @@ jupiter.position.set(20, 0, 0);
 
 // Saturn
 
-const saturnTexture = new THREE.TextureLoader().load('./images/mars.jpg');
-const saturnNormal = new THREE.TextureLoader().load('./images/marsnorm.jpg');
+const saturnTexture = new THREE.TextureLoader().load("./images/mars.jpg");
+const saturnNormal = new THREE.TextureLoader().load("./images/marsnorm.jpg");
 
 const saturn = new THREE.Mesh(
   new THREE.SphereGeometry(saturnDia, 32, 32),
@@ -236,8 +245,8 @@ saturn.position.set(30, 0, 0);
 
 // Uranus
 
-const uranusTexture = new THREE.TextureLoader().load('./images/mars.jpg');
-const uranusNormal = new THREE.TextureLoader().load('./images/marsnorm.jpg');
+const uranusTexture = new THREE.TextureLoader().load("./images/mars.jpg");
+const uranusNormal = new THREE.TextureLoader().load("./images/marsnorm.jpg");
 
 const uranus = new THREE.Mesh(
   new THREE.SphereGeometry(uranusDia, 32, 32),
@@ -253,8 +262,8 @@ uranus.position.set(40, 0, 0);
 
 // Neptun
 
-const neptunTexture = new THREE.TextureLoader().load('./images/mars.jpg');
-const neptunNormal = new THREE.TextureLoader().load('./images/marsnorm.jpg');
+const neptunTexture = new THREE.TextureLoader().load("./images/mars.jpg");
+const neptunNormal = new THREE.TextureLoader().load("./images/marsnorm.jpg");
 
 const neptun = new THREE.Mesh(
   new THREE.SphereGeometry(neptunDia, 32, 32),
@@ -277,7 +286,7 @@ function onWindResize() {
   renderer.setPixelRatio(window.devicePixelRatio);
 }
 
-window.addEventListener('resize', onWindResize);
+window.addEventListener("resize", onWindResize);
 
 // Controls, helpers
 const axisHelp = new THREE.AxesHelper(50);
@@ -293,10 +302,10 @@ let delta = 0;
 function animate() {
   requestAnimationFrame(animate);
 
-	sun.rotation.y -= 0.001;
+  sun.rotation.y -= 0.001;
   moon.rotation.y -= 0.005;
   earth.rotation.y += 0.005;
-	mars.rotation.y -= 0.005;
+  mars.rotation.y -= 0.005;
 
   // moon orbit doesn't align properly to a non-zerus(x=0) earth
   moon.position.x = Math.cos(delta) * 5;
