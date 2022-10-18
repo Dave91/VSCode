@@ -164,7 +164,7 @@ const earthNormal = new THREE.TextureLoader().load(
 );
 
 const earth = new THREE.Mesh(
-  new THREE.SphereGeometry(earthDia, 32, 32),
+  new THREE.SphereGeometry(2, 32, 32),
   new THREE.MeshStandardMaterial({
     map: earthTexture,
     normalMap: earthNormal,
@@ -173,7 +173,7 @@ const earth = new THREE.Mesh(
 
 scene.add(earth);
 earth.name = "earth";
-earth.position.set(0, 0, 0);
+//earth.position.set(5, 0, 0);
 
 // Moon
 
@@ -181,7 +181,7 @@ const moonTexture = new THREE.TextureLoader().load("./images/moon.jpg");
 const moonNormal = new THREE.TextureLoader().load("./images/normal.jpg");
 
 const moon = new THREE.Mesh(
-  new THREE.SphereGeometry(earthDia / 10, 32, 32),
+  new THREE.SphereGeometry(1, 32, 32),
   new THREE.MeshStandardMaterial({
     map: moonTexture,
     normalMap: moonNormal,
@@ -190,7 +190,7 @@ const moon = new THREE.Mesh(
 
 scene.add(moon);
 moon.name = "moon";
-moon.position.set(0, 0, 0);
+//moon.position.set(0, 0, 0);
 
 // Mars
 
@@ -307,9 +307,23 @@ function animate() {
   earth.rotation.y += 0.005;
   mars.rotation.y -= 0.005;
 
-  // moon orbit doesn't align properly to a non-zerus(x=0) earth
-  moon.position.x = Math.cos(delta) * 5;
-  moon.position.z = Math.sin(delta) * 7;
+  earth.position.x = sun.position.x + Math.sin(delta) * 25;
+  earth.position.z = sun.position.z + Math.cos(delta) * 30;
+
+  moon.position.x = earth.position.x + Math.sin(delta) * 4;
+  moon.position.z = earth.position.z + Math.cos(delta) * 5;
+
+  //jupiter.position.x = sun.position.x + Math.sin(delta) * 45;
+  //jupiter.position.z = sun.position.z + Math.cos(delta) * 50;
+
+  //saturn.position.x = sun.position.x + Math.sin(delta) * 55;
+  //saturn.position.z = sun.position.z + Math.cos(delta) * 60;
+
+  //uranus.position.x = sun.position.x + Math.sin(delta) * 65;
+  //uranus.position.z = sun.position.z + Math.cos(delta) * 70;
+
+  //neptun.position.x = sun.position.x + Math.sin(delta) * 75;
+  //neptun.position.z = sun.position.z + Math.cos(delta) * 80;
 
   delta += 0.01;
 
