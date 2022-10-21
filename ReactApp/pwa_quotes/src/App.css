@@ -52,12 +52,6 @@ label {
   margin-right: 5px;
 }
 
-audio {
-  float: right;
-  margin: 10px;
-  height: 2rem;
-}
-
 .yoda {
   position: absolute;
   top: 55%;

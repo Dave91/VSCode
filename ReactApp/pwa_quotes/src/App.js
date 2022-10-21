@@ -32,9 +32,6 @@ function App() {
           <label form='optAnd'>AND</label>
           <label id='resNum'> / (Found:)</label>
         </div>
-        <audio controls loop={true}>
-          <source src='./dan_bodan_-_fortress_europe.mp3' type='audio/mpeg'></source>
-        </audio>
       </div>
       <div className="container"></div>
       <img className='yoda' src='./yoda.gif' alt='yoda'></img>
