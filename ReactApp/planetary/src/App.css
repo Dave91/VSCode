@@ -9,6 +9,7 @@ body {
   font-family: 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  overflow: hidden;
 }
 
 #App {
@@ -39,13 +40,6 @@ body {
   transition: width 3s, top 1s, max-height 3s, background 3s;
 }
 
-#objCont {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 .objDiv {
   position: absolute;
   height: 20px;
@@ -55,6 +49,7 @@ body {
   border: 1px solid transparent;
   border-radius: 100%;
   background-color: cornflowerblue;
+  z-index: 90;
 }
 
 #inp {
