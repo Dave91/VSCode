@@ -16,15 +16,14 @@ function App() {
     // search txt given (mars), show that content (mars)
   };
 
-  function divObjCreate() {
+  function divObjCreate () {
     for (let i = 0; i < 10; i++) {
       let divobj = document.createElement("div");
       divobj.className = "objDiv";
       divobj.innerHTML = " ";
       divobj.id = "d" + i;
-      let obj = document.getElementById("d" + i);
-      obj.style.left = 49 + i * 4 + "%";
-      obj.style.top = 49 + i * 4 + "%";
+      divobj.style.left = 49 + i * 4 + "%";
+      divobj.style.top = 49 + i * 4 + "%";
       document.getElementById("objCont").appendChild(divobj);
     }
     let divObjArray = document.getElementsByClassName("objDiv");
