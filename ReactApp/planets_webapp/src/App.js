@@ -5,7 +5,7 @@ function App() {
   const Inp = document.getElementById("inp");
   const AnimCheck = document.getElementById("chkb");
   const [inpval, setInpVal] = useState("");
-  const [anim, setAnim] = useState("false");
+  const [anim, setAnim] = useState(false);
   const onInputChange = function() {
     setInpVal(Inp.value);
   };
