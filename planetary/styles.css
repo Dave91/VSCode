@@ -13,13 +13,12 @@ body {
 }
 
 #App {
-  padding: 2rem 2rem;
-  width: 100%;
-  top: 0;
-  left: 0;
+  padding: 1rem 2rem;
+  width: 250px;
+  margin: auto;
+  text-align: center;
   color: ghostwhite;
   background: lightslategray;
-  text-align: center;
   font-size: calc(8px + 2vmin);
   z-index: 99;
 }
@@ -54,10 +53,6 @@ body {
 
 #inp {
   width: 20ch;
-}
-
-input {
-  display: inline-block;
 }
 
 button {

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="planetary" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <title>Planetary Web App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <div id="objCont"></div>
+
+    <div id="App">
+      <h2>Planetary</h2>
+      <div>
+        <input
+          id="inp"
+          type="text"
+          placeholder="Name of planet/moon..."
+          value="{inpval}"
+          onChange="{onInputChange}"
+        />
+      </div>
+      <button type="button" onClick="{searchBtnPressed}">Show</button>
+      <div>
+        <label>Animation: </label>
+        <input
+          title="Toggle animation"
+          type="checkbox"
+          id="chkb"
+          checked="{anim}"
+          onChange="{onAnimChange}"
+        />
+      </div>
+
+      <div class="content" id="content1"></div>
+
+      <script src="./scripts.js"></script>
+    </div>
+  </body>
+</html>

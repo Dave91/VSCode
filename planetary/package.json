@@ -1,0 +1,13 @@
+{
+  "name": "planetary",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^2.9.15"
+  }
+}
