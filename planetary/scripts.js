@@ -1,18 +1,19 @@
 const Inp = document.getElementById("inp");
 const AnimCheck = document.getElementById("chkb");
-const [inpval, setInpVal] = useState("");
-const [anim, setAnim] = useState(false);
-const onInputChange = function() {
-  setInpVal(Inp.value);
-};
-const onAnimChange = function() {
-  setAnim(AnimCheck.checked);
-}
-const searchBtnPressed = function() {
-  // search txt given (mars), show that content (mars)
-};
 
-function divObjCreate () {
+function onInputChange() {
+  let inpval = Inp.value;
+}
+
+function onAnimChange() {
+  let anim = AnimCheck.checked;
+}
+
+function searchBtnPressed() {
+  // search txt given (mars), show that content (mars)
+}
+
+function divObjCreate() {
   for (let i = 0; i < 10; i++) {
     let divobj = document.createElement("div");
     divobj.className = "objDiv";

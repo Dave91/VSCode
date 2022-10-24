@@ -22,19 +22,17 @@
           id="inp"
           type="text"
           placeholder="Name of planet/moon..."
-          value="{inpval}"
-          onChange="{onInputChange}"
+          onchange="onInputChange()"
         />
       </div>
-      <button type="button" onClick="{searchBtnPressed}">Show</button>
+      <button type="button" onclick="searchBtnPressed()">Show</button>
       <div>
         <label>Animation: </label>
         <input
           title="Toggle animation"
           type="checkbox"
           id="chkb"
-          checked="{anim}"
-          onChange="{onAnimChange}"
+          onchange="onAnimChange()"
         />
       </div>
 
