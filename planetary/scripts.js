@@ -1,9 +1,18 @@
 const Inp = document.getElementById("inp");
 const AnimCheck = document.getElementById("chkb");
-
-function onInputChange() {
-  let inpval = Inp.value;
-}
+const ContFrame = document.getElementById("contFrame");
+let objNameList = [
+  "Sun",
+  "Mercury",
+  "Venus",
+  "Earth",
+  "Mars",
+  "Jupiter",
+  "Saturn",
+  "Uranus",
+  "Neptun",
+  "Pluto",
+];
 
 function onAnimChange() {
   if (AnimCheck.checked) {
@@ -12,30 +21,23 @@ function onAnimChange() {
 }
 
 function searchBtnPressed() {
-  // search txt given (mars), show that content (mars)
-  contentShow();
+  let inpval = Inp.value;
+  contentShow(inpval);
 }
 
-function contentShow() {
-  let cont = document.getElementById("content1");
-  cont.className += " contshow";
+function contentShow(objname) {
+  AnimCheck.checked = false;
+  ContFrame.src = "https://www.princeton.edu/~willman/planetary_systems/Sol/";
+  ContFrame.className = "content contshow";
 }
 
-//document.getElementById("content1").addEventListener("click", contentShow);
+Inp.addEventListener("keypress", function (ev) {
+  if (ev.key == "Enter") {
+    searchBtnPressed();
+  }
+});
 
 function divObjCreate() {
-  let objNameList = [
-    "Sun",
-    "Mercury",
-    "Venus",
-    "Earth",
-    "Mars",
-    "Jupiter",
-    "Saturn",
-    "Uranus",
-    "Neptun",
-    "Pluto",
-  ];
   for (let i = 0; i < 10; i++) {
     let divobj = document.createElement("div");
     divobj.className = "objDiv";
@@ -49,6 +51,9 @@ function divObjCreate() {
     });
     divobj.addEventListener("mouseleave", function () {
       this.innerHTML = " ";
+    });
+    divobj.addEventListener("click", function () {
+      contentShow(this.id);
     });
   }
 }
@@ -69,7 +74,6 @@ function divObjMove() {
       }
     }
     delta += 0.01;
-    //setTimeout(500, divObjMove);
   }
 }
 

@@ -16,14 +16,9 @@
     <div id="objCont"></div>
 
     <div id="App">
-      <h2>Planetary</h2>
+      <h1>Planetary</h1>
       <div>
-        <input
-          id="inp"
-          type="text"
-          placeholder="Name of planet/moon..."
-          onchange="onInputChange()"
-        />
+        <input id="inp" type="text" placeholder="Name of planet/moon..." />
       </div>
       <button type="button" onclick="searchBtnPressed()">Show</button>
       <div>
@@ -37,9 +32,15 @@
         />
       </div>
 
-      <div class="content" id="content1"></div>
-
-      <script src="./scripts.js"></script>
+      <iframe
+        class="content"
+        id="contFrame"
+        src=""
+        title="Object Info"
+        loading="lazy"
+      ></iframe>
     </div>
+
+    <script src="./scripts.js"></script>
   </body>
 </html>
