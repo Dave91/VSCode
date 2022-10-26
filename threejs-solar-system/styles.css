@@ -1,15 +1,15 @@
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-:root {
+body {
   --dark-bg: rgba(15, 15, 15, 0.95);
   --spacing: 350px;
 
   font-family: Verdana, Tahoma, sans-serif;
-  font-weight: 400;
+  font-weight: 300;
   font-style: normal;
 }
 

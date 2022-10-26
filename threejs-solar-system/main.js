@@ -303,29 +303,38 @@ function animate() {
   requestAnimationFrame(animate);
 
   sun.rotation.y -= 0.001;
-  moon.rotation.y -= 0.005;
+  moon.rotation.y += 0.005;
   earth.rotation.y += 0.005;
   mars.rotation.y -= 0.005;
 
-  earth.position.x = sun.position.x + Math.sin(delta) * 25;
-  earth.position.z = sun.position.z + Math.cos(delta) * 30;
+  mercury.position.x = sun.position.x + Math.sin(delta) * 25;
+  mercury.position.z = sun.position.z + Math.cos(delta) * 30;
+
+  venus.position.x = sun.position.x + Math.sin(delta) * 35;
+  venus.position.z = sun.position.z + Math.cos(delta) * 40;
+
+  earth.position.x = sun.position.x + Math.sin(delta) * 45;
+  earth.position.z = sun.position.z + Math.cos(delta) * 50;
 
   moon.position.x = earth.position.x + Math.sin(delta) * 4;
   moon.position.z = earth.position.z + Math.cos(delta) * 5;
 
-  //jupiter.position.x = sun.position.x + Math.sin(delta) * 45;
-  //jupiter.position.z = sun.position.z + Math.cos(delta) * 50;
+  mars.position.x = sun.position.x + Math.sin(delta) * 55;
+  mars.position.z = sun.position.z + Math.cos(delta) * 60;
 
-  //saturn.position.x = sun.position.x + Math.sin(delta) * 55;
-  //saturn.position.z = sun.position.z + Math.cos(delta) * 60;
+  jupiter.position.x = sun.position.x + Math.sin(delta) * 65;
+  jupiter.position.z = sun.position.z + Math.cos(delta) * 70;
 
-  //uranus.position.x = sun.position.x + Math.sin(delta) * 65;
-  //uranus.position.z = sun.position.z + Math.cos(delta) * 70;
+  saturn.position.x = sun.position.x + Math.sin(delta) * 75;
+  saturn.position.z = sun.position.z + Math.cos(delta) * 80;
 
-  //neptun.position.x = sun.position.x + Math.sin(delta) * 75;
-  //neptun.position.z = sun.position.z + Math.cos(delta) * 80;
+  uranus.position.x = sun.position.x + Math.sin(delta) * 85;
+  uranus.position.z = sun.position.z + Math.cos(delta) * 90;
 
-  delta += 0.01;
+  neptun.position.x = sun.position.x + Math.sin(delta) * 95;
+  neptun.position.z = sun.position.z + Math.cos(delta) * 100;
+
+  delta += 0.005;
 
   renderer.render(scene, camera);
 }
