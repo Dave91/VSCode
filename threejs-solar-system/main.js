@@ -89,7 +89,7 @@ const marsDia = N / 205.4;
 const jupiterDia = N / 9.7;
 const saturnDia = N / 11.6;
 const uranusDia = N / 27.2;
-const neptunDia = N / 28.1;
+const neptuneDia = N / 28.1;
 
 const scaleDown = 100;
 // for planet/moon distances, too?
@@ -102,10 +102,9 @@ const marsDist = (N * 163.7) / scaleDown;
 const jupiterDist = (N * 559) / scaleDown;
 const saturnDist = (N * 1030) / scaleDown;
 const uranusDist = (N * 2061) / scaleDown;
-const neptunDist = (N * 3230) / scaleDown;
+const neptuneDist = (N * 3230) / scaleDown;
 
-// position.set() in func to set initial pos for non-anim state!!
-function createObj(objText, objNorm, objDia, objName) {
+function createObj(objText, objNorm, objDia, objName, objXYZ) {
   let obj = new THREE.Mesh(
     new THREE.SphereGeometry(objDia, 32, 32),
     new THREE.MeshStandardMaterial({
@@ -115,80 +114,103 @@ function createObj(objText, objNorm, objDia, objName) {
   );
   scene.add(obj);
   obj.name = objName;
-  // pos given to func as [-50, 0, 0]
   obj.position.set(objXYZ);
   return obj;
 }
 
 // Sun
 const sun = createObj(
-  "./images/normal.jpg",
-  "./images/normal.jpg",
+  "./images/sun.jpg",
+  "./images/sun.jpg",
   N,
-  "sun"
+  "sun",
+  [-50, 0, 0]
 );
-sun.position.set(-50, 0, 0);
 
 // Planets
 let planets = [];
 
 const mercury = createObj(
-  "./images/mars.jpg",
-  "./images/marsnorm.jpg",
+  "./images/mercury.jpg",
+  "./images/mercury.jpg",
   mercuryDia,
-  "mercury"
+  "mercury",
+  [-20, 0, 0]
 );
 const venus = createObj(
-  "./images/mars.jpg",
-  "./images/marsnorm.jpg",
+  "./images/venus.jpg",
+  "./images/venus.jpg",
   venusDia,
-  "venus"
+  "venus",
+  [-10, 0, 0]
 );
 const earth = createObj(
   "./images/earthwithtopo.jpg",
   "./images/earthwithtopo.jpg",
   earthDia,
-  "earth"
+  "earth",
+  [0, 0, 0]
 );
 const mars = createObj(
   "./images/mars.jpg",
   "./images/marsnorm.jpg",
   marsDia,
-  "mars"
+  "mars",
+  [10, 0, 0]
 );
 const jupiter = createObj(
-  "./images/mars.jpg",
-  "./images/marsnorm.jpg",
+  "./images/jupiter.jpg",
+  "./images/jupiter.jpg",
   jupiterDia,
-  "jupiter"
+  "jupiter",
+  [20, 0, 0]
 );
 const saturn = createObj(
-  "./images/mars.jpg",
-  "./images/marsnorm.jpg",
+  "./images/saturn.jpg",
+  "./images/saturn.jpg",
   saturnDia,
-  "saturn"
+  "saturn",
+  [30, 0, 0]
 );
 const uranus = createObj(
-  "./images/mars.jpg",
-  "./images/marsnorm.jpg",
+  "./images/uranus.jpg",
+  "./images/uranus.jpg",
   uranusDia,
-  "uranus"
+  "uranus",
+  [40, 0, 0]
 );
-const neptun = createObj(
-  "./images/mars.jpg",
-  "./images/marsnorm.jpg",
-  neptunDia,
-  "neptun"
+const neptune = createObj(
+  "./images/neptune.jpg",
+  "./images/neptune.jpg",
+  neptuneDia,
+  "neptune",
+  [50, 0, 0]
 );
 
 // Moons
-// Earth Moons
+// Earth Moon
 const moon = createObj(
   "./images/moon.jpg",
-  "./images/normal.jpg",
+  "./images/moonnorm.jpg",
   earthDia / 7,
-  "moon"
+  "moon",
+  [0, 0, 5]
 );
+// Mars moons
+const phobos = createObj(
+  "./images/phobos.jpg",
+  "./images/phobos.jpg",
+  marsDia / 5,
+  "phobos",
+  [10, 0, 5]
+);
+const deimos = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  marsDia / 5,
+  "deimos",
+  [10, 0, 10]
+)
 
 // Window Resize Event
 
@@ -210,7 +232,7 @@ scene.add(axisHelp, gridHelp);
 
 // Object Lists
 
-planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptun];
+planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune];
 //moons = [[], [], [moon], [phobos, deimos]];
 
 // Animation Loop
@@ -220,22 +242,32 @@ let delta = 0;
 function animate() {
   requestAnimationFrame(animate);
 
-  sun.rotation.y -= 0.001;
+  if (1 > 0) {
+    sun.rotation.y -= 0.001;
 
-  // planets movement
-  for (let i = 0; i < planets.length; i++) {
-    let p = planets[i];
-    p.position.x = sun.position.x + Math.sin(delta + i * 0.2) * (25 + i * 10);
-    p.position.z = sun.position.z + Math.cos(delta + i * 0.2) * (30 + i * 10);
-    p.rotation.y += 0.01;
+    // planets movement
+    for (let i = 0; i < planets.length; i++) {
+      let p = planets[i];
+      p.position.x = sun.position.x + Math.sin(delta + i * 0.2) * (25 + i * 10);
+      p.position.z = sun.position.z + Math.cos(delta + i * 0.2) * (30 + i * 10);
+      p.rotation.y += 0.01;
+    }
+
+    // moons movement
+    moon.position.x = earth.position.x - Math.sin(delta + 1) * 4;
+    moon.position.z = earth.position.z - Math.cos(delta + 1) * 5;
+    moon.rotation.y += 0.01;
+
+    phobos.position.x = mars.position.x - Math.sin(delta + 1) * 4;
+    phobos.position.z = mars.position.z - Math.cos(delta + 1) * 5;
+    phobos.rotation.y += 0.01;
+
+    deimos.position.x = mars.position.x - Math.sin(delta + 1) * 8;
+    deimos.position.z = mars.position.z - Math.cos(delta + 1) * 10;
+    deimos.rotation.y += 0.01;
+
+    delta += 0.005;
   }
-
-  // moons movement
-  moon.position.x = earth.position.x - Math.sin(delta + 1) * 4;
-  moon.position.z = earth.position.z - Math.cos(delta + 1) * 5;
-  moon.rotation.y += 0.01;
-
-  delta += 0.005;
 
   renderer.render(scene, camera);
 }
