@@ -69,7 +69,7 @@ function onMouseClick(event) {
 // Lights
 
 const pointLight = new THREE.PointLight(0xffffff, 2);
-pointLight.position.set(-25, 5, 0);
+pointLight.position.set(-25, 40, -30);
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
 
 scene.add(pointLight, ambientLight);
@@ -106,7 +106,7 @@ const neptuneDist = (N * 3230) / scaleDown;
 
 function createObj(objText, objNorm, objDia, objName, objXYZ) {
   let obj = new THREE.Mesh(
-    new THREE.SphereGeometry(objDia, 32, 32),
+    new THREE.SphereGeometry(objDia, 64, 64),
     new THREE.MeshStandardMaterial({
       map: new THREE.TextureLoader().load(objText),
       normalMap: new THREE.TextureLoader().load(objNorm),
@@ -114,7 +114,7 @@ function createObj(objText, objNorm, objDia, objName, objXYZ) {
   );
   scene.add(obj);
   obj.name = objName;
-  obj.position.set(objXYZ);
+  obj.position.set(objXYZ[0], objXYZ[1], objXYZ[2]);
   return obj;
 }
 
@@ -128,8 +128,6 @@ const sun = createObj(
 );
 
 // Planets
-let planets = [];
-
 const mercury = createObj(
   "./images/mercury.jpg",
   "./images/mercury.jpg",
@@ -210,7 +208,7 @@ const deimos = createObj(
   marsDia / 5,
   "deimos",
   [10, 0, 10]
-)
+);
 
 // Window Resize Event
 
@@ -232,7 +230,7 @@ scene.add(axisHelp, gridHelp);
 
 // Object Lists
 
-planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune];
+let planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune];
 //moons = [[], [], [moon], [phobos, deimos]];
 
 // Animation Loop
@@ -242,32 +240,30 @@ let delta = 0;
 function animate() {
   requestAnimationFrame(animate);
 
-  if (1 > 0) {
-    sun.rotation.y -= 0.001;
+  sun.rotation.y -= 0.001;
 
-    // planets movement
-    for (let i = 0; i < planets.length; i++) {
-      let p = planets[i];
-      p.position.x = sun.position.x + Math.sin(delta + i * 0.2) * (25 + i * 10);
-      p.position.z = sun.position.z + Math.cos(delta + i * 0.2) * (30 + i * 10);
-      p.rotation.y += 0.01;
-    }
-
-    // moons movement
-    moon.position.x = earth.position.x - Math.sin(delta + 1) * 4;
-    moon.position.z = earth.position.z - Math.cos(delta + 1) * 5;
-    moon.rotation.y += 0.01;
-
-    phobos.position.x = mars.position.x - Math.sin(delta + 1) * 4;
-    phobos.position.z = mars.position.z - Math.cos(delta + 1) * 5;
-    phobos.rotation.y += 0.01;
-
-    deimos.position.x = mars.position.x - Math.sin(delta + 1) * 8;
-    deimos.position.z = mars.position.z - Math.cos(delta + 1) * 10;
-    deimos.rotation.y += 0.01;
-
-    delta += 0.005;
+  // planets movement
+  for (let i = 0; i < planets.length; i++) {
+    let p = planets[i];
+    p.position.x = sun.position.x + Math.sin(delta + i * 0.2) * (25 + i * 10);
+    p.position.z = sun.position.z + Math.cos(delta + i * 0.2) * (30 + i * 10);
+    p.rotation.y += 0.01;
   }
+
+  // moons movement
+  moon.position.x = earth.position.x - Math.sin(delta + 1) * 4;
+  moon.position.z = earth.position.z - Math.cos(delta + 1) * 5;
+  moon.rotation.y += 0.01;
+
+  phobos.position.x = mars.position.x - Math.sin(delta + 1) * 4;
+  phobos.position.z = mars.position.z - Math.cos(delta + 1) * 5;
+  phobos.rotation.y += 0.01;
+
+  deimos.position.x = mars.position.x - Math.sin(delta + 1) * 6;
+  deimos.position.z = mars.position.z - Math.cos(delta + 1) * 7;
+  deimos.rotation.y += 0.01;
+
+  delta += 0.005;
 
   renderer.render(scene, camera);
 }
