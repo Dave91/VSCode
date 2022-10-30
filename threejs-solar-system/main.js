@@ -81,7 +81,7 @@ scene.background = spaceTexture;
 
 // Scales/object data
 
-const N = 20; // N = sun diameter
+const N = 30; // N = sun diameter
 const mercuryDia = N / 285;
 const venusDia = N / 115;
 const earthDia = N / 109.3;
@@ -124,7 +124,7 @@ const sun = createObj(
   "./images/sun.jpg",
   N,
   "sun",
-  [-50, 0, 0]
+  [-60, 0, 0]
 );
 
 // Planets
@@ -133,56 +133,56 @@ const mercury = createObj(
   "./images/mercury.jpg",
   mercuryDia,
   "mercury",
-  [-20, 0, 0]
+  [mercuryDist, 0, 0]
 );
 const venus = createObj(
   "./images/venus.jpg",
   "./images/venus.jpg",
   venusDia,
   "venus",
-  [-10, 0, 0]
+  [venusDist, 0, 0]
 );
 const earth = createObj(
   "./images/earthwithtopo.jpg",
   "./images/earthwithtopo.jpg",
   earthDia,
   "earth",
-  [0, 0, 0]
+  [earthDist, 0, 0]
 );
 const mars = createObj(
   "./images/mars.jpg",
   "./images/marsnorm.jpg",
   marsDia,
   "mars",
-  [10, 0, 0]
+  [marsDist, 0, 0]
 );
 const jupiter = createObj(
   "./images/jupiter.jpg",
   "./images/jupiter.jpg",
   jupiterDia,
   "jupiter",
-  [20, 0, 0]
+  [jupiterDist, 0, 0]
 );
 const saturn = createObj(
   "./images/saturn.jpg",
   "./images/saturn.jpg",
   saturnDia,
   "saturn",
-  [30, 0, 0]
+  [saturnDist, 0, 0]
 );
 const uranus = createObj(
   "./images/uranus.jpg",
   "./images/uranus.jpg",
   uranusDia,
   "uranus",
-  [40, 0, 0]
+  [uranusDist, 0, 0]
 );
 const neptune = createObj(
   "./images/neptune.jpg",
   "./images/neptune.jpg",
   neptuneDia,
   "neptune",
-  [50, 0, 0]
+  [neptuneDist, 0, 0]
 );
 
 // Moons
@@ -192,7 +192,7 @@ const moon = createObj(
   "./images/moonnorm.jpg",
   earthDia / 7,
   "moon",
-  [0, 0, 5]
+  [earthDist, 0, 5]
 );
 // Mars moons
 const phobos = createObj(
@@ -200,14 +200,14 @@ const phobos = createObj(
   "./images/phobos.jpg",
   marsDia / 5,
   "phobos",
-  [10, 0, 5]
+  [marsDist, 0, 5]
 );
 const deimos = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   marsDia / 5,
   "deimos",
-  [10, 0, 10]
+  [marsDist, 0, 10]
 );
 
 // Window Resize Event
