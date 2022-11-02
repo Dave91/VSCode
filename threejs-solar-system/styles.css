@@ -5,25 +5,19 @@
 }
 
 body {
-  --dark-bg: rgba(15, 15, 15, 0.75);
-  --spacing: 50px;
-
   font-family: Verdana, Tahoma, sans-serif;
   font-weight: 100;
   font-style: normal;
 }
 
 main {
-  width: 100vw;
   color: white;
   z-index: 99;
   position: absolute;
-  width: 100%;
-  margin: 0px auto;
-  padding: 20px 0px;
-
-  display: none;
-  grid-template-columns: repeat(12, 1fr);
+  max-width: max-content;
+  padding: 0;
+  margin: auto;
+  display: block;
 }
 
 h1,
@@ -40,23 +34,23 @@ canvas {
   left: 0;
 }
 
-header {
-  background: var(--dark-bg);
-  grid-column: 2 / span 6;
+header,
+section {
+  background: rgba(15, 15, 15, 0.75);
   font-size: 1rem;
   padding: 2rem;
-  margin-bottom: var(--spacing);
-}
-
-section {
-  grid-column: 2 / 8;
-  padding: 1rem;
-  background: var(--dark-bg);
-  font-size: 1rem;
   line-height: 1.5;
-  margin-bottom: var(--spacing);
+  max-width: max-content;
+  margin: auto;
 }
 
-.left {
-  grid-column: 6 / 12;
+.menusel {
+  display: inline;
+  padding: 4px;
+  transition: 1s;
+  cursor: pointer;
+}
+
+.menusel:hover {
+  color: steelblue;
 }

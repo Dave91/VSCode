@@ -259,8 +259,10 @@ function animate() {
     // planets movement
     for (let i = 0; i < planets.length; i++) {
       let p = planets[i];
-      p.position.x = sun.position.x + Math.sin(delta + i * 0.2) * planetDists[i];
-      p.position.z = sun.position.z + Math.cos(delta + i * 0.2) * (planetDists[i] + 5);
+      p.position.x =
+        sun.position.x + Math.sin(delta + i * 0.1) * planetDists[i];
+      p.position.z =
+        sun.position.z + Math.cos(delta + i * 0.1) * (planetDists[i] + 5);
     }
 
     // moons movement
