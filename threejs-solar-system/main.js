@@ -20,11 +20,7 @@ renderer.render(scene, camera);
 
 // Lights
 
-<<<<<<< HEAD
 const pointLight = new THREE.PointLight(0xffffff, 1.4);
-=======
-const pointLight = new THREE.PointLight(0xffffff, 2);
->>>>>>> a324ea28dda3d0887241a7f73e823176e55b9d0b
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
 scene.add(pointLight, ambientLight);
 pointLight.position.set(0, 0, 0);
@@ -212,11 +208,7 @@ window.addEventListener("keydown", function (ev) {
     return;
   }
   animIsPaused = animIsPaused ? false : true;
-<<<<<<< HEAD
   infobox.style.display = animIsPaused ? "grid" : "none";
-=======
-  infobox.style.display = ev.code == "Space" && animIsPaused ? "none" : "grid";
->>>>>>> a324ea28dda3d0887241a7f73e823176e55b9d0b
 });
 
 // Window Resize Event
