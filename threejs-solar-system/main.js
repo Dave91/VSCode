@@ -134,9 +134,9 @@ const neptune = createObj(
 const moon = createObj(
   "./images/moon.jpg",
   "./images/moonnorm.jpg",
-  earthDia / 7,
+  earthDia / 5,
   "moon",
-  [earthDist, 0, 5]
+  [earthDist, 0, 3]
 );
 // Mars moons
 const phobos = createObj(
@@ -144,20 +144,43 @@ const phobos = createObj(
   "./images/phobos.jpg",
   marsDia / 5,
   "phobos",
-  [marsDist, 0, 5]
+  [marsDist, 0, 3]
 );
 const deimos = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   marsDia / 5,
   "deimos",
-  [marsDist, 0, 10]
+  [marsDist, 0, 4]
 );
 
-const infobox = document.getElementById("infobox");
-let animIsPaused = true;
+// Object Lists
 
-// Raycaster (handles click events)
+let planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune];
+let planetDias = [
+  mercuryDia,
+  venusDia,
+  earthDia,
+  marsDia,
+  jupiterDia,
+  saturnDia,
+  uranusDia,
+  neptuneDia,
+];
+let planetDists = [
+  mercuryDist,
+  venusDist,
+  earthDist,
+  marsDist,
+  jupiterDist,
+  saturnDist,
+  uranusDist,
+  neptuneDist,
+];
+//moons = [[], [], [moon], [phobos, deimos]];
+
+// Click Events
+// Raycaster (handles object click events)
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -190,25 +213,37 @@ function renderRay() {
   renderer.render(scene, camera);
 }
 
-// Click Events
-
-window.addEventListener("click", function (ev) {
+// Object Click
+/* window.addEventListener("click", function (ev) {
   // calc mouse pos in normalized device coords
   // (-1 to +1)
   mouse.x = (ev.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(ev.clientY / window.innerHeight) * 2 + 1;
-  //camera.position.set(earth.position.x, 5, 5);
   //window.requestAnimationFrame(renderRay);
-});
+}); */
+
+// Menu Click
+const menus = document.getElementsByClassName("menusel");
+for (let ms of menus) {
+  ms.addEventListener("click", function () {
+    let evid = this.dataset.ind;
+    let evposx = planets[evid].position.x + planetDias[evid];
+    let evposy = planets[evid].position.y + planetDias[evid];
+    let evposz = planets[evid].position.z + planetDias[evid];
+    camera.position.set(evposx + 2, evposy + 2, evposz + 2);
+  });
+}
 
 // Key Press Events
-
+const infobox = document.getElementById("infobox");
+let animIsPaused = true;
 window.addEventListener("keydown", function (ev) {
   if (ev.code != "Space") {
     return;
   }
   animIsPaused = animIsPaused ? false : true;
   infobox.style.display = animIsPaused ? "grid" : "none";
+  camera.position.set(50, 50, 25);
 });
 
 // Window Resize Event
@@ -222,26 +257,11 @@ window.addEventListener("resize", function () {
 
 // Controls, helpers
 
-const axisHelp = new THREE.AxesHelper(50);
+const axisHelp = new THREE.AxesHelper(1000);
 const gridHelp = new THREE.PolarGridHelper(1000, 10, 10);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.update();
 scene.add(axisHelp, gridHelp);
-
-// Object Lists
-
-let planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune];
-let planetDists = [
-  mercuryDist,
-  venusDist,
-  earthDist,
-  marsDist,
-  jupiterDist,
-  saturnDist,
-  uranusDist,
-  neptuneDist,
-];
-//moons = [[], [], [moon], [phobos, deimos]];
 
 // Animation Loop
 
@@ -264,22 +284,22 @@ function animate() {
       p.position.z =
         sun.position.z + Math.cos(delta + i * 0.1) * (planetDists[i] + 5);
     }
-
-    // moons movement
-    moon.position.x = earth.position.x - Math.sin(delta + 1) * 3;
-    moon.position.z = earth.position.z - Math.cos(delta + 1) * 4;
-    moon.rotation.y += 0.01;
-
-    phobos.position.x = mars.position.x - Math.sin(delta + 1) * 2;
-    phobos.position.z = mars.position.z - Math.cos(delta + 1) * 3;
-    phobos.rotation.y += 0.01;
-
-    deimos.position.x = mars.position.x - Math.sin(delta + 1) * 4;
-    deimos.position.z = mars.position.z - Math.cos(delta + 1) * 5;
-    deimos.rotation.y += 0.01;
-
-    delta += 0.005;
   }
+
+  // moons movement
+  moon.position.x = earth.position.x - Math.sin(delta + 1) * 2;
+  moon.position.z = earth.position.z - Math.cos(delta + 1) * 3;
+  moon.rotation.y += 0.01;
+
+  phobos.position.x = mars.position.x - Math.sin(delta + 1) * 2;
+  phobos.position.z = mars.position.z - Math.cos(delta + 1) * 3;
+  phobos.rotation.y += 0.01;
+
+  deimos.position.x = mars.position.x - Math.sin(delta + 1) * 3;
+  deimos.position.z = mars.position.z - Math.cos(delta + 1) * 4;
+  deimos.rotation.y += 0.01;
+
+  delta += 0.005;
 
   renderer.render(scene, camera);
 }
