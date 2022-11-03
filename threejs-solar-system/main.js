@@ -186,41 +186,26 @@ const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 
 function renderRay() {
-  // mouse pos camera to pick object clicked
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(scene.children);
-  if (!intersects[0].object.name) {
-    return;
-  }
 
-  // create lists for objects and links
-  // get index of intersects[0].object.name in objects list
-  // get the link of that same index from links list
-  // window.open("link from above");
-
-  if (intersects[0].object.name === "moon") {
-    window.open("https://en.wikipedia.org/wiki/Moon");
-  }
-  if (intersects[0].object.name === "earth") {
-    window.open("https://www.google.hu/intl/hu/earth/");
-  }
-  if (intersects[0].object.name === "mars") {
-    window.open("https://en.wikipedia.org/wiki/Mars");
-  }
-  if (intersects[0].object.name === "sun") {
-    window.open("https://en.wikipedia.org/wiki/Sun");
-  }
+  const mbstat = document.getElementById("mbox");
+  const mframe = document.getElementById("mbframe");
+  mbstat.innerHTML = "Loading wiki info...";
+  mframe.style.visibility = "hidden";
+  let srctxt = intersects[0].object.name;
+  mframe.setAttribute("src", "https://en.wikipedia.org/wiki/" + srctxt);
+  setTimeout(() => {
+    mbstat.innerHTML = "";
+    mframe.style.visibility = "visible";
+  }, 2500);
   renderer.render(scene, camera);
 }
 
 // Object Click
-/* window.addEventListener("click", function (ev) {
-  // calc mouse pos in normalized device coords
-  // (-1 to +1)
-  mouse.x = (ev.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(ev.clientY / window.innerHeight) * 2 + 1;
+window.addEventListener("click", function () {
   //window.requestAnimationFrame(renderRay);
-}); */
+});
 
 // Menu Click
 const menus = document.getElementsByClassName("menusel");
@@ -230,7 +215,17 @@ for (let ms of menus) {
     let evposx = planets[evid].position.x + planetDias[evid];
     let evposy = planets[evid].position.y + planetDias[evid];
     let evposz = planets[evid].position.z + planetDias[evid];
-    camera.position.set(evposx + 2, evposy + 2, evposz + 2);
+    camera.position.set(evposx + 4, evposy + 2, evposz + 2);
+    const mbstat = document.getElementById("mbox");
+    const mframe = document.getElementById("mbframe");
+    mbstat.innerHTML = "Loading wiki info...";
+    mframe.style.visibility = "hidden";
+    let srctxt = planets[evid].name;
+    mframe.setAttribute("src", "https://en.wikipedia.org/wiki/" + srctxt);
+    setTimeout(() => {
+      mbstat.innerHTML = "";
+      mframe.style.visibility = "visible";
+    }, 1500);
   });
 }
 
