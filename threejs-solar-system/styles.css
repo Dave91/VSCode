@@ -55,10 +55,16 @@ section {
   color: steelblue;
 }
 
-#mbframe {
-  visibility: hidden;
-  border: none;
-  width: 36vw;
-  height: 72vh;
-  transition: 1s;
+#objinfo {
+  width: 76px;
+  height: 18px;
+  overflow: hidden;
+  color: wheat;
+  transition: 0.5s
+}
+
+#objinfo:hover:not(:empty) {
+  width: 35vw;
+  height: 75vh;
+  overflow: auto;
 }

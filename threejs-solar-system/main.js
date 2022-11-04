@@ -77,24 +77,22 @@ const mercury = createObj(
   mercuryDia,
   [mercuryDist, 0, 0]
 );
-const venus = createObj(
-  "./images/venus.jpg",
-  "./images/venus.jpg",
-  venusDia,
-  [venusDist, 0, 0]
-);
+const venus = createObj("./images/venus.jpg", "./images/venus.jpg", venusDia, [
+  venusDist,
+  0,
+  0,
+]);
 const earth = createObj(
   "./images/earthwithtopo.jpg",
   "./images/earthwithtopo.jpg",
   earthDia,
   [earthDist, 0, 0]
 );
-const mars = createObj(
-  "./images/mars.jpg",
-  "./images/marsnorm.jpg",
-  marsDia,
-  [marsDist, 0, 0]
-);
+const mars = createObj("./images/mars.jpg", "./images/marsnorm.jpg", marsDia, [
+  marsDist,
+  0,
+  0,
+]);
 const jupiter = createObj(
   "./images/jupiter.jpg",
   "./images/jupiter.jpg",
@@ -273,23 +271,44 @@ let moons = [
   [io, europa, ganymedes, callisto],
   [thetis, dione, rhea, titan, japetu],
   [miranda, ariel, umbriel, titania, oberon],
-  [triton, nereida]
+  [triton, nereida],
 ];
 
 // Menu Click Event
 
 const menus = document.getElementsByClassName("menusel");
-const mbstat = document.getElementById("mbframe");
+const infotxt = document.getElementById("objinfo");
+
+// Info Text Loader
+function loadInfoTxt(infofile) {
+  let request = new XMLHttpRequest();
+  request.open("GET", "./info/" + infofile + ".txt", true);
+  request.responseType = "blob";
+  request.onerror = function () {
+    console.log(request.error);
+  };
+  request.onload = function () {
+    let reader = new FileReader();
+    reader.readAsText(request.response);
+    reader.onerror = function () {
+      console.log(reader.error);
+    };
+    reader.onload = function () {
+      infotxt.innerHTML = reader.result;
+    };
+  };
+  request.send();
+}
+
 for (let ms of menus) {
   ms.addEventListener("click", function () {
     let evid = this.dataset.ind;
+    let evlab = this.dataset.lab;
     let evposx = planets[evid].position.x + planetDias[evid];
     let evposy = planets[evid].position.y + planetDias[evid];
     let evposz = planets[evid].position.z + planetDias[evid];
     camera.position.set(evposx + 4, evposy + 2, evposz + 2);
-    // list of data strings (innerHTML instead of iframe src)
-    let srctxt = "";
-    mbstat.innerHTML = srctxt;
+    loadInfoTxt(evlab);
   });
 }
 
@@ -303,7 +322,7 @@ window.addEventListener("keydown", function (ev) {
   }
   animIsPaused = animIsPaused ? false : true;
   infobox.style.display = animIsPaused ? "grid" : "none";
-  mbstat.innerHTML = "";
+  infotxt.innerHTML = "";
   camera.position.set(50, 50, 25);
 });
 
@@ -341,10 +360,8 @@ function animate() {
     for (let i = 0; i < planets.length; i++) {
       let p = planets[i];
       let pdist = planetDists[i];
-      p.position.x =
-        sun.position.x + Math.sin(delta + i * 0.1) * pdist;
-      p.position.z =
-        sun.position.z + Math.cos(delta + i * 0.1) * (pdist + 5);
+      p.position.x = sun.position.x + Math.sin(delta + i * 0.1) * pdist;
+      p.position.z = sun.position.z + Math.cos(delta + i * 0.1) * (pdist + 5);
     }
   }
 
@@ -355,8 +372,10 @@ function animate() {
       let pmdia = planetDias[pi];
       for (let mi = 0; mi < moons[pi].length; mi++) {
         let m = moons[pi][mi];
-        m.position.x = pm.position.x - Math.sin(delta + mi * 0.05) * (pmdia + 1 + mi * 1);
-        m.position.z = pm.position.z - Math.cos(delta + mi * 0.05) * (pmdia + 2 + mi * 1);
+        m.position.x =
+          pm.position.x - Math.sin(delta + mi * 0.05) * (pmdia + 1 + mi * 1);
+        m.position.z =
+          pm.position.z - Math.cos(delta + mi * 0.05) * (pmdia + 2 + mi * 1);
         m.rotation.y += 0.01;
       }
     }
