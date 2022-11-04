@@ -54,7 +54,7 @@ const saturnDist = (N * 1030) / scaleDown + N / 2;
 const uranusDist = (N * 2061) / scaleDown + N / 2;
 const neptuneDist = (N * 3230) / scaleDown + N / 2;
 
-function createObj(objText, objNorm, objDia, objName, objXYZ) {
+function createObj(objText, objNorm, objDia, objXYZ) {
   let obj = new THREE.Mesh(
     new THREE.SphereGeometry(objDia, 64, 64),
     new THREE.MeshStandardMaterial({
@@ -63,69 +63,60 @@ function createObj(objText, objNorm, objDia, objName, objXYZ) {
     })
   );
   scene.add(obj);
-  obj.name = objName;
   obj.position.set(objXYZ[0], objXYZ[1], objXYZ[2]);
   return obj;
 }
 
 // Sun
-const sun = createObj("./images/sun.jpg", "", N / 2, "sun", [0, 0, 0]);
+const sun = createObj("./images/sun.jpg", "", N / 2, [0, 0, 0]);
 
 // Planets
 const mercury = createObj(
   "./images/mercury.jpg",
   "./images/mercury.jpg",
   mercuryDia,
-  "mercury",
   [mercuryDist, 0, 0]
 );
 const venus = createObj(
   "./images/venus.jpg",
   "./images/venus.jpg",
   venusDia,
-  "venus",
   [venusDist, 0, 0]
 );
 const earth = createObj(
   "./images/earthwithtopo.jpg",
   "./images/earthwithtopo.jpg",
   earthDia,
-  "earth",
   [earthDist, 0, 0]
 );
 const mars = createObj(
   "./images/mars.jpg",
   "./images/marsnorm.jpg",
   marsDia,
-  "mars",
   [marsDist, 0, 0]
 );
 const jupiter = createObj(
   "./images/jupiter.jpg",
   "./images/jupiter.jpg",
   jupiterDia,
-  "jupiter",
   [jupiterDist, 0, 0]
 );
 const saturn = createObj(
   "./images/saturn.jpg",
   "./images/saturn.jpg",
   saturnDia,
-  "saturn",
   [saturnDist, 0, 0]
 );
 const uranus = createObj(
   "./images/uranus.jpg",
   "./images/uranus.jpg",
   uranusDia,
-  "uranus",
   [uranusDist, 0, 0]
 );
 const neptune = createObj(
   "./images/neptune.jpg",
   "./images/neptune.jpg",
   neptuneDia,
-  "neptune",
   [neptuneDist, 0, 0]
 );
 
@@ -135,23 +126,120 @@ const moon = createObj(
   "./images/moon.jpg",
   "./images/moonnorm.jpg",
   earthDia / 5,
-  "moon",
-  [earthDist, 0, 3]
+  [earthDist, 0, 2]
 );
 // Mars moons
 const phobos = createObj(
   "./images/phobos.jpg",
   "./images/phobos.jpg",
   marsDia / 5,
-  "phobos",
-  [marsDist, 0, 3]
+  [marsDist, 0, 2]
 );
 const deimos = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   marsDia / 5,
-  "deimos",
-  [marsDist, 0, 4]
+  [marsDist, 0, 3]
+);
+// Jupiter moons
+const io = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  jupiterDia / 20,
+  [jupiterDist, 0, 4]
+);
+const europa = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  jupiterDia / 20,
+  [jupiterDist, 0, 5]
+);
+const ganymedes = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  jupiterDia / 20,
+  [jupiterDist, 0, 6]
+);
+const callisto = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  jupiterDia / 20,
+  [jupiterDist, 0, 7]
+);
+// Saturn moons
+const thetis = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  saturnDia / 20,
+  [saturnDist, 0, 4]
+);
+const dione = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  saturnDia / 20,
+  [saturnDist, 0, 5]
+);
+const rhea = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  saturnDia / 20,
+  [saturnDist, 0, 6]
+);
+const titan = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  saturnDia / 20,
+  [saturnDist, 0, 7]
+);
+const japetu = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  saturnDia / 20,
+  [saturnDist, 0, 8]
+);
+// Uranus moons
+const miranda = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  uranusDia / 18,
+  [uranusDist, 0, 4]
+);
+const ariel = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  uranusDia / 18,
+  [uranusDist, 0, 5]
+);
+const umbriel = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  uranusDia / 18,
+  [uranusDist, 0, 6]
+);
+const titania = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  uranusDia / 18,
+  [uranusDist, 0, 7]
+);
+const oberon = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  uranusDia / 18,
+  [uranusDist, 0, 8]
+);
+// Neptune moons
+const triton = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  neptuneDia / 18,
+  [neptuneDist, 0, 4]
+);
+const nereida = createObj(
+  "./images/deimos.jpg",
+  "./images/deimos.jpg",
+  neptuneDia / 18,
+  [neptuneDist, 0, 5]
 );
 
 // Object Lists
@@ -177,38 +265,21 @@ let planetDists = [
   uranusDist,
   neptuneDist,
 ];
-//moons = [[], [], [moon], [phobos, deimos]];
+let moons = [
+  [],
+  [],
+  [moon],
+  [phobos, deimos],
+  [io, europa, ganymedes, callisto],
+  [thetis, dione, rhea, titan, japetu],
+  [miranda, ariel, umbriel, titania, oberon],
+  [triton, nereida]
+];
 
-// Click Events
-// Raycaster (handles object click events)
+// Menu Click Event
 
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
-function renderRay() {
-  raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObjects(scene.children);
-
-  const mbstat = document.getElementById("mbox");
-  const mframe = document.getElementById("mbframe");
-  mbstat.innerHTML = "Loading wiki info...";
-  mframe.style.visibility = "hidden";
-  let srctxt = intersects[0].object.name;
-  mframe.setAttribute("src", "https://en.wikipedia.org/wiki/" + srctxt);
-  setTimeout(() => {
-    mbstat.innerHTML = "";
-    mframe.style.visibility = "visible";
-  }, 2500);
-  renderer.render(scene, camera);
-}
-
-// Object Click
-window.addEventListener("click", function () {
-  //window.requestAnimationFrame(renderRay);
-});
-
-// Menu Click
 const menus = document.getElementsByClassName("menusel");
+const mbstat = document.getElementById("mbframe");
 for (let ms of menus) {
   ms.addEventListener("click", function () {
     let evid = this.dataset.ind;
@@ -216,20 +287,14 @@ for (let ms of menus) {
     let evposy = planets[evid].position.y + planetDias[evid];
     let evposz = planets[evid].position.z + planetDias[evid];
     camera.position.set(evposx + 4, evposy + 2, evposz + 2);
-    const mbstat = document.getElementById("mbox");
-    const mframe = document.getElementById("mbframe");
-    mbstat.innerHTML = "Loading wiki info...";
-    mframe.style.visibility = "hidden";
-    let srctxt = planets[evid].name;
-    mframe.setAttribute("src", "https://en.wikipedia.org/wiki/" + srctxt);
-    setTimeout(() => {
-      mbstat.innerHTML = "";
-      mframe.style.visibility = "visible";
-    }, 1500);
+    // list of data strings (innerHTML instead of iframe src)
+    let srctxt = "";
+    mbstat.innerHTML = srctxt;
   });
 }
 
-// Key Press Events
+// Key Press Event
+
 const infobox = document.getElementById("infobox");
 let animIsPaused = true;
 window.addEventListener("keydown", function (ev) {
@@ -238,6 +303,7 @@ window.addEventListener("keydown", function (ev) {
   }
   animIsPaused = animIsPaused ? false : true;
   infobox.style.display = animIsPaused ? "grid" : "none";
+  mbstat.innerHTML = "";
   camera.position.set(50, 50, 25);
 });
 
@@ -274,25 +340,27 @@ function animate() {
     // planets movement
     for (let i = 0; i < planets.length; i++) {
       let p = planets[i];
+      let pdist = planetDists[i];
       p.position.x =
-        sun.position.x + Math.sin(delta + i * 0.1) * planetDists[i];
+        sun.position.x + Math.sin(delta + i * 0.1) * pdist;
       p.position.z =
-        sun.position.z + Math.cos(delta + i * 0.1) * (planetDists[i] + 5);
+        sun.position.z + Math.cos(delta + i * 0.1) * (pdist + 5);
     }
   }
 
   // moons movement
-  moon.position.x = earth.position.x - Math.sin(delta + 1) * 2;
-  moon.position.z = earth.position.z - Math.cos(delta + 1) * 3;
-  moon.rotation.y += 0.01;
-
-  phobos.position.x = mars.position.x - Math.sin(delta + 1) * 2;
-  phobos.position.z = mars.position.z - Math.cos(delta + 1) * 3;
-  phobos.rotation.y += 0.01;
-
-  deimos.position.x = mars.position.x - Math.sin(delta + 1) * 3;
-  deimos.position.z = mars.position.z - Math.cos(delta + 1) * 4;
-  deimos.rotation.y += 0.01;
+  for (let pi = 0; pi < planets.length; pi++) {
+    if (moons[pi].length) {
+      let pm = planets[pi];
+      let pmdia = planetDias[pi];
+      for (let mi = 0; mi < moons[pi].length; mi++) {
+        let m = moons[pi][mi];
+        m.position.x = pm.position.x - Math.sin(delta + mi * 0.05) * (pmdia + 1 + mi * 1);
+        m.position.z = pm.position.z - Math.cos(delta + mi * 0.05) * (pmdia + 2 + mi * 1);
+        m.rotation.y += 0.01;
+      }
+    }
+  }
 
   delta += 0.005;
 
