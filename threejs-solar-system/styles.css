@@ -55,12 +55,20 @@ section {
   color: steelblue;
 }
 
+#objinfo:not(:empty)::before {
+  content: "INFOBOX >> ";
+}
+
 #objinfo {
-  width: 76px;
+  width: 116px;
   height: 18px;
   overflow: hidden;
   color: wheat;
   transition: 0.5s
+}
+
+#objinfo:hover:not(:empty)::before {
+  content: "INFOBOX (from Wikipedia): ";
 }
 
 #objinfo:hover:not(:empty) {

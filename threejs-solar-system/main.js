@@ -350,7 +350,8 @@ let delta = 0;
 function animate() {
   requestAnimationFrame(animate);
 
-  sun.rotation.y -= 0.001;
+  sun.rotation.y += 0.001;
+  venus.rotation.y -= 0.02;
   for (let p of planets) {
     p.rotation.y += 0.01;
   }
