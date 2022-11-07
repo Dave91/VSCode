@@ -30,6 +30,8 @@ pointLight.position.set(0, 0, 0);
 const spaceTexture = new THREE.TextureLoader().load("./images/bg4.jpg");
 scene.background = spaceTexture;
 
+// Modal Intro
+
 const modal = document.getElementById("modal");
 modal.addEventListener("click", function () {
   modal.style.display = "none";

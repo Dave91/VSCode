@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A humble presentation of our solar system."
+    />
+    
+    <title>Solar System Project</title>
+    <script type="module" crossorigin src="/assets/index.1e110689.js"></script>
+    <link rel="stylesheet" href="/assets/index.56b6062b.css">
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <canvas id="bg"></canvas>
+
+    <div id="modal">
+      <h1>Planetary - a simple model of our solar system</h1>
+      <br />
+      <p>- Object sizes are to scale - except moons</p>
+      <p>- Planet distances are to scale, but reduced to fit screen</p>
+      <p>- Planet-moon distances are not to scale</p>
+      <br />
+      <br />
+      <h3>[Click to start...]</h3>
+    </div>
+
+    <main id="infobox">
+      <section>
+        <p>
+          Click on planet names below to zoom in/get info or press SPACE to
+          unpause...
+        </p>
+        <span class="menusel" data-ind="0" data-lab="mercury">Mercury</span>
+        <span class="menusel" data-ind="1" data-lab="venus">Venus</span>
+        <span class="menusel" data-ind="2" data-lab="earth">Earth</span>
+        <span class="menusel" data-ind="3" data-lab="mars">Mars</span>
+        <span class="menusel" data-ind="4" data-lab="jupiter">Jupiter</span>
+        <span class="menusel" data-ind="5" data-lab="saturn">Saturn</span>
+        <span class="menusel" data-ind="6" data-lab="uranus">Uranus</span>
+        <span class="menusel" data-ind="7" data-lab="neptune">Neptune</span>
+        <br />
+        <br />
+        <p id="objinfo"></p>
+      </section>
+    </main>
+
+    
+  </body>
+</html>
