@@ -30,6 +30,11 @@ pointLight.position.set(0, 0, 0);
 const spaceTexture = new THREE.TextureLoader().load("./images/bg4.jpg");
 scene.background = spaceTexture;
 
+const modal = document.getElementById("modal");
+modal.addEventListener("click", function () {
+  modal.style.display = "none";
+})
+
 // Scales/object data
 
 const N = 30; // N = sun diameter
