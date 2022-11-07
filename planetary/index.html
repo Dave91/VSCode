@@ -2,11 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
     <meta name="description" content="planetary" />
-    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" href="" />
     <link rel="stylesheet" type="text/css" href="./styles.css" />
     <title>Planetary Web App</title>
   </head>
@@ -20,7 +18,7 @@
       <div>
         <input id="inp" type="text" placeholder="Name of planet/moon..." />
       </div>
-      <button type="button" onclick="searchBtnPressed()">Show</button>
+      <button type="button" id="searchbtn">Show</button>
       <div>
         <label>Animation: </label>
         <input
@@ -28,7 +26,6 @@
           type="checkbox"
           id="chkb"
           checked="true"
-          onchange="onAnimChange()"
         />
       </div>
 
@@ -38,6 +35,7 @@
         src=""
         title="Object Info"
         loading="lazy"
+        rel="noopener noreferrer"
       ></iframe>
     </div>
 

@@ -1,5 +1,6 @@
 const Inp = document.getElementById("inp");
 const AnimCheck = document.getElementById("chkb");
+const SearchBtn = document.getElementById("searchbtn");
 const ContFrame = document.getElementById("contFrame");
 let objNameList = [
   "Sun",
@@ -14,16 +15,11 @@ let objNameList = [
   "Pluto",
 ];
 
-function onAnimChange() {
+AnimCheck.addEventListener("change", function () {
   if (AnimCheck.checked) {
     divObjMove();
   }
-}
-
-function searchBtnPressed() {
-  let inpval = Inp.value;
-  contentShow(inpval);
-}
+});
 
 function contentShow(objname) {
   AnimCheck.checked = false;
@@ -31,11 +27,18 @@ function contentShow(objname) {
   ContFrame.className = "content contshow";
 }
 
+function searchBtnPressed() {
+  let inpval = Inp.value;
+  contentShow(inpval);
+}
+
 Inp.addEventListener("keypress", function (ev) {
   if (ev.key == "Enter") {
     searchBtnPressed();
   }
 });
+
+SearchBtn.addEventListener("click", searchBtnPressed);
 
 function divObjCreate() {
   for (let i = 0; i < 10; i++) {
