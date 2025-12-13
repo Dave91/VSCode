@@ -59,7 +59,7 @@ function App() {
 
       <div className="container">
         {!quotes || quotes.length === 0 ? (
-          <img className="yoda" src="./yoda.gif" alt="yoda" />
+          <div className="yoda"></div>
         ) : (
           quotes.map((quoteItem, index) => (
             <div key={index} className="quote">
