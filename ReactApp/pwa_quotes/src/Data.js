@@ -1,95 +1,69 @@
-import DBdata from "./DB";
+import DBdata from "./DB.js";
 
 export async function fetchData(query, filtMode) {
-  try {
-    let yodaImg = document.querySelector(".yoda");
-    if (yodaImg) {
-      yodaImg.remove();
-    }
-    if (query) {
-      let qWords = query.split(" ");
-      filterData(DBdata, qWords, filtMode);
+  const yodaImg = document.querySelector(".yoda");
+  if (yodaImg) yodaImg.remove();
+
+  let results = [];
+
+  if (query) {
+    const qWords = query.toLowerCase().split(" ");
+    results = getFilteredData(DBdata, qWords, filtMode);
+  } else {
+    results = DBdata;
+  }
+
+  renderResults(results);
+}
+
+function getFilteredData(data, qWords, filtMode) {
+  return data.filter((item) => {
+    const text = item.text.toLowerCase();
+    const author = (item.author || "Unknown").toLowerCase();
+    const fullText = `${text} ${author}`;
+
+    if (filtMode === "AND") {
+      return qWords.every((word) => fullText.includes(word));
     } else {
-      fullResult(DBdata);
+      return qWords.some((word) => fullText.includes(word));
     }
-  } catch (error) {
-    console.log(error);
+  });
+}
+
+function renderResults(results) {
+  const container = document.querySelector(".container");
+  const resNum = document.getElementById("resNum");
+
+  if (resNum) {
+    resNum.innerHTML = ` / (Found: ${results.length})`;
+  }
+
+  if (results.length === 0) {
+    showNullResult();
+    return;
+  }
+
+  if (container) {
+    results.forEach((item) => {
+      const author = item.author || "Unknown";
+      const qDiv = document.createElement("div");
+      qDiv.className = "quote";
+      qDiv.innerHTML = `"${item.text}" (${author})`;
+      container.appendChild(qDiv);
+      setTimeout(() => {
+        qDiv.style.opacity = "1";
+      }, 100);
+    });
   }
 }
 
-async function filterData(data, qWords, filtMode) {
-  var dataTxt;
-  var dataAuth;
-  var matchResult = 0;
-  for (let q in data) {
-    var matchWord = 0;
-    dataTxt = data[q]["text"];
-    dataAuth = data[q]["author"];
-    if (dataAuth === null) {
-      dataAuth = "Unknown";
-    }
-    for (let word in qWords) {
-      if (
-        (dataTxt + dataAuth).toLowerCase().includes(qWords[word].toLowerCase())
-      ) {
-        matchWord++;
-      }
-    }
-    if (filtMode === "OR" && 0 < matchWord) {
-      matchResult++;
-      renderData(dataTxt, dataAuth);
-    }
-    if (filtMode === "AND" && matchWord === qWords.length) {
-      matchResult++;
-      renderData(dataTxt, dataAuth);
-    }
-  }
-  postResult(matchResult);
-}
-
-async function renderData(dataTxt, dataAuth) {
-  let container = document.querySelector(".container");
-  let qDiv = document.createElement("div");
-  qDiv.className = "quote";
-  qDiv.innerHTML = '"' + dataTxt + '" (' + dataAuth + ")";
-  container.appendChild(qDiv);
-  setTimeout(function () {
-    qDiv.style.opacity = "1";
-  }, 100);
-}
-
-async function postResult(matchResult) {
-  document.getElementById("resNum").innerHTML =
-    " / (Found: " + matchResult + ")";
-  if (matchResult === 0) {
-    nullResult();
-  }
-}
-
-async function nullResult() {
-  document.getElementById("resNum").innerHTML = " / (Found: 0)";
-  let yodaImg = document.querySelector(".yoda");
-  if (!yodaImg) {
-    yodaImg = document.createElement("img");
+function showNullResult() {
+  const app = document.querySelector(".App");
+  if (app && !document.querySelector(".yoda")) {
+    const yodaImg = document.createElement("img");
     yodaImg.className = "yoda";
     yodaImg.src = "./yoda.gif";
-    yodaImg.alt = "yoda";
-    document.querySelector(".App").appendChild(yodaImg);
+    yodaImg.alt = "Yoda - No results";
+    app.appendChild(yodaImg);
   }
-}
-
-async function fullResult(data) {
-  var dataTxt;
-  var dataAuth;
-  var matchResult = 0;
-  for (let q in data) {
-    dataTxt = data[q]["text"];
-    dataAuth = data[q]["author"];
-    if (dataAuth === null) {
-      dataAuth = "Unknown";
-    }
-    matchResult++;
-    renderData(dataTxt, dataAuth);
-  }
-  postResult(matchResult);
 }
