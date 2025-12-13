@@ -10,7 +10,7 @@
   width: 100%;
   height: 100vh;
   min-height: 100vh;
-  padding-top: 2.5rem;
+  padding-top: 3.5rem;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -26,12 +26,12 @@
   z-index: 999;
   width: 100%;
   background: beige;
-  opacity: 0.2;
+  opacity: 0.5;
   transition: all 0.5s linear;
 }
 
 .search-bar:hover {
-  opacity: 0.8;
+  opacity: 1;
 }
 
 #search {
@@ -61,10 +61,10 @@ label {
   height: 540px;
   border: 2px solid thistle;
   border-radius: 8rem;
-  opacity: 0.8;
   background: url("./yoda.gif");
   background-size: contain;
   background-position: center;
+  animation: qAnim 0.7s linear;
 }
 
 .quote {
@@ -72,11 +72,15 @@ label {
   min-height: 1.5em;
   margin-top: 10px;
   padding: 0.5em;
-  background: linear-gradient(rgba(50, 50, 150, 0.2), rgba(200, 200, 200, 0.8));
+  background: rgba(247, 230, 230, 0.7);
   background-size: auto;
   background-position: top;
   color: black;
   animation: qAnim 0.7s linear;
+}
+
+.quote:hover {
+  background: rgba(255, 228, 196, 0.7);
 }
 
 @keyframes qAnim {
