@@ -86,6 +86,7 @@ label {
   background-size: contain;
   background-position: center;
   animation: qAnim 1s linear;
+  opacity: 0.8;
 }
 
 .quote {
@@ -100,6 +101,7 @@ label {
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
   animation: qAnim 0.7s linear;
+  transition: all 0.5s ease;
 }
 
 .quote:hover {
