@@ -6,6 +6,11 @@ function App() {
   const [query, setQuery] = useState("");
   const [filterMode, setFilterMode] = useState("OR");
   const [quotes, setQuotes] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   const handleRadioChange = (e) => {
     setFilterMode(e.target.value);
@@ -24,7 +29,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className={`App ${isDarkMode ? "dark" : ""}`}>
       <div className="search-bar">
         <input
           type="text"
@@ -43,7 +48,7 @@ function App() {
             checked={filterMode === "OR"}
             onChange={handleRadioChange}
           />
-          <label htmlFor="optOr">OR</label>
+          <label htmlFor="optOr">or</label>
           <input
             type="radio"
             id="optAnd"
@@ -52,9 +57,12 @@ function App() {
             checked={filterMode === "AND"}
             onChange={handleRadioChange}
           />
-          <label htmlFor="optAnd">AND</label>
-          <label id="resNum"> / (Találat: {quotes.length})</label>
+          <label htmlFor="optAnd">and</label>
+          <label id="resNum"> (Found: {quotes.length})</label>
         </div>
+        <button className="theme-toggle" onClick={toggleDarkMode}>
+          {isDarkMode ? "Light Mode" : "Dark Mode"}
+        </button>
       </div>
 
       <div className="container">

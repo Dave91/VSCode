@@ -5,7 +5,12 @@
 }
 
 .App {
-  background: url("./clouds.jpg");
+  --bg-img: url("./clouds.jpg");
+  --border-color: #323296;
+  --txt-color: black;
+  --bg-color: rgba(200, 200, 200, 0.8);
+
+  background: var(--bg-img);
   background-size: cover;
   width: 100%;
   height: 100vh;
@@ -17,6 +22,13 @@
   font-size: calc(5px + 2vmin);
   color: black;
   overflow-y: scroll;
+}
+
+.App.dark {
+  --bg-img: url("./space.jpg");
+  --border-color: #e20303d0;
+  --txt-color: #f0f0f0;
+  --bg-color: rgba(20, 0, 0, 0.6);
 }
 
 .search-bar {
@@ -52,6 +64,15 @@ label {
   margin-right: 5px;
 }
 
+.theme-toggle {
+  float: right;
+  margin: 10px 25px 5px 0px;
+  padding: 5px 5px;
+  background: bisque;
+  border: 2px solid salmon;
+  border-radius: 5px;
+  cursor: pointer;
+}
 .yoda {
   position: absolute;
   top: 55vh;
@@ -64,18 +85,20 @@ label {
   background: url("./yoda.gif");
   background-size: contain;
   background-position: center;
-  animation: qAnim 0.7s linear;
+  animation: qAnim 1s linear;
 }
 
 .quote {
   width: 100%;
   min-height: 1.5em;
-  margin-top: 10px;
+  margin-top: 5px;
   padding: 0.5em;
-  background: rgba(247, 230, 230, 0.7);
+  background: var(--bg-color);
   background-size: auto;
   background-position: top;
-  color: black;
+  color: var(--txt-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
   animation: qAnim 0.7s linear;
 }
 
