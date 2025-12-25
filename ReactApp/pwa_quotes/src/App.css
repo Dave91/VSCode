@@ -55,7 +55,7 @@
 
 .opt {
   float: left;
-  margin: 15px 5px;
+  margin: 5px 5px;
 }
 
 #optOr,
@@ -64,15 +64,24 @@ label {
   margin-right: 5px;
 }
 
-.theme-toggle {
-  float: right;
-  margin: 10px 25px 5px 0px;
+.menubtn {
+  margin: 5px 5px;
   padding: 5px 5px;
   background: bisque;
   border: 2px solid salmon;
   border-radius: 5px;
   cursor: pointer;
 }
+
+#theme-toggle {
+  float: right;
+  margin-right: 25px;
+}
+
+.menubtn:hover {
+  background: peachpuff;
+}
+
 .yoda {
   position: absolute;
   top: 55vh;

@@ -1,5 +1,10 @@
 import DBdata from "./DB.js";
 
+export async function fetchRandomQuote() {
+  const randomIndex = Math.floor(Math.random() < 0.5 ? Math.random() * DBdata.length : Math.random() * DBdata.length);
+  return DBdata[randomIndex];
+}
+
 export async function fetchData(query, filtMode) {
   let results = [];
 

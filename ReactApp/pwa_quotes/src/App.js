@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { fetchData } from "./Data";
+import { fetchData, fetchRandomQuote } from "./Data";
 import "./App.css";
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
   const [filterMode, setFilterMode] = useState("OR");
   const [quotes, setQuotes] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isRandom, setIsRandom] = useState(false);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -16,15 +17,25 @@ function App() {
     setFilterMode(e.target.value);
   };
 
-  const search = async (event) => {
-    if (event.key === "Enter") {
-      try {
-        const resultData = await fetchData(query, filterMode);
-        setQuotes(resultData);
-      } catch (error) {
-        console.error("Hiba történt a kereséskor:", error);
-        setQuotes([]);
-      }
+  const search = async () => {
+    try {
+      const resultData = await fetchData(query, filterMode);
+      setQuotes(resultData);
+      setIsRandom(false);
+    } catch (error) {
+      console.error("Hiba történt a kereséskor:", error);
+      setQuotes([]);
+    }
+  };
+
+  const randomQuote = async () => {
+    try {
+      const quote = await fetchRandomQuote();
+      setQuotes([quote]);
+      setIsRandom(true);
+    } catch (error) {
+      console.error("Hiba történt a véletlen idézet kérésekor:", error);
+      setQuotes([]);
     }
   };
 
@@ -34,10 +45,10 @@ function App() {
         <input
           type="text"
           id="search"
-          placeholder="Kutass az Erőben..."
+          placeholder="Separate keywords with spaces"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={search}
+          onKeyDown={(e) => (e.key === "Enter" ? search() : null)}
         />
         <div className="opt">
           <input
@@ -58,9 +69,14 @@ function App() {
             onChange={handleRadioChange}
           />
           <label htmlFor="optAnd">and</label>
-          <label id="resNum"> (Found: {quotes.length})</label>
+          <button className="menubtn" onClick={search}>
+            Search
+          </button>
+          <button className="menubtn" onClick={randomQuote}>
+            Random Quote
+          </button>
         </div>
-        <button className="theme-toggle" onClick={toggleDarkMode}>
+        <button className="menubtn" id="theme-toggle" onClick={toggleDarkMode}>
           {isDarkMode ? "Light Mode" : "Dark Mode"}
         </button>
       </div>
@@ -75,6 +91,7 @@ function App() {
             </div>
           ))
         )}
+        {isRandom ? <div className="yoda"></div> : null}
       </div>
     </div>
   );
