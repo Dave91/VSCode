@@ -1,34 +1,42 @@
-const canvas = document.getElementById('canvas1');
-const context = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const canvas = document.getElementById("canvas1");
+const context = canvas.getContext("2d");
 
-const symbols = "0123456789QWERTZUIOPASDFGHJKLYXCVBNMアイウエオカキクケコサシスセソガギグゲゴパピプペポ";
-const dropSize = 14;
-const dropsTotal = canvas.width / dropSize;
-const dropsArray = [];
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  init();
+}
+
+const symbols =
+  "0123456789QWERTZUIOPASDFGHJKLYXCVBNMアイウエオカキクケコサシスセソガギグゲゴパピプペポ";
+const dropSize = 18;
+let drops = [];
 
 function init() {
-	for (let d = 0; d < dropsTotal; d++) {
-		dropsArray[d] = 1;
-	}
+  const dropsTotal = Math.floor(canvas.width / dropSize);
+  drops = [];
+  for (let d = 0; d < dropsTotal; d++) {
+    drops[d] = Math.random() * -100;
+  }
 }
 
-function update() {
-	context.fillStyle = "rgba(0, 0, 0, 0.05)";
-	context.fillRect(0, 0, canvas.width, canvas.height);
-	context.fillStyle = "green";
-	context.font = dropSize + "px monospace";
-	context.textAlign = "center";
-	for (let drop of dropsArray) {
-		let char = symbols.charAt(Math.floor(Math.random() * symbols.length));
-		context.fillText(char, drop * dropSize, dropsArray[drop] * dropSize);
-		if (dropsArray[drop] * dropSize > canvas.height && Math.random() > 0.985) {
-			dropsArray[drop] = 0;
-		}
-		dropsArray[drop]++;
-	}
+function draw() {
+  context.fillStyle = "rgba(0, 0, 0, 0.05)";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = "#0F0";
+  context.font = dropSize + "px monospace";
+  context.textAlign = "center";
+  for (let d = 0; d < drops.length; d++) {
+    const char = symbols.charAt(Math.floor(Math.random() * symbols.length));
+    context.fillText(char, d * dropSize, drops[d] * dropSize);
+    if (drops[d] * dropSize > canvas.height && Math.random() > 0.975) {
+      drops[d] = 0;
+    }
+    drops[d]++;
+  }
+	//requestAnimationFrame(draw);
 }
 
-init();
-setInterval(update, 30);
+window.addEventListener("resize", resize);
+resize();
+setInterval(draw, 30);
