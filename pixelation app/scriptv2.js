@@ -1,23 +1,33 @@
 const canvas = document.getElementById("canvas1");
 const context = canvas.getContext("2d");
+const textInput = document.getElementById("textInput");
+let specialWords = ["MATRIX-IS-EVERYWHERE", "NEO", "WHITE-RABBIT"];
+
+textInput.addEventListener("input", (e) => {
+  if (e.target.value) {
+    specialWords = [];
+    specialWords.push(e.target.value);
+  } else {
+    specialWords = ["MATRIX-IS-EVERYWHERE", "NEO", "WHITE-RABBIT"];
+  }
+  inputTextArray.push(e.target.value);
+});
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// todo: user can add custom words from input field
 const symbols =
   "0123456789QWERTZUIOPASDFGHJKLYXCVBNMアイウエオカキクケコサシスセソガギグゲゴパピプペポ";
-const specialWords = ["MATRIX-IS-EVERYWHERE", "DAVID", "WHITE-RABBIT"];
 const dropSize = 18;
 const dropsTotal = Math.floor(canvas.width / dropSize);
 const drops = [];
 
 for (let d = 0; d < dropsTotal; d++) {
-	drops[d] = {
-		y: Math.random() * -100,
-		word: "",
-		wordInd: 0,
-	};
+  drops[d] = {
+    y: Math.random() * -100,
+    word: "",
+    wordInd: 0,
+  };
 }
 
 function draw() {
@@ -55,7 +65,7 @@ function draw() {
 }
 
 window.addEventListener("resize", () => {
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 });
 setInterval(draw, 30);
