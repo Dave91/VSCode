@@ -8,7 +8,7 @@ const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
-  1000
+  1000,
 );
 const renderer = new THREE.WebGLRenderer();
 camera.position.set(50, 50, 25);
@@ -35,7 +35,7 @@ scene.background = spaceTexture;
 const modal = document.getElementById("modal");
 modal.addEventListener("click", function () {
   modal.style.display = "none";
-})
+});
 
 // Scales/object data
 
@@ -67,7 +67,7 @@ function createObj(objText, objNorm, objDia, objXYZ) {
     new THREE.MeshStandardMaterial({
       map: new THREE.TextureLoader().load(objText),
       normalMap: new THREE.TextureLoader().load(objNorm),
-    })
+    }),
   );
   scene.add(obj);
   obj.position.set(objXYZ[0], objXYZ[1], objXYZ[2]);
@@ -82,7 +82,7 @@ const mercury = createObj(
   "./images/mercury.jpg",
   "./images/mercury.jpg",
   mercuryDia,
-  [mercuryDist, 0, 0]
+  [mercuryDist, 0, 0],
 );
 const venus = createObj("./images/venus.jpg", "./images/venus.jpg", venusDia, [
   venusDist,
@@ -93,7 +93,7 @@ const earth = createObj(
   "./images/earthwithtopo.jpg",
   "./images/earthwithtopo.jpg",
   earthDia,
-  [earthDist, 0, 0]
+  [earthDist, 0, 0],
 );
 const mars = createObj("./images/mars.jpg", "./images/marsnorm.jpg", marsDia, [
   marsDist,
@@ -104,25 +104,25 @@ const jupiter = createObj(
   "./images/jupiter.jpg",
   "./images/jupiter.jpg",
   jupiterDia,
-  [jupiterDist, 0, 0]
+  [jupiterDist, 0, 0],
 );
 const saturn = createObj(
   "./images/saturn.jpg",
   "./images/saturn.jpg",
   saturnDia,
-  [saturnDist, 0, 0]
+  [saturnDist, 0, 0],
 );
 const uranus = createObj(
   "./images/uranus.jpg",
   "./images/uranus.jpg",
   uranusDia,
-  [uranusDist, 0, 0]
+  [uranusDist, 0, 0],
 );
 const neptune = createObj(
   "./images/neptune.jpg",
   "./images/neptune.jpg",
   neptuneDia,
-  [neptuneDist, 0, 0]
+  [neptuneDist, 0, 0],
 );
 
 // Moons
@@ -131,120 +131,120 @@ const moon = createObj(
   "./images/moon.jpg",
   "./images/moonnorm.jpg",
   earthDia / 5,
-  [earthDist, 0, 2]
+  [earthDist, 0, 2],
 );
 // Mars moons
 const phobos = createObj(
   "./images/phobos.jpg",
   "./images/phobos.jpg",
   marsDia / 5,
-  [marsDist, 0, 2]
+  [marsDist, 0, 2],
 );
 const deimos = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   marsDia / 5,
-  [marsDist, 0, 3]
+  [marsDist, 0, 3],
 );
 // Jupiter moons
 const io = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   jupiterDia / 20,
-  [jupiterDist, 0, 4]
+  [jupiterDist, 0, 4],
 );
 const europa = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   jupiterDia / 20,
-  [jupiterDist, 0, 5]
+  [jupiterDist, 0, 5],
 );
 const ganymedes = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   jupiterDia / 20,
-  [jupiterDist, 0, 6]
+  [jupiterDist, 0, 6],
 );
 const callisto = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   jupiterDia / 20,
-  [jupiterDist, 0, 7]
+  [jupiterDist, 0, 7],
 );
 // Saturn moons
 const thetis = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   saturnDia / 20,
-  [saturnDist, 0, 4]
+  [saturnDist, 0, 4],
 );
 const dione = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   saturnDia / 20,
-  [saturnDist, 0, 5]
+  [saturnDist, 0, 5],
 );
 const rhea = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   saturnDia / 20,
-  [saturnDist, 0, 6]
+  [saturnDist, 0, 6],
 );
 const titan = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   saturnDia / 20,
-  [saturnDist, 0, 7]
+  [saturnDist, 0, 7],
 );
 const japetu = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   saturnDia / 20,
-  [saturnDist, 0, 8]
+  [saturnDist, 0, 8],
 );
 // Uranus moons
 const miranda = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   uranusDia / 18,
-  [uranusDist, 0, 4]
+  [uranusDist, 0, 4],
 );
 const ariel = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   uranusDia / 18,
-  [uranusDist, 0, 5]
+  [uranusDist, 0, 5],
 );
 const umbriel = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   uranusDia / 18,
-  [uranusDist, 0, 6]
+  [uranusDist, 0, 6],
 );
 const titania = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   uranusDia / 18,
-  [uranusDist, 0, 7]
+  [uranusDist, 0, 7],
 );
 const oberon = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   uranusDia / 18,
-  [uranusDist, 0, 8]
+  [uranusDist, 0, 8],
 );
 // Neptune moons
 const triton = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   neptuneDia / 18,
-  [neptuneDist, 0, 4]
+  [neptuneDist, 0, 4],
 );
 const nereida = createObj(
   "./images/deimos.jpg",
   "./images/deimos.jpg",
   neptuneDia / 18,
-  [neptuneDist, 0, 5]
+  [neptuneDist, 0, 5],
 );
 
 // Object Lists
@@ -287,24 +287,14 @@ const menus = document.getElementsByClassName("menusel");
 const infotxt = document.getElementById("objinfo");
 
 // Info Text Loader
-function loadInfoTxt(infofile) {
-  let request = new XMLHttpRequest();
-  request.open("GET", "./info/" + infofile + ".txt", true);
-  request.responseType = "blob";
-  request.onerror = function () {
-    console.log(request.error);
-  };
-  request.onload = function () {
-    let reader = new FileReader();
-    reader.readAsText(request.response);
-    reader.onerror = function () {
-      console.log(reader.error);
-    };
-    reader.onload = function () {
-      infotxt.innerHTML = reader.result;
-    };
-  };
-  request.send();
+async function loadInfoTxt(infofile) {
+  try {
+    const response = await fetch(`./info/${infofile}.txt`);
+    const text = await response.text();
+    infotxt.innerHTML = text;
+  } catch (error) {
+    console.error("Error fetching info text:", error);
+  }
 }
 
 for (let ms of menus) {
