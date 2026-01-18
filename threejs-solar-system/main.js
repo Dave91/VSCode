@@ -20,8 +20,8 @@ renderer.render(scene, camera);
 
 // Lights
 
-const pointLight = new THREE.PointLight(0xffffff, 1.4);
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+const pointLight = new THREE.PointLight(0xffffff, 2);
+const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(pointLight, ambientLight);
 pointLight.position.set(0, 0, 0);
 
@@ -29,6 +29,25 @@ pointLight.position.set(0, 0, 0);
 
 const spaceTexture = new THREE.TextureLoader().load("./images/bg4.jpg");
 scene.background = spaceTexture;
+
+// Textures
+
+const sunTexture = new THREE.TextureLoader().load("./images/sun.jpg");
+const mercuryTexture = new THREE.TextureLoader().load("./images/mercury.jpg");
+const venusTexture = new THREE.TextureLoader().load("./images/venus.jpg");
+const earthTexture = new THREE.TextureLoader().load(
+  "./images/earthwithtopo.jpg",
+);
+const marsTexture = new THREE.TextureLoader().load("./images/mars.jpg");
+const marsNorm = new THREE.TextureLoader().load("./images/marsnorm.jpg");
+const jupiterTexture = new THREE.TextureLoader().load("./images/jupiter.jpg");
+const saturnTexture = new THREE.TextureLoader().load("./images/saturn.jpg");
+const uranusTexture = new THREE.TextureLoader().load("./images/uranus.jpg");
+const neptuneTexture = new THREE.TextureLoader().load("./images/neptune.jpg");
+const moonTexture = new THREE.TextureLoader().load("./images/moon.jpg");
+const moonNorm = new THREE.TextureLoader().load("./images/moonnorm.jpg");
+const phobosTexture = new THREE.TextureLoader().load("./images/phobos.jpg");
+const deimosTexture = new THREE.TextureLoader().load("./images/deimos.jpg");
 
 // Modal Intro
 
@@ -65,187 +84,173 @@ function createObj(objText, objNorm, objDia, objXYZ) {
   let obj = new THREE.Mesh(
     new THREE.SphereGeometry(objDia, 64, 64),
     new THREE.MeshStandardMaterial({
-      map: new THREE.TextureLoader().load(objText),
-      normalMap: new THREE.TextureLoader().load(objNorm),
+      map: objText,
+      normalMap: objNorm,
     }),
   );
   scene.add(obj);
   obj.position.set(objXYZ[0], objXYZ[1], objXYZ[2]);
+  createOrbit(objDia / 2, objXYZ);
   return obj;
 }
 
+function createOrbit(orbitRad, orbitCoreXYZ) {
+  const geometry = new THREE.RingGeometry(
+    orbitCoreXYZ[1],
+    orbitCoreXYZ[1] + orbitRad * 2,
+    128,
+  );
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+    transparent: true,
+    opacity: 0.2,
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.set(orbitCoreXYZ[0], 0, 0);
+  mesh.rotation.x = Math.PI / 2;
+  scene.add(mesh);
+}
+
 // Sun
-const sun = createObj("./images/sun.jpg", "", N / 2, [0, 0, 0]);
+const sun = createObj(sunTexture, "", N / 2, [0, 0, 0]);
 
 // Planets
-const mercury = createObj(
-  "./images/mercury.jpg",
-  "./images/mercury.jpg",
-  mercuryDia,
-  [mercuryDist, 0, 0],
-);
-const venus = createObj("./images/venus.jpg", "./images/venus.jpg", venusDia, [
+const mercury = createObj(mercuryTexture, mercuryTexture, mercuryDia, [
+  mercuryDist,
+  0,
+  0,
+]);
+const venus = createObj(venusTexture, venusTexture, venusDia, [
   venusDist,
   0,
   0,
 ]);
-const earth = createObj(
-  "./images/earthwithtopo.jpg",
-  "./images/earthwithtopo.jpg",
-  earthDia,
-  [earthDist, 0, 0],
-);
-const mars = createObj("./images/mars.jpg", "./images/marsnorm.jpg", marsDia, [
-  marsDist,
+const earth = createObj(earthTexture, earthTexture, earthDia, [
+  earthDist,
   0,
   0,
 ]);
-const jupiter = createObj(
-  "./images/jupiter.jpg",
-  "./images/jupiter.jpg",
-  jupiterDia,
-  [jupiterDist, 0, 0],
-);
-const saturn = createObj(
-  "./images/saturn.jpg",
-  "./images/saturn.jpg",
-  saturnDia,
-  [saturnDist, 0, 0],
-);
-const uranus = createObj(
-  "./images/uranus.jpg",
-  "./images/uranus.jpg",
-  uranusDia,
-  [uranusDist, 0, 0],
-);
-const neptune = createObj(
-  "./images/neptune.jpg",
-  "./images/neptune.jpg",
-  neptuneDia,
-  [neptuneDist, 0, 0],
-);
+const mars = createObj(marsTexture, marsNorm, marsDia, [marsDist, 0, 0]);
+const jupiter = createObj(jupiterTexture, jupiterTexture, jupiterDia, [
+  jupiterDist,
+  0,
+  0,
+]);
+const saturn = createObj(saturnTexture, saturnTexture, saturnDia, [
+  saturnDist,
+  0,
+  0,
+]);
+const uranus = createObj(uranusTexture, uranusTexture, uranusDia, [
+  uranusDist,
+  0,
+  0,
+]);
+const neptune = createObj(neptuneTexture, neptuneTexture, neptuneDia, [
+  neptuneDist,
+  0,
+  0,
+]);
 
 // Moons
 // Earth Moon
-const moon = createObj(
-  "./images/moon.jpg",
-  "./images/moonnorm.jpg",
-  earthDia / 5,
-  [earthDist, 0, 2],
-);
+const moon = createObj(moonTexture, moonNorm, earthDia / 5, [earthDist, 0, 2]);
 // Mars moons
-const phobos = createObj(
-  "./images/phobos.jpg",
-  "./images/phobos.jpg",
-  marsDia / 5,
-  [marsDist, 0, 2],
-);
-const deimos = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  marsDia / 5,
-  [marsDist, 0, 3],
-);
+const phobos = createObj(phobosTexture, phobosTexture, marsDia / 5, [
+  marsDist,
+  0,
+  2,
+]);
+const deimos = createObj(deimosTexture, deimosTexture, marsDia / 5, [
+  marsDist,
+  0,
+  3,
+]);
 // Jupiter moons
-const io = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  jupiterDia / 20,
-  [jupiterDist, 0, 4],
-);
-const europa = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  jupiterDia / 20,
-  [jupiterDist, 0, 5],
-);
-const ganymedes = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  jupiterDia / 20,
-  [jupiterDist, 0, 6],
-);
-const callisto = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  jupiterDia / 20,
-  [jupiterDist, 0, 7],
-);
+const io = createObj(deimosTexture, deimosTexture, jupiterDia / 20, [
+  jupiterDist,
+  0,
+  4,
+]);
+const europa = createObj(deimosTexture, deimosTexture, jupiterDia / 20, [
+  jupiterDist,
+  0,
+  5,
+]);
+const ganymedes = createObj(deimosTexture, deimosTexture, jupiterDia / 20, [
+  jupiterDist,
+  0,
+  6,
+]);
+const callisto = createObj(deimosTexture, deimosTexture, jupiterDia / 20, [
+  jupiterDist,
+  0,
+  7,
+]);
 // Saturn moons
-const thetis = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  saturnDia / 20,
-  [saturnDist, 0, 4],
-);
-const dione = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  saturnDia / 20,
-  [saturnDist, 0, 5],
-);
-const rhea = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  saturnDia / 20,
-  [saturnDist, 0, 6],
-);
-const titan = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  saturnDia / 20,
-  [saturnDist, 0, 7],
-);
-const japetu = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  saturnDia / 20,
-  [saturnDist, 0, 8],
-);
+const thetis = createObj(deimosTexture, deimosTexture, saturnDia / 20, [
+  saturnDist,
+  0,
+  4,
+]);
+const dione = createObj(deimosTexture, deimosTexture, saturnDia / 20, [
+  saturnDist,
+  0,
+  5,
+]);
+const rhea = createObj(deimosTexture, deimosTexture, saturnDia / 20, [
+  saturnDist,
+  0,
+  6,
+]);
+const titan = createObj(deimosTexture, deimosTexture, saturnDia / 20, [
+  saturnDist,
+  0,
+  7,
+]);
+const japetu = createObj(deimosTexture, deimosTexture, saturnDia / 20, [
+  saturnDist,
+  0,
+  8,
+]);
 // Uranus moons
-const miranda = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  uranusDia / 18,
-  [uranusDist, 0, 4],
-);
-const ariel = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  uranusDia / 18,
-  [uranusDist, 0, 5],
-);
-const umbriel = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  uranusDia / 18,
-  [uranusDist, 0, 6],
-);
-const titania = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  uranusDia / 18,
-  [uranusDist, 0, 7],
-);
-const oberon = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  uranusDia / 18,
-  [uranusDist, 0, 8],
-);
+const miranda = createObj(deimosTexture, deimosTexture, uranusDia / 18, [
+  uranusDist,
+  0,
+  4,
+]);
+const ariel = createObj(deimosTexture, deimosTexture, uranusDia / 18, [
+  uranusDist,
+  0,
+  5,
+]);
+const umbriel = createObj(deimosTexture, deimosTexture, uranusDia / 18, [
+  uranusDist,
+  0,
+  6,
+]);
+const titania = createObj(deimosTexture, deimosTexture, uranusDia / 18, [
+  uranusDist,
+  0,
+  7,
+]);
+const oberon = createObj(deimosTexture, deimosTexture, uranusDia / 18, [
+  uranusDist,
+  0,
+  8,
+]);
 // Neptune moons
-const triton = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  neptuneDia / 18,
-  [neptuneDist, 0, 4],
-);
-const nereida = createObj(
-  "./images/deimos.jpg",
-  "./images/deimos.jpg",
-  neptuneDia / 18,
-  [neptuneDist, 0, 5],
-);
+const triton = createObj(deimosTexture, deimosTexture, neptuneDia / 18, [
+  neptuneDist,
+  0,
+  4,
+]);
+const nereida = createObj(deimosTexture, deimosTexture, neptuneDia / 18, [
+  neptuneDist,
+  0,
+  5,
+]);
 
 // Object Lists
 
@@ -317,7 +322,7 @@ window.addEventListener("keydown", function (ev) {
   if (ev.code != "Space") {
     return;
   }
-  animIsPaused = animIsPaused ? false : true;
+  animIsPaused = !animIsPaused;
   infobox.style.display = animIsPaused ? "grid" : "none";
   infotxt.innerHTML = "";
   camera.position.set(50, 50, 25);
