@@ -2,6 +2,7 @@
   "name": "threejs-solar-system",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/threejs-solar-system",
   "dependencies": {
     "buffer": "^6.0.3",
     "fs": "^0.0.1-security",
