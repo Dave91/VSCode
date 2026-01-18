@@ -20,8 +20,8 @@ renderer.render(scene, camera);
 
 // Lights
 
-const pointLight = new THREE.PointLight(0xffffff, 2);
-const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+const pointLight = new THREE.PointLight(0xffffff, 1.5);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
 scene.add(pointLight, ambientLight);
 pointLight.position.set(0, 0, 0);
 
@@ -114,6 +114,8 @@ function createOrbit(orbitRad, orbitCoreXYZ) {
 
 // Sun
 const sun = createObj(sunTexture, "", N / 2, [0, 0, 0]);
+sun.material.emissive = new THREE.Color(0xffffff);
+sun.material.emissiveIntensity = 0.5;
 
 // Planets
 const mercury = createObj(mercuryTexture, mercuryTexture, mercuryDia, [
