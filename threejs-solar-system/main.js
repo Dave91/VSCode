@@ -1,5 +1,9 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import {
+  CSS2DRenderer,
+  CSS2DObject,
+} from "three/examples/jsm/renderers/CSS2DRenderer.js";
 
 // Setup
 
@@ -15,8 +19,14 @@ camera.position.set(50, 50, 25);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-
 renderer.render(scene, camera);
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(window.innerWidth, window.innerHeight);
+labelRenderer.domElement.style.position = "absolute";
+labelRenderer.domElement.style.top = "0px";
+labelRenderer.domElement.style.pointerEvents = "none";
+document.body.appendChild(labelRenderer.domElement);
+labelRenderer.render(scene, camera);
 
 // Lights
 
@@ -27,8 +37,15 @@ pointLight.position.set(0, 0, 0);
 
 // Background
 
-const spaceTexture = new THREE.TextureLoader().load("./images/bg4.jpg");
-scene.background = spaceTexture;
+const skyboxLoader = new THREE.TextureLoader();
+const skyboxTexture = skyboxLoader.load("./images/bg1.jpg", () => {
+  skyboxTexture.mapping = THREE.EquirectangularReflectionMapping;
+  skyboxTexture.colorSpace = THREE.SRGBColorSpace;
+  scene.background = skyboxTexture;
+});
+
+//const spaceTexture = new THREE.TextureLoader().load("./images/bg1.jpg");
+//scene.background = spaceTexture;
 
 // Textures
 
@@ -67,7 +84,6 @@ const jupiterDia = N / 9.7;
 const saturnDia = N / 11.6;
 const uranusDia = N / 27.2;
 const neptuneDia = N / 28.1;
-
 const scaleDown = 100;
 
 // distances from sun, pos(x)
@@ -90,26 +106,44 @@ function createObj(objText, objNorm, objDia, objXYZ) {
   );
   scene.add(obj);
   obj.position.set(objXYZ[0], objXYZ[1], objXYZ[2]);
-  createOrbit(objDia / 2, objXYZ);
+  const orbit = createOrbitLine(objDia / 2, objXYZ);
+  const label = createLabel("text", objDia / 2, objXYZ);
+  scene.add(orbit);
+  scene.add(label);
   return obj;
 }
 
-function createOrbit(orbitRad, orbitCoreXYZ) {
-  const geometry = new THREE.RingGeometry(
-    orbitCoreXYZ[1],
-    orbitCoreXYZ[1] + orbitRad * 2,
-    128,
+function createOrbitLine(rad, XYZ) {
+  const curve = new THREE.EllipseCurve(
+    XYZ[0],
+    XYZ[1],
+    rad,
+    rad,
+    0,
+    2 * Math.PI,
+    false,
+    0,
   );
-  const material = new THREE.MeshBasicMaterial({
+  const points = curve.getPoints(100);
+  const orbitGeom = new THREE.BufferGeometry().setFromPoints(points);
+  const orbitMat = new THREE.LineBasicMaterial({
     color: 0xffffff,
-    side: THREE.DoubleSide,
     transparent: true,
-    opacity: 0.2,
+    opacity: 0.3,
   });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.set(orbitCoreXYZ[0], 0, 0);
-  mesh.rotation.x = Math.PI / 2;
-  scene.add(mesh);
+  const orbit = new THREE.LineLoop(orbitGeom, orbitMat);
+  orbit.rotation.x = Math.PI / 2;
+  return orbit;
+}
+
+function createLabel(text, rad, XYZ) {
+  const p = document.createElement("p");
+  p.className = "label";
+  p.textContent = text;
+  p.style.color = "white";
+  const label = new CSS2DObject(p);
+  label.position.set(XYZ[0], rad + 1, XYZ[2]);
+  return label;
 }
 
 // Sun
@@ -389,6 +423,7 @@ function animate() {
   delta += 0.005;
 
   renderer.render(scene, camera);
+  labelRenderer.render(scene, camera);
 }
 
 animate();
