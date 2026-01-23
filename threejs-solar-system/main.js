@@ -15,7 +15,7 @@ const camera = new THREE.PerspectiveCamera(
   1000,
 );
 const renderer = new THREE.WebGLRenderer();
-camera.position.set(50, 50, 25);
+camera.position.set(0, 100, 150);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -96,27 +96,42 @@ const saturnDist = (N * 1030) / scaleDown + N / 2;
 const uranusDist = (N * 2061) / scaleDown + N / 2;
 const neptuneDist = (N * 3230) / scaleDown + N / 2;
 
-function createObj(objText, objNorm, objDia, objXYZ) {
-  let obj = new THREE.Mesh(
-    new THREE.SphereGeometry(objDia, 64, 64),
-    new THREE.MeshStandardMaterial({
-      map: objText,
-      normalMap: objNorm,
-    }),
-  );
-  scene.add(obj);
-  obj.position.set(objXYZ[0], objXYZ[1], objXYZ[2]);
-  const orbit = createOrbitLine(objDia / 2, objXYZ);
-  const label = createLabel("text", objDia / 2, objXYZ);
-  scene.add(orbit);
-  scene.add(label);
-  return obj;
+// Functions to create objects, orbits, labels
+
+function createObjGroup(text, norm, dia, dist, name, parentObj, hasOrb = true) {
+  const childGroup = new THREE.Group();
+  const geometry = new THREE.SphereGeometry(dia, 32, 32);
+  const material = new THREE.MeshStandardMaterial({
+    map: text,
+    normalMap: norm || null,
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.x = dist;
+  childGroup.add(mesh);
+  const label = createLabel(name, dia);
+  mesh.add(label);
+  if (hasOrb && dist > 0) {
+    const orbit = createOrbitLine(dist);
+    parentObj.add(orbit);
+  }
+  return { child: childGroup, mesh: mesh, dist: dist };
 }
 
-function createOrbitLine(rad, XYZ) {
+function createLabel(name, dia) {
+  const p = document.createElement("p");
+  p.className = "label";
+  p.textContent = name;
+  p.style.color = "white";
+  p.style.marginTop = "-1em";
+  const label = new CSS2DObject(p);
+  label.position.set(0, dia + 1.5, 0);
+  return label;
+}
+
+function createOrbitLine(rad) {
   const curve = new THREE.EllipseCurve(
-    XYZ[0],
-    XYZ[1],
+    0,
+    0,
     rad,
     rad,
     0,
@@ -124,7 +139,7 @@ function createOrbitLine(rad, XYZ) {
     false,
     0,
   );
-  const points = curve.getPoints(100);
+  const points = curve.getPoints(128);
   const orbitGeom = new THREE.BufferGeometry().setFromPoints(points);
   const orbitMat = new THREE.LineBasicMaterial({
     color: 0xffffff,
@@ -136,157 +151,203 @@ function createOrbitLine(rad, XYZ) {
   return orbit;
 }
 
-function createLabel(text, rad, XYZ) {
-  const p = document.createElement("p");
-  p.className = "label";
-  p.textContent = text;
-  p.style.color = "white";
-  const label = new CSS2DObject(p);
-  label.position.set(XYZ[0], rad + 1, XYZ[2]);
-  return label;
-}
-
 // Sun
-const sun = createObj(sunTexture, "", N / 2, [0, 0, 0]);
-sun.material.emissive = new THREE.Color(0xffffff);
-sun.material.emissiveIntensity = 0.5;
+const sun = createObjGroup(sunTexture, "", N / 2, 0, "Sun");
+//sun.mesh.material.emissive = new THREE.Color(0xffffff);
+//sun.mesh.material.emissiveIntensity = 0.5;
 
 // Planets
-const mercury = createObj(mercuryTexture, mercuryTexture, mercuryDia, [
+const mercury = createObjGroup(
+  mercuryTexture,
+  mercuryTexture,
+  mercuryDia,
   mercuryDist,
-  0,
-  0,
-]);
-const venus = createObj(venusTexture, venusTexture, venusDia, [
+  "Mercury",
+);
+const venus = createObjGroup(
+  venusTexture,
+  venusTexture,
+  venusDia,
   venusDist,
-  0,
-  0,
-]);
-const earth = createObj(earthTexture, earthTexture, earthDia, [
+  "Venus",
+);
+const earth = createObjGroup(
+  earthTexture,
+  earthTexture,
+  earthDia,
   earthDist,
-  0,
-  0,
-]);
-const mars = createObj(marsTexture, marsNorm, marsDia, [marsDist, 0, 0]);
-const jupiter = createObj(jupiterTexture, jupiterTexture, jupiterDia, [
+  "Earth",
+);
+const mars = createObjGroup(marsTexture, marsNorm, marsDia, marsDist, "Mars");
+const jupiter = createObjGroup(
+  jupiterTexture,
+  jupiterTexture,
+  jupiterDia,
   jupiterDist,
-  0,
-  0,
-]);
-const saturn = createObj(saturnTexture, saturnTexture, saturnDia, [
+  "Jupiter",
+);
+const saturn = createObjGroup(
+  saturnTexture,
+  saturnTexture,
+  saturnDia,
   saturnDist,
-  0,
-  0,
-]);
-const uranus = createObj(uranusTexture, uranusTexture, uranusDia, [
+  "Saturn",
+);
+const uranus = createObjGroup(
+  uranusTexture,
+  uranusTexture,
+  uranusDia,
   uranusDist,
-  0,
-  0,
-]);
-const neptune = createObj(neptuneTexture, neptuneTexture, neptuneDia, [
+  "Uranus",
+);
+const neptune = createObjGroup(
+  neptuneTexture,
+  neptuneTexture,
+  neptuneDia,
   neptuneDist,
-  0,
-  0,
-]);
+  "Neptune",
+);
 
 // Moons
 // Earth Moon
-const moon = createObj(moonTexture, moonNorm, earthDia / 5, [earthDist, 0, 2]);
+const moon = createObjGroup(
+  moonTexture,
+  moonNorm,
+  earthDia / 5,
+  earthDist,
+  "Moon",
+);
 // Mars moons
-const phobos = createObj(phobosTexture, phobosTexture, marsDia / 5, [
+const phobos = createObjGroup(
+  phobosTexture,
+  phobosTexture,
+  marsDia / 5,
   marsDist,
-  0,
-  2,
-]);
-const deimos = createObj(deimosTexture, deimosTexture, marsDia / 5, [
+  "Phobos",
+);
+const deimos = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  marsDia / 5,
   marsDist,
-  0,
-  3,
-]);
+  "Deimos",
+);
 // Jupiter moons
-const io = createObj(deimosTexture, deimosTexture, jupiterDia / 20, [
+const io = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  jupiterDia / 20,
   jupiterDist,
-  0,
-  4,
-]);
-const europa = createObj(deimosTexture, deimosTexture, jupiterDia / 20, [
+  "Io",
+);
+const europa = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  jupiterDia / 20,
   jupiterDist,
-  0,
-  5,
-]);
-const ganymedes = createObj(deimosTexture, deimosTexture, jupiterDia / 20, [
+  "Europa",
+);
+const ganymedes = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  jupiterDia / 20,
   jupiterDist,
-  0,
-  6,
-]);
-const callisto = createObj(deimosTexture, deimosTexture, jupiterDia / 20, [
+  "Ganymedes",
+);
+const callisto = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  jupiterDia / 20,
   jupiterDist,
-  0,
-  7,
-]);
+  "Callisto",
+);
 // Saturn moons
-const thetis = createObj(deimosTexture, deimosTexture, saturnDia / 20, [
+const thetis = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  saturnDia / 20,
   saturnDist,
-  0,
-  4,
-]);
-const dione = createObj(deimosTexture, deimosTexture, saturnDia / 20, [
+  "Thetis",
+);
+const dione = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  saturnDia / 20,
   saturnDist,
-  0,
-  5,
-]);
-const rhea = createObj(deimosTexture, deimosTexture, saturnDia / 20, [
+  "Dione",
+);
+const rhea = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  saturnDia / 20,
   saturnDist,
-  0,
-  6,
-]);
-const titan = createObj(deimosTexture, deimosTexture, saturnDia / 20, [
+  "Rhea",
+);
+const titan = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  saturnDia / 20,
   saturnDist,
-  0,
-  7,
-]);
-const japetu = createObj(deimosTexture, deimosTexture, saturnDia / 20, [
+  "Titan",
+);
+const japetu = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  saturnDia / 20,
   saturnDist,
-  0,
-  8,
-]);
+  "Japetu",
+);
 // Uranus moons
-const miranda = createObj(deimosTexture, deimosTexture, uranusDia / 18, [
+const miranda = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  uranusDia / 18,
   uranusDist,
-  0,
-  4,
-]);
-const ariel = createObj(deimosTexture, deimosTexture, uranusDia / 18, [
+  "Miranda",
+);
+const ariel = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  uranusDia / 18,
   uranusDist,
-  0,
-  5,
-]);
-const umbriel = createObj(deimosTexture, deimosTexture, uranusDia / 18, [
+  "Ariel",
+);
+const umbriel = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  uranusDia / 18,
   uranusDist,
-  0,
-  6,
-]);
-const titania = createObj(deimosTexture, deimosTexture, uranusDia / 18, [
+  "Umbriel",
+);
+const titania = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  uranusDia / 18,
   uranusDist,
-  0,
-  7,
-]);
-const oberon = createObj(deimosTexture, deimosTexture, uranusDia / 18, [
+  "Titania",
+);
+const oberon = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  uranusDia / 18,
   uranusDist,
-  0,
-  8,
-]);
+  "Oberon",
+);
 // Neptune moons
-const triton = createObj(deimosTexture, deimosTexture, neptuneDia / 18, [
+const triton = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  neptuneDia / 18,
   neptuneDist,
-  0,
-  4,
-]);
-const nereida = createObj(deimosTexture, deimosTexture, neptuneDia / 18, [
+  "Triton",
+);
+const nereida = createObjGroup(
+  deimosTexture,
+  deimosTexture,
+  neptuneDia / 18,
   neptuneDist,
-  0,
-  5,
-]);
+  "Nereida",
+);
 
 // Object Lists
 
@@ -375,11 +436,11 @@ window.addEventListener("resize", function () {
 
 // Controls, helpers
 
-const axisHelp = new THREE.AxesHelper(1000);
-const gridHelp = new THREE.PolarGridHelper(1000, 10, 10);
+//const axisHelp = new THREE.AxesHelper(1000);
+//const gridHelp = new THREE.PolarGridHelper(1000, 10, 10);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.update();
-scene.add(axisHelp, gridHelp);
+//scene.add(axisHelp, gridHelp);
 
 // Animation Loop
 
