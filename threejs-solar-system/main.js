@@ -98,7 +98,7 @@ const neptuneDist = (N * 3230) / scaleDown + N / 2;
 
 // Functions to create objects, orbits, labels
 
-function createObjGroup(text, norm, dia, dist, name, parentObj, hasOrb = true) {
+function createSystem(text, norm, dia, dist, name, parentObj, hasOrb = true) {
   const childGroup = new THREE.Group();
   const geometry = new THREE.SphereGeometry(dia, 32, 32);
   const material = new THREE.MeshStandardMaterial({
@@ -151,207 +151,279 @@ function createOrbitLine(rad) {
   return orbit;
 }
 
-// Sun
-const sun = createObjGroup(sunTexture, "", N / 2, 0, "Sun");
-//sun.mesh.material.emissive = new THREE.Color(0xffffff);
-//sun.mesh.material.emissiveIntensity = 0.5;
+// Sun - Center Object
+const solarSystem = new THREE.Group();
+scene.add(solarSystem);
+
+const sunGeom = new THREE.SphereGeometry(N / 2, 32, 32);
+const sunMat = new THREE.MeshStandardMaterial({
+  map: sunTexture,
+  emissive: 0xffffee,
+  emissiveIntensity: 0.5,
+});
+const sunMesh = new THREE.Mesh(sunGeom, sunMat);
+solarSystem.add(sunMesh);
 
 // Planets
-const mercury = createObjGroup(
+const mercury = createSystem(
   mercuryTexture,
-  mercuryTexture,
+  null,
   mercuryDia,
   mercuryDist,
   "Mercury",
+  solarSystem,
 );
-const venus = createObjGroup(
+const venus = createSystem(
   venusTexture,
-  venusTexture,
+  null,
   venusDia,
   venusDist,
   "Venus",
+  solarSystem,
 );
-const earth = createObjGroup(
+const earth = createSystem(
   earthTexture,
-  earthTexture,
+  null,
   earthDia,
   earthDist,
   "Earth",
+  solarSystem,
 );
-const mars = createObjGroup(marsTexture, marsNorm, marsDia, marsDist, "Mars");
-const jupiter = createObjGroup(
+const mars = createSystem(
+  marsTexture,
+  marsNorm,
+  marsDia,
+  marsDist,
+  "Mars",
+  solarSystem,
+);
+const jupiter = createSystem(
   jupiterTexture,
   jupiterTexture,
   jupiterDia,
   jupiterDist,
   "Jupiter",
+  solarSystem,
 );
-const saturn = createObjGroup(
+const saturn = createSystem(
   saturnTexture,
   saturnTexture,
   saturnDia,
   saturnDist,
   "Saturn",
+  solarSystem,
 );
-const uranus = createObjGroup(
+const uranus = createSystem(
   uranusTexture,
   uranusTexture,
   uranusDia,
   uranusDist,
   "Uranus",
+  solarSystem,
 );
-const neptune = createObjGroup(
+const neptune = createSystem(
   neptuneTexture,
   neptuneTexture,
   neptuneDia,
   neptuneDist,
   "Neptune",
+  solarSystem,
 );
 
 // Moons
 // Earth Moon
-const moon = createObjGroup(
+const moon = createSystem(
   moonTexture,
   moonNorm,
-  earthDia / 5,
-  earthDist,
+  earthDia / 4,
+  5,
   "Moon",
+  earth.mesh,
 );
 // Mars moons
-const phobos = createObjGroup(
+const phobos = createSystem(
   phobosTexture,
-  phobosTexture,
+  null,
   marsDia / 5,
-  marsDist,
+  3,
   "Phobos",
+  mars.mesh,
 );
-const deimos = createObjGroup(
+const deimos = createSystem(
   deimosTexture,
-  deimosTexture,
-  marsDia / 5,
-  marsDist,
+  null,
+  marsDia / 6,
+  5,
   "Deimos",
+  mars.mesh,
 );
 // Jupiter moons
-const io = createObjGroup(
+const io = createSystem(
   deimosTexture,
-  deimosTexture,
+  null,
   jupiterDia / 20,
-  jupiterDist,
+  5,
   "Io",
+  jupiter.mesh,
 );
-const europa = createObjGroup(
+const europa = createSystem(
   deimosTexture,
   deimosTexture,
   jupiterDia / 20,
   jupiterDist,
   "Europa",
+  jupiter.mesh,
 );
-const ganymedes = createObjGroup(
+const ganymedes = createSystem(
   deimosTexture,
   deimosTexture,
   jupiterDia / 20,
   jupiterDist,
   "Ganymedes",
+  jupiter.mesh,
 );
-const callisto = createObjGroup(
+const callisto = createSystem(
   deimosTexture,
   deimosTexture,
   jupiterDia / 20,
   jupiterDist,
   "Callisto",
+  jupiter.mesh,
 );
 // Saturn moons
-const thetis = createObjGroup(
+const thetis = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
   saturnDist,
   "Thetis",
+  saturn.mesh,
 );
-const dione = createObjGroup(
+const dione = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
   saturnDist,
   "Dione",
+  saturn.mesh,
 );
-const rhea = createObjGroup(
+const rhea = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
   saturnDist,
   "Rhea",
+  saturn.mesh,
 );
-const titan = createObjGroup(
+const titan = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
   saturnDist,
   "Titan",
+  saturn.mesh,
 );
-const japetu = createObjGroup(
+const japetu = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
   saturnDist,
   "Japetu",
+  saturn.mesh,
 );
 // Uranus moons
-const miranda = createObjGroup(
+const miranda = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
   uranusDist,
   "Miranda",
+  uranus.mesh,
 );
-const ariel = createObjGroup(
+const ariel = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
   uranusDist,
   "Ariel",
+  uranus.mesh,
 );
-const umbriel = createObjGroup(
+const umbriel = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
   uranusDist,
   "Umbriel",
+  uranus.mesh,
 );
-const titania = createObjGroup(
+const titania = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
   uranusDist,
   "Titania",
+  uranus.mesh,
 );
-const oberon = createObjGroup(
+const oberon = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
   uranusDist,
   "Oberon",
+  uranus.mesh,
 );
 // Neptune moons
-const triton = createObjGroup(
+const triton = createSystem(
   deimosTexture,
   deimosTexture,
   neptuneDia / 18,
   neptuneDist,
   "Triton",
+  neptune.mesh,
 );
-const nereida = createObjGroup(
+const nereida = createSystem(
   deimosTexture,
   deimosTexture,
   neptuneDia / 18,
   neptuneDist,
   "Nereida",
+  neptune.mesh,
 );
 
 // Object Lists
 
-let planets = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune];
+const planetObjects = [
+  { obj: mercury, speed: 0.04 },
+  { obj: venus, speed: 0.015 },
+  { obj: earth, speed: 0.01 },
+  { obj: mars, speed: 0.008 },
+  { obj: jupiter, speed: 0.004 },
+  { obj: saturn, speed: 0.003 },
+  { obj: uranus, speed: 0.002 },
+  { obj: neptune, speed: 0.001 },
+];
+const moonObjects = [
+  { obj: moon, speed: 0.05 },
+  { obj: phobos, speed: 0.1 },
+  { obj: deimos, speed: 0.08 },
+  { obj: io, speed: 0.07 },
+  { obj: europa, speed: 0.06 },
+  { obj: ganymedes, speed: 0.05 },
+  { obj: callisto, speed: 0.04 },
+  { obj: thetis, speed: 0.03 },
+  { obj: dione, speed: 0.02 },
+  { obj: rhea, speed: 0.01 },
+  { obj: titan, speed: 0.009 },
+  { obj: japetu, speed: 0.008 },
+  { obj: miranda, speed: 0.007 },
+  { obj: ariel, speed: 0.006 },
+  { obj: umbriel, speed: 0.005 },
+  { obj: titania, speed: 0.004 },
+  { obj: oberon, speed: 0.003 },
+  { obj: triton, speed: 0.002 },
+  { obj: nereida, speed: 0.001 },
+];
+
 let planetDias = [
   mercuryDia,
   venusDia,
@@ -372,7 +444,7 @@ let planetDists = [
   uranusDist,
   neptuneDist,
 ];
-let moons = [
+let moonLists = [
   [],
   [],
   [moon],
