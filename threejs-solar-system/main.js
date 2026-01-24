@@ -38,33 +38,33 @@ pointLight.position.set(0, 0, 0);
 // Background
 
 const skyboxLoader = new THREE.TextureLoader();
-const skyboxTexture = skyboxLoader.load("./images/bg1.jpg", () => {
+const skyboxTexture = skyboxLoader.load("/images/bg1.jpg", () => {
   skyboxTexture.mapping = THREE.EquirectangularReflectionMapping;
   skyboxTexture.colorSpace = THREE.SRGBColorSpace;
   scene.background = skyboxTexture;
 });
 
-//const spaceTexture = new THREE.TextureLoader().load("./images/bg1.jpg");
+//const spaceTexture = new THREE.TextureLoader().load("/images/bg1.jpg");
 //scene.background = spaceTexture;
 
 // Textures
 
-const sunTexture = new THREE.TextureLoader().load("./images/sun.jpg");
-const mercuryTexture = new THREE.TextureLoader().load("./images/mercury.jpg");
-const venusTexture = new THREE.TextureLoader().load("./images/venus.jpg");
+const sunTexture = new THREE.TextureLoader().load("/images/sun.jpg");
+const mercuryTexture = new THREE.TextureLoader().load("/images/mercury.jpg");
+const venusTexture = new THREE.TextureLoader().load("/images/venus.jpg");
 const earthTexture = new THREE.TextureLoader().load(
-  "./images/earthwithtopo.jpg",
+  "/images/earthwithtopo.jpg",
 );
-const marsTexture = new THREE.TextureLoader().load("./images/mars.jpg");
-const marsNorm = new THREE.TextureLoader().load("./images/marsnorm.jpg");
-const jupiterTexture = new THREE.TextureLoader().load("./images/jupiter.jpg");
-const saturnTexture = new THREE.TextureLoader().load("./images/saturn.jpg");
-const uranusTexture = new THREE.TextureLoader().load("./images/uranus.jpg");
-const neptuneTexture = new THREE.TextureLoader().load("./images/neptune.jpg");
-const moonTexture = new THREE.TextureLoader().load("./images/moon.jpg");
-const moonNorm = new THREE.TextureLoader().load("./images/moonnorm.jpg");
-const phobosTexture = new THREE.TextureLoader().load("./images/phobos.jpg");
-const deimosTexture = new THREE.TextureLoader().load("./images/deimos.jpg");
+const marsTexture = new THREE.TextureLoader().load("/images/mars.jpg");
+const marsNorm = new THREE.TextureLoader().load("/images/marsnorm.jpg");
+const jupiterTexture = new THREE.TextureLoader().load("/images/jupiter.jpg");
+const saturnTexture = new THREE.TextureLoader().load("/images/saturn.jpg");
+const uranusTexture = new THREE.TextureLoader().load("/images/uranus.jpg");
+const neptuneTexture = new THREE.TextureLoader().load("/images/neptune.jpg");
+const moonTexture = new THREE.TextureLoader().load("/images/moon.jpg");
+const moonNorm = new THREE.TextureLoader().load("/images/moonnorm.jpg");
+const phobosTexture = new THREE.TextureLoader().load("/images/phobos.jpg");
+const deimosTexture = new THREE.TextureLoader().load("/images/deimos.jpg");
 
 // Modal Intro
 
@@ -437,26 +437,6 @@ let planetDias = [
   uranusDia,
   neptuneDia,
 ];
-let planetDists = [
-  mercuryDist,
-  venusDist,
-  earthDist,
-  marsDist,
-  jupiterDist,
-  saturnDist,
-  uranusDist,
-  neptuneDist,
-];
-let moonLists = [
-  [],
-  [],
-  [moon],
-  [phobos, deimos],
-  [io, europa, ganymedes, callisto],
-  [thetis, dione, rhea, titan, japetu],
-  [miranda, ariel, umbriel, titania, oberon],
-  [triton, nereida],
-];
 
 // Menu and Info Box
 
@@ -465,7 +445,7 @@ const infotxt = document.getElementById("objinfo");
 
 async function loadInfoTxt(infofile) {
   try {
-    const response = await fetch(`./info/${infofile}.txt`);
+    const response = await fetch(`public/info/${infofile}.txt`);
     const text = await response.text();
     infotxt.innerHTML = text;
   } catch (error) {
@@ -542,7 +522,7 @@ function animate() {
       m.obj.mesh.rotation.y += 0.01;
     });
   }
-  // to keep camera focus on selection
+  // to keep camera focused on selection
   // controls.target.copy(targetMesh.getWorldPosition(tempVec));
   controls.update();
   renderer.render(scene, camera);
