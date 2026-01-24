@@ -114,6 +114,7 @@ function createSystem(text, norm, dia, dist, name, parentObj, hasOrb = true) {
     const orbit = createOrbitLine(dist);
     parentObj.add(orbit);
   }
+  parentObj.add(childGroup);
   return { child: childGroup, mesh: mesh, dist: dist };
 }
 
@@ -236,7 +237,7 @@ const moon = createSystem(
   moonTexture,
   moonNorm,
   earthDia / 4,
-  5,
+  3,
   "Moon",
   earth.mesh,
 );
@@ -262,7 +263,7 @@ const io = createSystem(
   deimosTexture,
   null,
   jupiterDia / 20,
-  5,
+  3,
   "Io",
   jupiter.mesh,
 );
@@ -270,7 +271,7 @@ const europa = createSystem(
   deimosTexture,
   deimosTexture,
   jupiterDia / 20,
-  jupiterDist,
+  5,
   "Europa",
   jupiter.mesh,
 );
@@ -278,7 +279,7 @@ const ganymedes = createSystem(
   deimosTexture,
   deimosTexture,
   jupiterDia / 20,
-  jupiterDist,
+  7,
   "Ganymedes",
   jupiter.mesh,
 );
@@ -286,7 +287,7 @@ const callisto = createSystem(
   deimosTexture,
   deimosTexture,
   jupiterDia / 20,
-  jupiterDist,
+  9,
   "Callisto",
   jupiter.mesh,
 );
@@ -295,7 +296,7 @@ const thetis = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
-  saturnDist,
+  3,
   "Thetis",
   saturn.mesh,
 );
@@ -303,7 +304,7 @@ const dione = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
-  saturnDist,
+  5,
   "Dione",
   saturn.mesh,
 );
@@ -311,7 +312,7 @@ const rhea = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
-  saturnDist,
+  7,
   "Rhea",
   saturn.mesh,
 );
@@ -319,7 +320,7 @@ const titan = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
-  saturnDist,
+  9,
   "Titan",
   saturn.mesh,
 );
@@ -327,7 +328,7 @@ const japetu = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
-  saturnDist,
+  11,
   "Japetu",
   saturn.mesh,
 );
@@ -336,7 +337,7 @@ const miranda = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
-  uranusDist,
+  3,
   "Miranda",
   uranus.mesh,
 );
@@ -344,7 +345,7 @@ const ariel = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
-  uranusDist,
+  5,
   "Ariel",
   uranus.mesh,
 );
@@ -352,7 +353,7 @@ const umbriel = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
-  uranusDist,
+  7,
   "Umbriel",
   uranus.mesh,
 );
@@ -360,7 +361,7 @@ const titania = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
-  uranusDist,
+  9,
   "Titania",
   uranus.mesh,
 );
@@ -368,7 +369,7 @@ const oberon = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
-  uranusDist,
+  11,
   "Oberon",
   uranus.mesh,
 );
@@ -377,7 +378,7 @@ const triton = createSystem(
   deimosTexture,
   deimosTexture,
   neptuneDia / 18,
-  neptuneDist,
+  3,
   "Triton",
   neptune.mesh,
 );
@@ -385,43 +386,45 @@ const nereida = createSystem(
   deimosTexture,
   deimosTexture,
   neptuneDia / 18,
-  neptuneDist,
+  5,
   "Nereida",
   neptune.mesh,
 );
 
 // Object Lists
 
+const pSpeedMod = 10;
 const planetObjects = [
-  { obj: mercury, speed: 0.04 },
-  { obj: venus, speed: 0.015 },
-  { obj: earth, speed: 0.01 },
-  { obj: mars, speed: 0.008 },
-  { obj: jupiter, speed: 0.004 },
-  { obj: saturn, speed: 0.003 },
-  { obj: uranus, speed: 0.002 },
-  { obj: neptune, speed: 0.001 },
+  { obj: mercury, speed: 0.04 / pSpeedMod },
+  { obj: venus, speed: 0.015 / pSpeedMod },
+  { obj: earth, speed: 0.01 / pSpeedMod },
+  { obj: mars, speed: 0.008 / pSpeedMod },
+  { obj: jupiter, speed: 0.004 / pSpeedMod },
+  { obj: saturn, speed: 0.003 / pSpeedMod },
+  { obj: uranus, speed: 0.002 / pSpeedMod },
+  { obj: neptune, speed: 0.001 / pSpeedMod },
 ];
+const mSpeedMod = 100;
 const moonObjects = [
-  { obj: moon, speed: 0.05 },
-  { obj: phobos, speed: 0.1 },
-  { obj: deimos, speed: 0.08 },
-  { obj: io, speed: 0.07 },
-  { obj: europa, speed: 0.06 },
-  { obj: ganymedes, speed: 0.05 },
-  { obj: callisto, speed: 0.04 },
-  { obj: thetis, speed: 0.03 },
-  { obj: dione, speed: 0.02 },
-  { obj: rhea, speed: 0.01 },
-  { obj: titan, speed: 0.009 },
-  { obj: japetu, speed: 0.008 },
-  { obj: miranda, speed: 0.007 },
-  { obj: ariel, speed: 0.006 },
-  { obj: umbriel, speed: 0.005 },
-  { obj: titania, speed: 0.004 },
-  { obj: oberon, speed: 0.003 },
-  { obj: triton, speed: 0.002 },
-  { obj: nereida, speed: 0.001 },
+  { obj: moon, speed: 0.05 / mSpeedMod },
+  { obj: phobos, speed: 0.1 / mSpeedMod },
+  { obj: deimos, speed: 0.08 / mSpeedMod },
+  { obj: io, speed: 0.07 / mSpeedMod },
+  { obj: europa, speed: 0.06 / mSpeedMod },
+  { obj: ganymedes, speed: 0.05 / mSpeedMod },
+  { obj: callisto, speed: 0.04 / mSpeedMod },
+  { obj: thetis, speed: 0.03 / mSpeedMod },
+  { obj: dione, speed: 0.02 / mSpeedMod },
+  { obj: rhea, speed: 0.01 / mSpeedMod },
+  { obj: titan, speed: 0.009 / mSpeedMod },
+  { obj: japetu, speed: 0.008 / mSpeedMod },
+  { obj: miranda, speed: 0.007 / mSpeedMod },
+  { obj: ariel, speed: 0.006 / mSpeedMod },
+  { obj: umbriel, speed: 0.005 / mSpeedMod },
+  { obj: titania, speed: 0.004 / mSpeedMod },
+  { obj: oberon, speed: 0.003 / mSpeedMod },
+  { obj: triton, speed: 0.002 / mSpeedMod },
+  { obj: nereida, speed: 0.001 / mSpeedMod },
 ];
 
 let planetDias = [
@@ -523,15 +526,16 @@ function animate() {
     // planets movement
     planetObjects.forEach((p) => {
       p.obj.child.rotation.y += p.speed;
-      p.obj.mesh.position.y += 0.02;
+      p.obj.mesh.rotation.y += 0.02;
     });
     // moons movement
     moonObjects.forEach((m) => {
       m.obj.child.rotation.y += m.speed;
-      m.obj.mesh.position.y += 0.01;
+      m.obj.mesh.rotation.y += 0.01;
     });
   }
   controls.update();
+
   renderer.render(scene, camera);
   labelRenderer.render(scene, camera);
 }
