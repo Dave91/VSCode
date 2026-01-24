@@ -458,12 +458,11 @@ let moonLists = [
   [triton, nereida],
 ];
 
-// Menu Click Event
+// Menu and Info Box
 
 const menus = document.getElementsByClassName("menusel");
 const infotxt = document.getElementById("objinfo");
 
-// Info Text Loader
 async function loadInfoTxt(infofile) {
   try {
     const response = await fetch(`./info/${infofile}.txt`);
@@ -474,19 +473,30 @@ async function loadInfoTxt(infofile) {
   }
 }
 
+// move camera on menu click
+
+const targetPos = new THREE.Vector3();
+let targetMesh = null;
 for (let ms of menus) {
   ms.addEventListener("click", function () {
     let evid = this.dataset.ind;
     let evlab = this.dataset.lab;
-    let evposx = planets[evid].position.x + planetDias[evid];
-    let evposy = planets[evid].position.y + planetDias[evid];
-    let evposz = planets[evid].position.z + planetDias[evid];
-    camera.position.set(evposx + 4, evposy + 2, evposz + 2);
+    targetMesh = planetObjects[evid].obj.mesh;
+    const targetRad = planetDias[evid];
+    //const targetDist = planetDists[evid];
+    targetMesh.getWorldPosition(targetPos);
+    camera.position.set(
+      targetPos.x + targetRad * 5,
+      targetPos.y + targetRad * 2,
+      targetPos.z + targetRad * 2,
+    );
+    controls.target.copy(targetPos); // becomes camera center
+    controls.update();
     loadInfoTxt(evlab);
   });
 }
 
-// Key Press Event
+// pause/play
 
 const infobox = document.getElementById("infobox");
 let animIsPaused = true;
@@ -509,13 +519,11 @@ window.addEventListener("resize", function () {
   renderer.setPixelRatio(window.devicePixelRatio);
 });
 
-// Controls, helpers
+// Controls
 
-//const axisHelp = new THREE.AxesHelper(1000);
-//const gridHelp = new THREE.PolarGridHelper(1000, 10, 10);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.update();
-//scene.add(axisHelp, gridHelp);
+// let tempVec = new THREE.Vector3();
 
 // Animation Loop
 
@@ -534,8 +542,9 @@ function animate() {
       m.obj.mesh.rotation.y += 0.01;
     });
   }
+  // to keep camera focus on selection
+  // controls.target.copy(targetMesh.getWorldPosition(tempVec));
   controls.update();
-
   renderer.render(scene, camera);
   labelRenderer.render(scene, camera);
 }
