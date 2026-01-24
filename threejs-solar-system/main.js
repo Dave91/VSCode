@@ -516,45 +516,22 @@ controls.update();
 
 // Animation Loop
 
-let delta = 0;
-
 function animate() {
   requestAnimationFrame(animate);
-
-  sun.rotation.y += 0.001;
-  venus.rotation.y -= 0.02;
-  for (let p of planets) {
-    p.rotation.y += 0.01;
-  }
-
+  sunMesh.rotation.y += 0.001;
   if (!animIsPaused) {
     // planets movement
-    for (let i = 0; i < planets.length; i++) {
-      let p = planets[i];
-      let pdist = planetDists[i];
-      p.position.x = sun.position.x + Math.sin(delta + i * 0.1) * pdist;
-      p.position.z = sun.position.z + Math.cos(delta + i * 0.1) * (pdist + 5);
-    }
+    planetObjects.forEach((p) => {
+      p.obj.child.rotation.y += p.speed;
+      p.obj.mesh.position.y += 0.02;
+    });
+    // moons movement
+    moonObjects.forEach((m) => {
+      m.obj.child.rotation.y += m.speed;
+      m.obj.mesh.position.y += 0.01;
+    });
   }
-
-  // moons movement
-  for (let pi = 0; pi < planets.length; pi++) {
-    if (moons[pi].length) {
-      let pm = planets[pi];
-      let pmdia = planetDias[pi];
-      for (let mi = 0; mi < moons[pi].length; mi++) {
-        let m = moons[pi][mi];
-        m.position.x =
-          pm.position.x - Math.sin(delta + mi * 0.05) * (pmdia + 1 + mi * 1);
-        m.position.z =
-          pm.position.z - Math.cos(delta + mi * 0.05) * (pmdia + 2 + mi * 1);
-        m.rotation.y += 0.01;
-      }
-    }
-  }
-
-  delta += 0.005;
-
+  controls.update();
   renderer.render(scene, camera);
   labelRenderer.render(scene, camera);
 }
