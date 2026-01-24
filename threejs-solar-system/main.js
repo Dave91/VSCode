@@ -279,7 +279,7 @@ const ganymedes = createSystem(
   deimosTexture,
   deimosTexture,
   jupiterDia / 20,
-  7,
+  8,
   "Ganymedes",
   jupiter.mesh,
 );
@@ -287,7 +287,7 @@ const callisto = createSystem(
   deimosTexture,
   deimosTexture,
   jupiterDia / 20,
-  9,
+  12,
   "Callisto",
   jupiter.mesh,
 );
@@ -312,7 +312,7 @@ const rhea = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
-  7,
+  8,
   "Rhea",
   saturn.mesh,
 );
@@ -320,7 +320,7 @@ const titan = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
-  9,
+  12,
   "Titan",
   saturn.mesh,
 );
@@ -328,7 +328,7 @@ const japetu = createSystem(
   deimosTexture,
   deimosTexture,
   saturnDia / 20,
-  11,
+  17,
   "Japetu",
   saturn.mesh,
 );
@@ -353,7 +353,7 @@ const umbriel = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
-  7,
+  8,
   "Umbriel",
   uranus.mesh,
 );
@@ -361,7 +361,7 @@ const titania = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
-  9,
+  12,
   "Titania",
   uranus.mesh,
 );
@@ -369,7 +369,7 @@ const oberon = createSystem(
   deimosTexture,
   deimosTexture,
   uranusDia / 18,
-  11,
+  17,
   "Oberon",
   uranus.mesh,
 );
