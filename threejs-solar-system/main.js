@@ -460,15 +460,15 @@ for (let ms of menus) {
     let evid = this.dataset.ind;
     let evlab = this.dataset.lab;
     targetMesh = planetObjects[evid].obj.mesh;
-    const targetRad = planetDias[evid];
+    //const targetRad = planetDias[evid];
     targetMesh.getWorldPosition(targetPos);
-    camera.position.set(
+    /* camera.position.set(
       targetPos.x + targetRad * 5,
       targetPos.y + targetRad * 2,
       targetPos.z + targetRad * 2,
-    );
-    controls.target.copy(targetPos); // becomes camera center
-    controls.update();
+    ); */
+    //controls.target.copy(targetPos); // becomes camera center
+    //controls.update();
     loadInfoTxt(evlab);
   });
 }
@@ -506,22 +506,24 @@ controls.update();
 
 function animate() {
   requestAnimationFrame(animate);
+  // moving camera towards target obj
+  if (targetMesh) {
+    targetMesh.getWorldPosition(targetPos);
+    camera.position.lerp(
+      new THREE.Vector3(targetPos.x + 10, targetPos.y + 5, targetPos.z + 10),
+      0.05,
+    );
+    controls.target.lerp(targetPos, 0.05);
+    controls.update();
+  }
   sunMesh.rotation.y += 0.001;
   planetObjects.forEach((p) => (p.obj.mesh.rotation.y += 0.01));
   moonObjects.forEach((m) => (m.obj.mesh.rotation.y += 0.01));
   if (!animIsPaused) {
-    // planets movement
-    planetObjects.forEach((p) => {
-      p.obj.child.rotation.y += p.speed;
-    });
-    // moons movement
-    moonObjects.forEach((m) => {
-      m.obj.child.rotation.y += m.speed;
-    });
+    planetObjects.forEach((p) => (p.obj.child.rotation.y += p.speed));
+    moonObjects.forEach((m) => (m.obj.child.rotation.y += m.speed));
   }
-  // to keep camera focused on selection after unpause
-  // controls.target.copy(targetMesh.getWorldPosition(tempVec));
-  controls.update();
+  //controls.update();
   renderer.render(scene, camera);
   labelRenderer.render(scene, camera);
 }
