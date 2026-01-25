@@ -123,7 +123,7 @@ function createLabel(name, dia) {
   p.style.color = "white";
   p.style.marginTop = "-1em";
   const label = new CSS2DObject(p);
-  label.position.set(0, dia + 1.5, 0);
+  label.position.set(0, dia + 0.05, 0);
   return label;
 }
 
@@ -461,7 +461,6 @@ for (let ms of menus) {
     let evlab = this.dataset.lab;
     targetMesh = planetObjects[evid].obj.mesh;
     const targetRad = planetDias[evid];
-    //const targetDist = planetDists[evid];
     targetMesh.getWorldPosition(targetPos);
     camera.position.set(
       targetPos.x + targetRad * 5,
@@ -508,19 +507,19 @@ controls.update();
 function animate() {
   requestAnimationFrame(animate);
   sunMesh.rotation.y += 0.001;
+  planetObjects.forEach((p) => (p.obj.mesh.rotation.y += 0.01));
+  moonObjects.forEach((m) => (m.obj.mesh.rotation.y += 0.01));
   if (!animIsPaused) {
     // planets movement
     planetObjects.forEach((p) => {
       p.obj.child.rotation.y += p.speed;
-      p.obj.mesh.rotation.y += 0.02;
     });
     // moons movement
     moonObjects.forEach((m) => {
       m.obj.child.rotation.y += m.speed;
-      m.obj.mesh.rotation.y += 0.01;
     });
   }
-  // to keep camera focused on selection
+  // to keep camera focused on selection after unpause
   // controls.target.copy(targetMesh.getWorldPosition(tempVec));
   controls.update();
   renderer.render(scene, camera);
