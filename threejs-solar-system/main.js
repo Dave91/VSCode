@@ -425,22 +425,10 @@ const moonObjects = [
   { obj: nereida, speed: 0.001 / mSpeedMod },
 ];
 
-let planetDias = [
-  mercuryDia,
-  venusDia,
-  earthDia,
-  marsDia,
-  jupiterDia,
-  saturnDia,
-  uranusDia,
-  neptuneDia,
-];
-
 // Menu and Info Box
 
 const menus = document.getElementsByClassName("menusel");
 const infotxt = document.getElementById("objinfo");
-
 async function loadInfoTxt(infofile) {
   try {
     const response = await fetch(`public/info/${infofile}.txt`);
@@ -450,9 +438,6 @@ async function loadInfoTxt(infofile) {
     console.error("Error fetching info text:", error);
   }
 }
-
-// move camera on menu click
-
 const targetPos = new THREE.Vector3();
 let targetMesh = null;
 for (let ms of menus) {
@@ -460,20 +445,12 @@ for (let ms of menus) {
     let evid = this.dataset.ind;
     let evlab = this.dataset.lab;
     targetMesh = planetObjects[evid].obj.mesh;
-    //const targetRad = planetDias[evid];
     targetMesh.getWorldPosition(targetPos);
-    /* camera.position.set(
-      targetPos.x + targetRad * 5,
-      targetPos.y + targetRad * 2,
-      targetPos.z + targetRad * 2,
-    ); */
-    //controls.target.copy(targetPos); // becomes camera center
-    //controls.update();
     loadInfoTxt(evlab);
   });
 }
 
-// pause/play
+// pause/play event
 
 const infobox = document.getElementById("infobox");
 let animIsPaused = true;
@@ -513,7 +490,7 @@ function animate() {
       new THREE.Vector3(targetPos.x + 10, targetPos.y + 5, targetPos.z + 10),
       0.05,
     );
-    controls.target.lerp(targetPos, 0.05);
+    controls.target.lerp(targetPos, 0.06);
     controls.update();
   }
   sunMesh.rotation.y += 0.001;
@@ -523,7 +500,6 @@ function animate() {
     planetObjects.forEach((p) => (p.obj.child.rotation.y += p.speed));
     moonObjects.forEach((m) => (m.obj.child.rotation.y += m.speed));
   }
-  //controls.update();
   renderer.render(scene, camera);
   labelRenderer.render(scene, camera);
 }
