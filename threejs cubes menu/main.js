@@ -81,7 +81,6 @@ window.addEventListener("mousemove", onMouseOver, false);
 
 const bgTexture = new THREE.TextureLoader().load("./bannerlight.jpg");
 scene.background = bgTexture;
-const controls = new OrbitControls(camera, renderer.domElement);
 let menu_anim = "off";
 
 // Text Labels
@@ -111,10 +110,17 @@ createTextLabel("About Me", 4, 0, 4, "rolam");
 createTextLabel("Poems", -5, 3, 2, "versek");
 createTextLabel("Publications", -15, 6, 0, "irasok");
 
+// Contols
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+//controls.dampingFactor = 0.05;
+controls.autoRotate = false;
+//controls.autoRotateSpeed = 0.5;
 // Animation Loop
 
 function animate() {
   requestAnimationFrame(animate);
+  controls.update();
   if (menu_anim === "off") {
     camera.rotation.y = 0;
   }
@@ -133,13 +139,10 @@ function animate() {
 
 animate();
 
-// Resize, scaling
+// Resize event
 
-window.addEventListener("resize", onWindResize, false);
-
-function onWindResize() {
+window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
-}
+});
