@@ -6,6 +6,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // Setup
 
 const scene = new THREE.Scene();
+const bgTexture = new THREE.TextureLoader().load("./bannerlight.jpg");
+scene.background = bgTexture;
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
@@ -38,54 +40,72 @@ function renderRay() {
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(scene.children);
   let sect = null;
-  if (intersects[0].object.name === "rolam") {
+  if (intersects[0].object.userData.id === "rolam") {
     sect = "rolam";
   }
-  if (intersects[0].object.name === "versek") {
+  if (intersects[0].object.userData.id === "versek") {
     sect = "versek";
   }
-  if (intersects[0].object.name === "irasok") {
+  if (intersects[0].object.userData.id === "irasok") {
     sect = "irasok";
   }
   menu_anim = "out";
   document.getElementById(sect).className = "";
   renderer.render(scene, camera);
-  window.removeEventListener("mousemove", onMouseOver, false);
   controls.autoRotate = false;
-  window.addEventListener("click", onMouseClick(sect), false);
 }
 
-function onMouseClick(sect) {
-  return function () {
-    menu_anim = "in";
-    camera.rotation.y = -1.5;
-    camera.rotation.x = 0;
-    document.getElementById(sect).className = "hidden-cont";
-    window.removeEventListener("click", onMouseClick, false);
-    controls.autoRotate = true;
-    window.addEventListener("mousemove", onMouseOver, false);
-  };
-}
-
-function onMouseOver(event) {
-  // calc mouse pos in normalized device coords
-  // (-1 to +1)
+function handleClickEvent(event) {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-  window.requestAnimationFrame(renderRay);
+
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(scene.children);
+
+  if (intersects.length > 0) {
+    const object = intersects[0].object;
+    const sectionId = object.userData.id;
+
+    if (sectionId) {
+      console.log("Kiválasztva:", sectionId);
+      // Itt hívhatod meg az animációdat vagy az oldalváltást
+      handleMenuTransition(sectionId);
+    }
+  }
 }
 
-window.addEventListener("mousemove", onMouseOver, false);
+let menuAnim = "off";
 
-// Background, Light, Controls
+// Menu elements
 
-const bgTexture = new THREE.TextureLoader().load("./bannerlight.jpg");
-scene.background = bgTexture;
-let menu_anim = "off";
+function createTextCube(text, color, position, id) {
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+  canvas.width = 512;
+  canvas.height = 512;
+  context.fillStyle = color;
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.font = "Bold 80px Harrington";
+  context.fillStyle = "white";
+  context.textAlign = "center";
+  context.fillText(text, 256, 256);
+  const texture = new THREE.CanvasTexture(canvas);
+  const geometry = new THREE.BoxGeometry(5, 5, 5);
+  const material = new THREE.MeshStandardMaterial({ map: texture });
+  const cube = new THREE.Mesh(geometry, material);
+  cube.position.set(position.x, position.y, position.z);
+  cube.userData = { id: id };
+  scene.add(cube);
+  return cube;
+}
 
-// Text Labels
+const menuItems = [
+  createTextCube("ABOUT ME", "#ff4757", { x: -10, y: 0, z: 0 }, "rolam"),
+  createTextCube("POEMS", "#2e86de", { x: 0, y: 5, z: 0 }, "versek"),
+  createTextCube("BOOKS", "#2ed573", { x: 10, y: 0, z: 0 }, "irasok"),
+];
 
-function createTextLabel(text, x, y, z, id) {
+/* function createTextLabel(text, x, y, z, id) {
   const loader = new THREE.FontLoader();
   loader.load("./ADayInAutumn_Medium.json", function (font) {
     // TextGeometry(String, Object)
@@ -104,13 +124,22 @@ function createTextLabel(text, x, y, z, id) {
     mLabel.position.z = z;
     scene.add(mLabel);
   });
+} */
+
+function handleMenuTransition(id) {
+  menuAnim = menuAnim === "off" ? "in" : "out";
+  const target = document.getElementById(id);
+  if (target) {
+    target.className = "";
+    controls.autoRotate = false;
+    menuAnim = "out";
+  }
 }
 
-createTextLabel("About Me", 4, 0, 4, "rolam");
-createTextLabel("Poems", -5, 3, 2, "versek");
-createTextLabel("Publications", -15, 6, 0, "irasok");
+window.addEventListener("click", handleClickEvent, false);
 
-// Contols
+// Controls setup
+
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 //controls.dampingFactor = 0.05;
@@ -121,17 +150,19 @@ controls.autoRotate = false;
 function animate() {
   requestAnimationFrame(animate);
   controls.update();
-  if (menu_anim === "off") {
-    camera.rotation.y = 0;
-  }
-  if (menu_anim === "in") {
+  menuItems.forEach((item) => {
+    item.rotation.x += 0.001;
+    item.rotation.y += 0.001;
+    item.rotation.z += 0.001;
+  });
+  if (menuAnim === "in") {
     if (camera.rotation.y < 0) {
-      camera.rotation.y += 0.01;
+      camera.rotation.y += 0.05;
     }
   }
-  if (menu_anim === "out") {
+  if (menuAnim === "out") {
     if (camera.rotation.x < 1) {
-      camera.rotation.x += 0.02;
+      camera.rotation.x += 0.05;
     }
   }
   renderer.render(scene, camera);
