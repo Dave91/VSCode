@@ -53,7 +53,12 @@ function createTextCube(text, color, position, id) {
   const material = new THREE.MeshStandardMaterial({ map: texture });
   const cube = new THREE.Mesh(geometry, material);
   cube.position.set(position.x, position.y, position.z);
-  cube.userData = { id: id };
+  cube.userData = {
+    id: id,
+    originalPos: new THREE.Vector3(position.x, position.y, position.z),
+    hiddenPos: new THREE.Vector3(position.x, position.y - 50, position.z),
+    targetPos: new THREE.Vector3(position.x, position.y, position.z),
+  };
   scene.add(cube);
   return cube;
 }
@@ -64,32 +69,23 @@ const menuItems = [
   createTextCube("BOOKS", "#2ed573", { x: 10, y: 0, z: 0 }, "irasok"),
 ];
 
-/* function createTextLabel(text, x, y, z, id) {
-  const loader = new THREE.FontLoader();
-  loader.load("./ADayInAutumn_Medium.json", function (font) {
-    // TextGeometry(String, Object)
-    const textObj = new THREE.TextGeometry(text, {
-      font: font,
-      size: 2,
-      height: 0.5,
-      curveSegments: 6,
-      });
-      const labelTexture = new THREE.TextureLoader().load("./space.jpg");
-      const material = new THREE.MeshBasicMaterial({ map: labelTexture });
-      const mLabel = new THREE.Mesh(textObj, material);
-      mLabel.name = id;
-      mLabel.position.x = x;
-      mLabel.position.y = y;
-      mLabel.position.z = z;
-      scene.add(mLabel);
-      });
-      } */
-
 // Click event
 
 let contentVisible = false;
 let menuVisible = true;
 const sections = ["rolam", "versek", "irasok"];
+
+function animCubesOut() {
+  menuItems.forEach((item) => {
+    item.userData.targetPos.copy(item.userData.hiddenPos);
+  });
+}
+
+function animCubesIn() {
+  menuItems.forEach((item) => {
+    item.userData.targetPos.copy(item.userData.originalPos);
+  });
+}
 
 function onMouseHover(event) {
   if (contentVisible) return;
@@ -125,12 +121,7 @@ function onMouseClick(event) {
       target.className = "";
       contentVisible = true;
       menuVisible = false;
-    } else {
-      sections.forEach((sect) => {
-        document.getElementById(sect).className = "hidden";
-      });
-      contentVisible = false;
-      menuVisible = true;
+      animCubesOut();
     }
     return;
   }
@@ -140,6 +131,7 @@ function onMouseClick(event) {
     });
     contentVisible = false;
     menuVisible = true;
+    animCubesIn();
   }
 }
 
@@ -150,8 +142,6 @@ window.addEventListener("click", onMouseClick);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.5;
-controls.autoRotate = false;
-//controls.autoRotateSpeed = 0.5;
 
 // Animation Loop
 
@@ -159,9 +149,12 @@ function animate() {
   requestAnimationFrame(animate);
   controls.update();
   menuItems.forEach((item) => {
-    item.rotation.x += 0.0003;
-    item.rotation.y += 0.0003;
-    item.rotation.z += 0.0005;
+    item.position.lerp(item.userData.targetPos, 0.05);
+    if (!contentVisible) {
+      item.rotation.x += 0.0003;
+      item.rotation.y += 0.0003;
+      item.rotation.z += 0.0005;
+    }
   });
   renderer.render(scene, camera);
 }
