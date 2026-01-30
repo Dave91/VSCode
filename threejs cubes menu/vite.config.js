@@ -1,3 +1,3 @@
 export default {
-  base: "/ThreeJShovermenu/",
+  base: "/threejs-cubes-menu/",
 };

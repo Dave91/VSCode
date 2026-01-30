@@ -6,9 +6,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // Setup
 
 const scene = new THREE.Scene();
-const bgTexture = new THREE.TextureLoader().load(
-  "public/images/bannerlight.jpg",
-);
+const bgTexture = new THREE.TextureLoader().load("images/bannerlight.jpg");
 scene.background = bgTexture;
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -65,14 +63,14 @@ function createTextCube(text, color, position, id) {
   return cube;
 }
 
+const sections = ["rolam", "versek", "irasok", "kapcsolat", "kepek"];
 const menuItems = [
   createTextCube("ABOUT ME", "#ff4757", { x: -10, y: 0, z: 0 }, "rolam"),
-  createTextCube("POEMS", "#2e86de", { x: 0, y: 5, z: 0 }, "versek"),
+  createTextCube("POEMS", "#2e86de", { x: 5, y: 10, z: 0 }, "versek"),
   createTextCube("BOOKS", "#2ed573", { x: 10, y: 0, z: 0 }, "irasok"),
   createTextCube("CONTACT", "#ffa502", { x: 0, y: -5, z: 0 }, "kapcsolat"),
-  createTextCube("PHOTOS", "#ff6b81", { x: -15, y: 5, z: 0 }, "kepek"),
+  createTextCube("PHOTOS", "#ff6b81", { x: -5, y: 10, z: 0 }, "kepek"),
 ];
-const sections = ["rolam", "versek", "irasok", "kapcsolat", "kepek"];
 
 // Click event
 

@@ -39,17 +39,20 @@ canvas {
 
 section {
   grid-column: 3 / 11;
-  padding: 1rem;
+  padding: 1.5rem;
   background-color: var(--dark-bg);
   font-size: 1.25rem;
-  line-height: 1.5;
+  line-height: 1.25;
 }
 
 .hidden {
   display: none;
 }
 
-p,
+p {
+  text-align: justify;
+}
+
 pre {
   text-align: center;
 }
