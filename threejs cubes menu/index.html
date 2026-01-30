@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,9 +8,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(function () {
-        $("#rolam").load("./sectrolam.html");
-        $("#versek").load("./sectversek.html");
-        $("#irasok").load("./sectirasok.html");
+        $("#rolam").load("public/pages/sectrolam.html");
+        $("#versek").load("public/pages/sectversek.html");
+        $("#irasok").load("public/pages/sectirasok.html");
+        $("#kapcsolat").load("public/pages/sectkapcsolat.html");
+        $("#kepek").load("public/pages/sectkepek.html");
       });
     </script>
   </head>
@@ -21,6 +23,8 @@
       <section id="rolam" class="hidden"></section>
       <section id="versek" class="hidden"></section>
       <section id="irasok" class="hidden"></section>
+      <section id="kapcsolat" class="hidden"></section>
+      <section id="kepek" class="hidden"></section>
     </main>
 
     <script type="module" src="./main.js"></script>
