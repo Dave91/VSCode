@@ -55,8 +55,16 @@ const rule = (particles1, particles2, g) => {
 const yellow = create(500, "yellow");
 const red = create(200, "red");
 const green = create(200, "green");
-const scale = 1; // def 1 (0.5 - 1.5)
-const fratio = 0.2; // def 1 (0.05 - 1.05)
+const scaleInput = document.getElementById("scale");
+const fratioInput = document.getElementById("fratio");
+let scale = 1; // def 1 (0.5 - 1.25)
+let fratio = 0.1; // def 0.1 (0.005 - 1)
+scaleInput.addEventListener("input", (e) => {
+  scale = parseFloat(e.target.value);
+});
+fratioInput.addEventListener("input", (e) => {
+  fratio = parseFloat(e.target.value);
+});
 
 const update = () => {
   rule(green, green, -0.32 * fratio);
