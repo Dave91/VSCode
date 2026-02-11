@@ -1,4 +1,5 @@
-const m = document.getElementById("habitat").getContext("2d");
+const canvas = document.getElementById("habitat");
+const m = canvas.getContext("2d");
 
 const draw = (x, y, c, s) => {
   m.fillStyle = c;
@@ -52,18 +53,44 @@ const rule = (particles1, particles2, g) => {
   }
 };
 
+const mouse = { x: 0, y: 0, isActive: false };
+canvas.addEventListener("mousemove", (e) => {
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - rect.left;
+  mouse.y = e.clientY - rect.top;
+  mouse.isActive = true;
+});
+canvas.addEventListener("mouseleave", () => {
+  mouse.isActive = false;
+});
+
+const applyMouseRepel = (force, rad) => {
+  if (!mouse.isActive) return;
+  for (let p of particles) {
+    const dx = p.x - mouse.x;
+    const dy = p.y - mouse.y;
+    const d = Math.hypot(dx, dy);
+    if (d > 0 && d < rad) {
+      const falloff = 1 - d / rad;
+      const f = (force * falloff) / d;
+      p.vx += f * dx;
+      p.vy += f * dy;
+    }
+  }
+};
+
 const yellow = create(500, "yellow");
 const red = create(200, "red");
 const green = create(200, "green");
 const scaleInput = document.getElementById("scale");
 const fratioInput = document.getElementById("fratio");
-let scale = 1; // def 1 (0.5 - 1.25)
-let fratio = 0.1; // def 0.1 (0.005 - 1)
+let scale = 1;
+let fratio = 0.1;
 scaleInput.addEventListener("input", (e) => {
-  scale = parseFloat(e.target.value);
+  scale = Number.parseFloat(e.target.value);
 });
 fratioInput.addEventListener("input", (e) => {
-  fratio = parseFloat(e.target.value);
+  fratio = Number.parseFloat(e.target.value);
 });
 
 const update = () => {
@@ -74,6 +101,7 @@ const update = () => {
   rule(red, green, -0.34 * fratio);
   rule(yellow, yellow, 0.15 * fratio);
   rule(yellow, green, -0.2 * fratio);
+  applyMouseRepel(2, 75);
   m.clearRect(0, 0, 800, 800);
   draw(0, 0, "black", 800);
   for (let p of particles) {
